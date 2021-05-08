@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="272.0" layoutY="14.0" prefHeight="30.0" prefWidth="154.0" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Reserva" textAlignment="RIGHT" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <padding>
+            <Insets left="40.0" />
+         </padding>
+      </Label>
+      <Label layoutX="22.0" layoutY="83.0" text="A nombre de:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField layoutX="129.0" layoutY="81.0" promptText="Cliente" />
+      <Label layoutX="21.0" layoutY="163.0" text="Cantidad de personas:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ChoiceBox layoutX="189.0" layoutY="161.0" prefHeight="25.0" prefWidth="90.0" />
+      <Label layoutX="21.0" layoutY="201.0" text="Número de teléfono:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField layoutX="168.0" layoutY="199.0" promptText="Teléfono" />
+      <Label layoutX="17.0" layoutY="267.0" text="¿Le gustaría tener algo en la mesa">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="23.0" layoutY="316.0" prefHeight="173.0" prefWidth="166.0" />
+      <Label layoutX="362.0" layoutY="77.0" text="Encuesta de salubridad:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="17.0" layoutY="288.0" text="al momento de su llegada?">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="362.0" layoutY="116.0" text="Ingrese nombres y C.C de los acompañantes:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="362.0" layoutY="141.0" prefHeight="39.0" prefWidth="296.0" />
+      <Label layoutX="349.0" layoutY="190.0" text="1. ¿Alguno de los acompañantes ha tenido fiebre o ">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="362.0" layoutY="210.0" text=" malestar general la última semana?">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <RadioButton layoutX="395.0" layoutY="240.0" mnemonicParsing="false" text="Si">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <RadioButton layoutX="498.0" layoutY="240.0" mnemonicParsing="false" text="No">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <Label layoutX="349.0" layoutY="267.0" text="2. ¿Alguno de los acompañantes ha estado">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="362.0" layoutY="288.0" text="en contacto con alguien positivo para covid-19?">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <RadioButton layoutX="395.0" layoutY="316.0" mnemonicParsing="false" text="Si">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <RadioButton layoutX="498.0" layoutY="316.0" mnemonicParsing="false" text="No">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <Label layoutX="23.0" layoutY="240.0" text="Hora:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField layoutX="86.0" layoutY="238.0" promptText="Teléfono" />
+      <Label layoutX="19.0" layoutY="127.0" text="Cédula:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField layoutX="90.0" layoutY="125.0" promptText="C.C" />
+      <Button layoutX="396.0" layoutY="372.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #FFC300;" text="Reservar">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="509.0" layoutY="372.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #FFC300;" text="Cancelar">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
