@@ -21,6 +21,9 @@
                <font>
                   <Font size="15.0" />
                </font>
+               <effect>
+                  <DropShadow />
+               </effect>
             </Label>
          </children>
          <effect>
