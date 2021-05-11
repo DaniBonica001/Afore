@@ -12,7 +12,6 @@ public class AforeGUI {
 	
 	
 	public AforeGUI() {
-		boxLogin.setEffect(new DropShadow ());
 	}
 
 	@FXML
@@ -23,11 +22,7 @@ public class AforeGUI {
 
 	@FXML
 	private TextField txtPasswordLogin;
-	
-    @FXML
-    private Pane boxLogin;
     
-	
     @FXML
     void buttonLogin(ActionEvent event) {
 
