@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="697.0" stylesheets="@../styles/client-gradient.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
@@ -36,6 +40,28 @@
             </Menu>
          </menus>
       </MenuBar>
-      <Pane fx:id="mainPaneOptionClient" layoutY="27.0" prefHeight="482.0" prefWidth="697.0" stylesheets="@../styles/optionClient-gradient.css" />
+      <Pane fx:id="mainPaneOptionClient" layoutY="27.0" prefHeight="482.0" prefWidth="697.0" stylesheets="@../styles/optionClient-gradient.css">
+         <children>
+            <MenuButton contentDisplay="RIGHT" layoutX="104.0" layoutY="85.0" mnemonicParsing="false" popupSide="RIGHT" style="-fx-background-color: transparent;">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+               <graphic>
+                  <ImageView fitHeight="61.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/cliente.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <contextMenu>
+                  <ContextMenu style="-fx-background-color: black;">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+            </MenuButton>
+         </children></Pane>
    </children>
 </Pane>

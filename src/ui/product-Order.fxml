@@ -11,12 +11,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPaneOrder" prefHeight="508.0" prefWidth="697.0" stylesheets="@../styles/order-gradient.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="mainPaneOrder" prefHeight="560.0" prefWidth="697.0" styleClass="pane" stylesheets="@../styles/gradientPanes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="59.0" prefWidth="696.0" style="-fx-background-color: #E1E5E5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: green blue black yellow;">
+      <Pane prefHeight="59.0" prefWidth="698.0" style="-fx-background-color: #E1E5E5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: green blue black yellow;">
          <children>
             <RadioButton contentDisplay="TOP" graphicTextGap="0.0" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="01">
                <font>
@@ -50,7 +49,7 @@
                   <Label text="Table" />
                </graphic>
             </RadioButton>
-            <Button layoutX="527.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Agregar mesa" textFill="WHITE">
+            <Button layoutX="554.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Agregar mesa" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -77,77 +76,91 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="27.0" layoutY="72.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Crear nuevo producto" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
-      <Pane fx:id="factura" layoutX="379.0" layoutY="103.0" prefHeight="342.0" prefWidth="304.0" style="-fx-background-color: #D7D4D2; -fx-background-radius: 15;">
+      <Pane fx:id="factura" layoutX="369.0" layoutY="106.0" prefHeight="424.0" prefWidth="314.0" style="-fx-background-color: white; -fx-background-radius: 15;">
          <children>
-            <Label layoutX="117.0" layoutY="23.0" text="Factura" textFill="#075a33">
+            <Label layoutX="130.0" layoutY="14.0" text="Factura">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="17.0" layoutY="53.0" text="#mesa" />
-            <Label layoutX="17.0" layoutY="70.0" text="El que hace la factura" />
-            <Label layoutX="17.0" layoutY="298.0" text="Total" textFill="#075a33">
+            <Label layoutX="17.0" layoutY="44.0" text="#mesa" />
+            <Label layoutX="17.0" layoutY="61.0" text="El que hace la factura" />
+            <Label layoutX="53.0" layoutY="315.0" text="Total">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="223.0" layoutY="298.0" text="..." textFill="#075a33">
+            <Label layoutX="220.0" layoutY="315.0" text="..." textFill="#075a33">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <TableView layoutX="-1.0" layoutY="87.0" prefHeight="200.0" prefWidth="304.0">
+            <TableView layoutX="5.0" layoutY="87.0" prefHeight="223.0" prefWidth="304.0">
                <columns>
                   <TableColumn prefWidth="101.3" text="Nombre" />
                   <TableColumn prefWidth="101.3" text="Cantidad" />
                   <TableColumn prefWidth="101.3" text="Precio" />
                </columns>
             </TableView>
+            <Button layoutX="37.0" layoutY="371.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Imprimir" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button layoutX="137.0" layoutY="370.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Borrar" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button layoutX="226.0" layoutY="370.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Cancelar" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Pane>
+      <Pane layoutX="14.0" layoutY="106.0" prefHeight="424.0" prefWidth="326.0" style="-fx-background-color: white; -fx-background-radius: 20;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <Button layoutX="227.0" layoutY="217.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Agregar " textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <ListView fx:id="listViewOfProducts" layoutX="14.0" layoutY="43.0" prefHeight="322.0" prefWidth="200.0" />
+            <Label alignment="CENTER" layoutX="14.0" layoutY="19.0" prefHeight="21.0" prefWidth="200.0" style="-fx-background-color: #F66B1C;" text="Listado de productos" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="15.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#f66b1c" />
+               </effect>
+            </Label>
+            <Label layoutX="236.0" layoutY="144.0" text="Cantidad">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#f66b1c" />
+               </effect>
+            </Label>
+            <TextField layoutX="218.0" layoutY="179.0" prefHeight="25.0" prefWidth="99.0" promptText="Número" />
+            <Button layoutX="185.0" layoutY="382.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Crear producto" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Label layoutX="36.0" layoutY="386.0" text="Aún no tienes productos?">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Button layoutX="258.0" layoutY="239.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Agregar " textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
-      <ListView fx:id="listViewOfProducts" layoutX="27.0" layoutY="144.0" prefHeight="322.0" prefWidth="200.0" />
-      <Label layoutX="27.0" layoutY="124.0" text="Listado de productos">
-         <font>
-            <Font name="System Italic" size="15.0" />
-         </font>
-         <effect>
-            <DropShadow color="#f66b1c" />
-         </effect>
-      </Label>
-      <Label layoutX="249.0" layoutY="154.0" text="Cantidad">
-         <font>
-            <Font name="System Italic" size="16.0" />
-         </font>
-         <effect>
-            <DropShadow color="#f66b1c" />
-         </effect>
-      </Label>
-      <Circle fill="#1f93ff00" layoutX="408.0" layoutY="445.0" radius="10.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <Button layoutX="398.0" layoutY="455.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Imprimir" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
-      <Button layoutX="588.0" layoutY="455.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Cancelar" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
-      <TextField layoutX="249.0" layoutY="190.0" prefHeight="25.0" prefWidth="99.0" promptText="Número" />
-      <Button layoutX="499.0" layoutY="455.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Borrar" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
    </children>
 </Pane>
