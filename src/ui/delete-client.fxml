@@ -33,7 +33,7 @@
             <TextField layoutX="125.0" layoutY="82.0" prefHeight="25.0" prefWidth="140.0" />
             <Button layoutX="290.0" layoutY="80.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar" textFill="WHITE">
                <font>
-                  <Font size="13.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
                <effect>
                   <DropShadow />
@@ -73,7 +73,7 @@
             </Label>
             <Button layoutX="96.0" layoutY="312.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Eliminar" textFill="WHITE">
                <font>
-                  <Font size="13.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
                <effect>
                   <DropShadow />
@@ -81,7 +81,7 @@
             </Button>
             <Button layoutX="200.0" layoutY="312.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Cancelar" textFill="WHITE">
                <font>
-                  <Font size="13.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
                <effect>
                   <DropShadow />
