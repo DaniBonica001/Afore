@@ -77,6 +77,7 @@
                   <MenuItem mnemonicParsing="false" text="Actualizar" />
                   <MenuItem mnemonicParsing="false" text="Borrar" />
                   <MenuItem mnemonicParsing="false" text="Deshabilitar-Hablitar" />
+                  <MenuItem mnemonicParsing="false" text="Calificar Servicio" />
                </items>
                <graphic>
                   <ImageView fitHeight="34.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
