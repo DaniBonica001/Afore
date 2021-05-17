@@ -33,7 +33,7 @@
             <TextField layoutX="125.0" layoutY="82.0" prefHeight="25.0" prefWidth="140.0" />
             <Button layoutX="290.0" layoutY="80.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar" textFill="WHITE">
                <font>
-                  <Font size="13.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
                <effect>
                   <DropShadow />
@@ -49,7 +49,7 @@
             </Label>
             <Button layoutX="104.0" layoutY="322.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Eliminar" textFill="WHITE">
                <font>
-                  <Font size="13.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
                <effect>
                   <DropShadow />
@@ -57,42 +57,42 @@
             </Button>
             <Button layoutX="200.0" layoutY="322.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Cancelar" textFill="WHITE">
                <font>
-                  <Font size="13.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
                <effect>
                   <DropShadow />
                </effect>
             </Button>
-            <Label layoutX="70.0" layoutY="234.0" text="Usuario:">
+            <Label layoutX="70.0" layoutY="238.0" text="Usuario:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField editable="false" layoutX="126.0" layoutY="231.0" />
-            <Label layoutX="33.0" layoutY="159.0" text="Identificación:">
+            <TextField editable="false" layoutX="126.0" layoutY="235.0" />
+            <Label layoutX="33.0" layoutY="163.0" text="Identificación:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField editable="false" layoutX="126.0" layoutY="156.0" />
-            <Label layoutX="68.0" layoutY="196.0" text="Teléfono:">
+            <TextField editable="false" layoutX="126.0" layoutY="160.0" />
+            <Label layoutX="68.0" layoutY="200.0" text="Teléfono:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField editable="false" layoutX="126.0" layoutY="193.0" />
-            <Label layoutX="69.0" layoutY="126.0" text="Nombre:">
+            <TextField editable="false" layoutX="126.0" layoutY="197.0" />
+            <Label layoutX="69.0" layoutY="122.0" text="Nombre:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField editable="false" layoutX="126.0" layoutY="124.0" />
-            <Label layoutX="14.0" layoutY="265.0" text="Tipo de empleado:">
+            <TextField editable="false" layoutX="126.0" layoutY="120.0" />
+            <Label layoutX="14.0" layoutY="278.0" text="Tipo de empleado:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField editable="false" layoutX="126.0" layoutY="263.0" />
+            <TextField editable="false" layoutX="126.0" layoutY="276.0" />
          </children>
       </Pane>
       <Pane layoutX="471.0" layoutY="62.0" prefHeight="394.0" prefWidth="200.0" style="-fx-background-color: White; -fx-background-radius: 20;">

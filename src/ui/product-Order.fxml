@@ -84,7 +84,7 @@
                </font>
             </Label>
             <Label layoutX="17.0" layoutY="44.0" text="#mesa" />
-            <Label layoutX="17.0" layoutY="61.0" text="El que hace la factura" />
+            <Label layoutX="17.0" layoutY="61.0" text="Nombre empleado encargado de hacer la factura" />
             <Label layoutX="53.0" layoutY="315.0" text="Total">
                <font>
                   <Font name="System Bold" size="20.0" />

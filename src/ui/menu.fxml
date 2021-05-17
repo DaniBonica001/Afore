@@ -35,15 +35,6 @@
       <Pane fx:id="paneToChange" layoutX="69.0" layoutY="45.0" prefHeight="508.0" prefWidth="630.0" />
       <Pane layoutY="42.0" maxHeight="1.7976931348623157E308" prefHeight="508.0" prefWidth="69.0" styleClass="pane" stylesheets="@../styles/gradientPanes.css">
          <children>
-            <Button contentDisplay="TOP" layoutX="-4.0" layoutY="67.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="71.0" style="-fx-background-color: transparent;" text="Pedidos">
-               <graphic>
-                  <ImageView fitHeight="34.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/tray.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
             <Button contentDisplay="TOP" layoutX="-4.0" layoutY="126.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="71.0" style="-fx-background-color: transparent;" text="Reservas">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -62,16 +53,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button contentDisplay="TOP" layoutX="-5.0" layoutY="312.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="79.0" style="-fx-background-color: transparent;" text="Salir">
-               <graphic>
-                  <ImageView fitHeight="14.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/logout.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <MenuButton contentDisplay="RIGHT" layoutX="14.0" layoutY="362.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="53.0" prefWidth="42.0" style="-fx-background-color: transparent;">
+            <MenuButton contentDisplay="RIGHT" layoutX="14.0" layoutY="306.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="53.0" prefWidth="42.0" style="-fx-background-color: transparent;">
                <items>
                   <MenuItem mnemonicParsing="false" text="Crear" />
                   <MenuItem mnemonicParsing="false" text="Actualizar" />
@@ -87,7 +69,7 @@
                   </ImageView>
                </graphic>
             </MenuButton>
-            <Label layoutX="14.0" layoutY="407.0" text="Clientes" />
+            <Label layoutX="14.0" layoutY="359.0" text="Clientes" />
             <MenuButton contentDisplay="RIGHT" layoutX="14.0" layoutY="244.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="53.0" prefWidth="42.0" style="-fx-background-color: transparent;">
                <items>
                   <MenuItem mnemonicParsing="false" text="Crear" />
@@ -104,6 +86,31 @@
                </graphic>
             </MenuButton>
             <Label layoutX="6.0" layoutY="289.0" text="Empleados" />
+            <Button contentDisplay="TOP" layoutX="-1.0" layoutY="389.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="79.0" style="-fx-background-color: transparent;" text="Salir">
+               <graphic>
+                  <ImageView fitHeight="14.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/logout.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <MenuButton contentDisplay="RIGHT" layoutX="14.0" layoutY="64.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Crear producto" />
+                  <MenuItem mnemonicParsing="false" text="Actualizar producto" />
+                  <MenuItem mnemonicParsing="false" text="Deshabilitar-Habilitar" />
+                  <MenuItem mnemonicParsing="false" text="Borrar producto" />
+               </items>
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/tray.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
+            <Label layoutX="10.0" layoutY="109.0" text="Pedidos" />
          </children>
          <effect>
             <DropShadow blurType="TWO_PASS_BOX" height="33.6" offsetY="10.0" radius="13.15" />
