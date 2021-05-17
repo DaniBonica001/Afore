@@ -99,6 +99,7 @@
                <items>
                   <MenuItem mnemonicParsing="false" text="Crear producto" />
                   <MenuItem mnemonicParsing="false" text="Actualizar producto" />
+                  <MenuItem mnemonicParsing="false" text="Deshabilitar-Habilitar" />
                   <MenuItem mnemonicParsing="false" text="Borrar producto" />
                </items>
                <graphic>
