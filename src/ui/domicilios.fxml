@@ -62,12 +62,12 @@
          </effect>
       </Pane>
       <TextField layoutX="210.0" layoutY="185.0" prefHeight="25.0" prefWidth="94.0" promptText="Número" />
-      <Label layoutX="210.0" layoutY="287.0" text="Hora Envío" underline="true">
+      <Label disable="true" layoutX="210.0" layoutY="287.0" text="Hora Envío" underline="true">
          <font>
             <Font name="System Italic" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="210.0" layoutY="319.0" prefHeight="25.0" prefWidth="94.0" promptText="Número" />
+      <TextField disable="true" layoutX="210.0" layoutY="319.0" prefHeight="25.0" prefWidth="94.0" promptText="Número" />
       <Pane layoutX="360.0" layoutY="55.0" prefHeight="420.0" prefWidth="326.0" style="-fx-background-color: white; -fx-background-radius: 20;">
          <effect>
             <DropShadow />

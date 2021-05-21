@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.effect.DropShadow?>
@@ -52,7 +53,14 @@
             <Label layoutX="14.0" layoutY="359.0" text="Clientes" />
             <MenuButton fx:id="employeesMenuButton" contentDisplay="RIGHT" layoutX="14.0" layoutY="244.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="53.0" prefWidth="42.0" style="-fx-background-color: transparent;">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#buttonCreateEmployee" text="Crear" />
+                  <Menu mnemonicParsing="false" text="Crear nuevo empleado">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#createWaiterEmployee" text="Crear mesero" />
+                        <MenuItem mnemonicParsing="false" onAction="#createCashierEmployee" text="Crear cajero" />
+                        <MenuItem mnemonicParsing="false" onAction="#createChefEmployee" text="Crear cocinero" />
+                        <MenuItem mnemonicParsing="false" onAction="#createDeliveryManEmployee" text="Crear domiciliario" />
+                    </items>
+                  </Menu>
                   <MenuItem mnemonicParsing="false" onAction="#buttonUpdateEmployee" text="Actualizar" />
                   <MenuItem mnemonicParsing="false" onAction="#buttonDeleteEmployee" text="Borrar" />
                   <MenuItem mnemonicParsing="false" onAction="#buttonEnableDisableEmployee" text="Deshabilitar-Hablitar" />

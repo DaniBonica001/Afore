@@ -40,7 +40,6 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="137.0" layoutY="182.0" prefHeight="25.0" prefWidth="140.0" />
             <Label layoutX="76.0" layoutY="228.0" text="Precio:">
                <font>
                   <Font name="System Italic" size="14.0" />
@@ -76,6 +75,7 @@
                </font>
             </Label>
             <TextField layoutX="137.0" layoutY="67.0" prefHeight="25.0" prefWidth="140.0" />
+            <ChoiceBox layoutX="137.0" layoutY="182.0" prefHeight="25.0" prefWidth="140.0" />
          </children>
          <effect>
             <DropShadow />

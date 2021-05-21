@@ -81,9 +81,34 @@ public class AforeGUI {
     	paneToChange.getChildren().setAll(root);
     }
 
+ 
     @FXML
-    public void buttonCreateEmployee(ActionEvent event) throws IOException{
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-employee.fxml"));
+    public void createCashierEmployee(ActionEvent event) throws IOException{
+    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-cashier-employee.fxml"));
+    	fxml.setController(this);
+    	Parent root = fxml.load();
+    	paneToChange.getChildren().setAll(root);
+    }
+
+    @FXML
+    public void createChefEmployee(ActionEvent event)throws IOException {
+    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-chef-employee.fxml"));
+    	fxml.setController(this);
+    	Parent root = fxml.load();
+    	paneToChange.getChildren().setAll(root);
+    }
+
+    @FXML
+    public void createDeliveryManEmployee(ActionEvent event)throws IOException {
+    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-deliveryMan-employee.fxml"));
+    	fxml.setController(this);
+    	Parent root = fxml.load();
+    	paneToChange.getChildren().setAll(root);
+    }
+
+    @FXML
+    public void createWaiterEmployee(ActionEvent event) throws IOException{
+    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-waiter-employee.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
