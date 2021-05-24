@@ -2,20 +2,31 @@ package ui;
 
 import java.io.IOException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import model.Restaurant;
 
 
 public class AforeGUI {	
 	
-	public AforeGUI() {
+	//Relations
+	private Restaurant restaurant;
+	
+	public AforeGUI(Restaurant rest) {
+		restaurant = rest;
 	}
 	
 
@@ -120,6 +131,8 @@ public class AforeGUI {
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	initializeChoiceBoxCategoryProduct();
+    	initializeChoiceBoxSizeProduct();
     }
 
     @FXML
@@ -227,7 +240,93 @@ public class AforeGUI {
     }
     
     //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+  
+    //CREATE-PRODUCT.FXML THINGS**************************************************************************
+       
+    
+    @FXML
+    private Pane mainPaneCreateProduct;
 
+    @FXML
+    private TextField txtIdProduct;
+    
+    @FXML
+    private TextField txtNameProduct;
+
+    @FXML
+    private ChoiceBox<String> choiceBoxCategoryProduct;
+
+    @FXML
+    private ChoiceBox<String> choiceBoxSizeProduct;
+    
+    @FXML
+    private TextField txtPriceProduct;
+
+    @FXML
+    private TextField txtAvailabilityProduct;
+
+    @FXML
+    private TextArea txtDescriptionProduct;
+    
+    
+    public void initializeChoiceBoxCategoryProduct(){
+    	ObservableList<String>categories = FXCollections.observableArrayList("Bebida","Entrada","Plato principal","Postre","Vino","Ensalada","Respostería");
+    	choiceBoxCategoryProduct.setItems(categories);
+    }
+    
+    public void initializeChoiceBoxSizeProduct(){
+    	ObservableList<String>sizes = FXCollections.observableArrayList("Personal","Para dos","Familiar");
+    	choiceBoxSizeProduct.setItems(sizes);
+    }
+
+    @FXML
+    public void createProduct(ActionEvent event) {
+    String id = txtIdProduct.getText();
+    String name = txtNameProduct.getText();
+    String category = choiceBoxCategoryProduct.getValue();
+    String size= choiceBoxSizeProduct.getValue();
+    String price = txtPriceProduct.getText();
+   // int available = Integer.parseInt(txtAvailabilityProduct.getText());
+    String description = txtDescriptionProduct.getText();
+    
+    if (!id.equals("") && !name.equals("") && !category.equals("") && !size.equals("") && !price.equals("") && !txtAvailabilityProduct.getText().equals("") && !description.equals("")) {
+    	restaurant.addProduct(id,name,category,size,price,Integer.parseInt(txtAvailabilityProduct.getText()),description);
+    	txtIdProduct.setText("");
+        txtNameProduct.setText("");
+        choiceBoxCategoryProduct.setValue(null);
+        choiceBoxSizeProduct.setValue(null);
+        txtPriceProduct.setText("");
+        txtAvailabilityProduct.setText("");
+        txtDescriptionProduct.setText("");
+    	
+    }else if (id.equals("") || name.equals("") || category.equals("") || size.equals("") || price.equals("") || txtAvailabilityProduct.getText().equals("") || description.equals("")) {
+    	Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error al guardar datos");
+		alert.setHeaderText("Campos incompletos");
+		alert.setContentText("Todos los campos deben ser llenados");
+		alert.showAndWait();
+    }
+    //Dialog<String> dialog = createDialog();
+	//dialog.setTitle("Error al guardar datos");
+	//dialog.setContentText("Todos los campos de texto deben ser llenados");
+	//dialog.show();   
+
+    }
+
+    @FXML
+    public void noCreateProduct(ActionEvent event) {
+       	txtIdProduct.setText("");
+        txtNameProduct.setText("");
+        choiceBoxCategoryProduct.setValue(null);
+        choiceBoxSizeProduct.setValue(null);
+        txtPriceProduct.setText("");
+        txtAvailabilityProduct.setText("");
+        txtDescriptionProduct.setText("");
+    }
     
     
     

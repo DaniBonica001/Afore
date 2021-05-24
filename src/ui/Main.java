@@ -8,15 +8,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Restaurant;
 
 
 public class Main extends Application{
 	
 	private AforeGUI aforeGUI;
+	private Restaurant restaurant;
 	
 	
 	public Main() {		
-		aforeGUI= new AforeGUI();
+		restaurant = new Restaurant();
+		aforeGUI= new AforeGUI(restaurant);
 	}
 
 	public static void main(String[] args) {
