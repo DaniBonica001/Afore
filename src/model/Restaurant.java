@@ -10,11 +10,41 @@ public class Restaurant {
 	
 	//Relations
 	private List<Product>products;
+	private List<FoodDelivery>deliveries;
+	private Client firstClient;
+	
 	
 	//Constructor
 	public Restaurant() {
 		products = new ArrayList<Product>();
 	}
+	
+	//Getters and Setters
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+	
+	public List<Product> getProducts() {
+		return products;
+	}
+	
+	public void setDeliveries(List<FoodDelivery> deliveries) {
+		this.deliveries = deliveries;
+	}
+	
+	public List<FoodDelivery> getDeliveries(){
+		return deliveries;
+	}
+
+	public void setFirstClient(Client firstClient) {
+		this.firstClient = firstClient;
+	}
+
+	public Client getFirstClient() {
+		return firstClient;
+	}	
+	
+	//***********************************
 	
 	public Product findProduct(String id) {
 		Product product=null;
@@ -27,7 +57,7 @@ public class Restaurant {
 		}
 		return product;
 	}
-	
+
 	public void addProduct(String id,String name,String category,String size,String price,int available,String description) {
 		Product findProduct = findProduct(id);		
 		if (findProduct==null) {

@@ -11,6 +11,9 @@ public class Product {
 	private int availability;
 	private String description;
 	
+	//Relations
+	private Condition condition;
+	
 	//Constructor #1
 	public Product (String id,String name,String category,String size, String price, int availability,String description) {
 		this.id = id;
@@ -20,8 +23,10 @@ public class Product {
 		this.price = price;
 		this.availability = availability;
 		this.description = description;
+		condition = Condition.ACTIVE;
 	}
 	
+	//Getters and Setters
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -77,6 +82,16 @@ public class Product {
 	public String getDescription() {
 		return description;
 	}
+	
+	public void setCondition(Condition condition) {
+		this.condition = condition;
+	}
+	
+	public Condition getCondition() {
+		return condition;
+	}
+	
+	//*********************************************************************************************************
 
 	
 	
