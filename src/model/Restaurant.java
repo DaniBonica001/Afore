@@ -11,6 +11,7 @@ public class Restaurant {
 	//Relations
 	private List<Product>products;
 	private List<FoodDelivery>deliveries;
+	private List<Employee>employees;
 	private Client firstClient;
 	
 	
@@ -35,6 +36,14 @@ public class Restaurant {
 	public List<FoodDelivery> getDeliveries(){
 		return deliveries;
 	}
+	
+	public void setEmployees(List<Employee>employees) {
+		this.employees = employees;
+	}
+	
+	public List<Employee> getEmployees(){
+		return employees;
+	}	
 
 	public void setFirstClient(Client firstClient) {
 		this.firstClient = firstClient;

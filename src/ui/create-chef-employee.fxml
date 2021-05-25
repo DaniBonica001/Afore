@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPaneCreateEmployee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="697.0" styleClass="pane" stylesheets="@../styles/gradientPanes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="mainPaneCreateChef" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="697.0" styleClass="pane" stylesheets="@../styles/gradientPanes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="149.0" layoutY="19.0" prefHeight="436.0" prefWidth="399.0" style="-fx-background-color: white; -fx-background-radius: 20;">
          <children>
@@ -26,7 +26,7 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="173.0" layoutY="69.0" />
+            <TextField fx:id="txtNameChef" layoutX="173.0" layoutY="69.0" />
             <Label layoutX="105.0" layoutY="298.0" text="¿Qué platos son tu especialidad?">
                <font>
                   <Font name="System Italic" size="14.0" />
@@ -37,14 +37,14 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="174.0" layoutY="221.0" />
+            <TextField fx:id="txtUserChef" layoutX="174.0" layoutY="221.0" />
             <Label layoutX="92.0" layoutY="264.0" text="Contraseña:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="174.0" layoutY="261.0" />
-            <Button layoutX="116.0" layoutY="385.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Crear" textFill="WHITE">
+            <TextField fx:id="txtPasswordChef" layoutX="174.0" layoutY="261.0" />
+            <Button layoutX="91.0" layoutY="385.0" mnemonicParsing="false" onAction="#createChefEmployee" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Crear" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -52,7 +52,7 @@
                   <DropShadow />
                </effect>
             </Button>
-            <Button layoutX="220.0" layoutY="385.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Cancelar" textFill="WHITE">
+            <Button layoutX="173.0" layoutY="385.0" mnemonicParsing="false" onAction="#noCreateChefEmployee" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Cancelar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -65,20 +65,28 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="174.0" layoutY="107.0" />
+            <TextField fx:id="txtLastNameChef" layoutX="174.0" layoutY="107.0" />
             <Label layoutX="77.0" layoutY="149.0" text="Identificación:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="174.0" layoutY="146.0" />
+            <TextField fx:id="txtIdChef" layoutX="174.0" layoutY="146.0" />
             <Label layoutX="106.0" layoutY="186.0" text="Teléfono:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="174.0" layoutY="183.0" />
-            <TextArea layoutX="45.0" layoutY="318.0" prefHeight="57.0" prefWidth="316.0" promptText="Nombre platos" />
+            <TextField fx:id="txtPhoneChef" layoutX="174.0" layoutY="183.0" />
+            <TextArea fx:id="txtDishesChef" layoutX="45.0" layoutY="318.0" prefHeight="57.0" prefWidth="316.0" promptText="Nombre platos" />
+            <Button layoutX="284.0" layoutY="385.0" mnemonicParsing="false" onAction="#backFromChefToRegister1" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Atrás" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
          </children>
          <effect>
             <DropShadow color="#000000e1" height="59.0" radius="24.25" width="40.0" />

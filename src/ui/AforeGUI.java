@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -29,6 +30,18 @@ public class AforeGUI {
 		restaurant = rest;
 	}
 	
+	public void openScreen(String nameFxml, Pane paneToOpen)  {
+		FXMLLoader fxml = new FXMLLoader (getClass().getResource(nameFxml));
+		fxml.setController(this);
+    	Parent root = null;
+		try {
+			root = fxml.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	paneToOpen.getChildren().setAll(root);
+	}
+	
 
 	//LOGIN.FXML THINGS*************************************************************************
 
@@ -43,16 +56,24 @@ public class AforeGUI {
     
     @FXML
     public void buttonLogin(ActionEvent event) throws IOException {
+    	openScreen("menu.fxml",mainPaneLogin);
+    	/*    	
     	FXMLLoader menufxml = new FXMLLoader (getClass().getResource("menu.fxml"));
     	menufxml.setController(this);
     	Parent root = menufxml.load();
     	mainPaneLogin.getChildren().setAll(root);
+    	*/
     	
     }
     
     @FXML
-    void buttonRegister(ActionEvent event) {
-
+    void buttonLoginAdministrator(ActionEvent event) {
+    	openScreen("menu-admin.fxml",mainPaneLogin);
+    }
+    
+    @FXML
+    public void buttonRegister(ActionEvent event) {
+    	openScreen("register1.fxml",mainPaneLogin);
     }
     
     //**********************************************************************************************
@@ -86,157 +107,169 @@ public class AforeGUI {
 
     @FXML
     public void buttonCreateClient(ActionEvent event) throws IOException {
+    	openScreen("create-client.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-client.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
-
  
     @FXML
-    public void createCashierEmployee(ActionEvent event) throws IOException{
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-cashier-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    }
-
-    @FXML
-    public void createChefEmployee(ActionEvent event)throws IOException {
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-chef-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    }
-
-    @FXML
-    public void createDeliveryManEmployee(ActionEvent event)throws IOException {
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-deliveryMan-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    }
-
-    @FXML
-    public void createWaiterEmployee(ActionEvent event) throws IOException{
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-waiter-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    }
-
-    @FXML
     public void buttonCreateProduct(ActionEvent event) throws IOException{
+    	openScreen("create-product.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-product.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     	initializeChoiceBoxCategoryProduct();
     	initializeChoiceBoxSizeProduct();
     }
 
     @FXML
     public void buttonDeleteClient(ActionEvent event) throws IOException{
+    	openScreen("delete-client.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("delete-client.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonDeleteEmployee(ActionEvent event) throws IOException{
+    	openScreen("delete-employee.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("delete-employee.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonDeletepProduct(ActionEvent event) throws IOException{
+    	openScreen("delete-product.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("delete-product.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonDeliveryFood(ActionEvent event) throws IOException{
+    	openScreen("domicilios.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("domicilios.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonEnableDisableClient(ActionEvent event) throws IOException{
+    	openScreen("disable-client.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("disable-client.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonEnableDisableEmployee(ActionEvent event) throws IOException{
+    	openScreen("disable-employee.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("disable-employee.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonEnableDisableProduct(ActionEvent event) throws IOException{
+    	openScreen("disable-product.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("disable-product.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonExitMenu(ActionEvent event) throws IOException{
+    	openScreen("login.fxml",mainPaneMenu);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("login.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	mainPaneMenu.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonRateServiceClient(ActionEvent event) throws IOException{
+    	openScreen("grade-service.fxml",paneToChange);
+    	/*
        	FXMLLoader fxml = new FXMLLoader (getClass().getResource("grade-service.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonReserve(ActionEvent event) throws IOException{
+    	openScreen("reserva.fxml",paneToChange);    	
+    	/*
        	FXMLLoader fxml = new FXMLLoader (getClass().getResource("reserva.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonUpdateClient(ActionEvent event) throws IOException{
+    	openScreen("update-client.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("update-client.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonUpdateEmployee(ActionEvent event) throws IOException{
+    	openScreen("update-employee.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("update-employee.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
 
     @FXML
     public void buttonUpdateProduct(ActionEvent event) throws IOException{
+    	openScreen("update-product.fxml",paneToChange);
+    	/*
     	FXMLLoader fxml = new FXMLLoader (getClass().getResource("update-product.fxml"));
     	fxml.setController(this);
     	Parent root = fxml.load();
     	paneToChange.getChildren().setAll(root);
+    	*/
     }
     
     //**********************************************************************************************
@@ -328,10 +361,279 @@ public class AforeGUI {
         txtDescriptionProduct.setText("");
     }
     
+  	//**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //REGISTER1.FXML THINGS**********************************************************************************************************************************************************
     
+    @FXML
+    private Pane mainPaneRegister;
     
+    @FXML
+    void createAdministratorUser(ActionEvent event) {
+
+    }
+    
+    @FXML
+    public void openCreateCashierEmployee(ActionEvent event) throws IOException{
+    	openScreen("create-cashier-employee.fxml",mainPaneRegister);
+    	/*
+    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-cashier-employee.fxml"));
+    	fxml.setController(this);
+    	Parent root = fxml.load();
+    	mainPaneRegister.getChildren().setAll(root);
+    	*/
+    }
+    
+    @FXML
+    public void openCreateChefEmployee(ActionEvent event)throws IOException {
+    	openScreen("create-chef-employee.fxml",mainPaneRegister);
+    	/*
+    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-chef-employee.fxml"));
+    	fxml.setController(this);
+    	Parent root = fxml.load();
+    	mainPaneRegister.getChildren().setAll(root);
+    	*/
+    }
+
+    @FXML
+    public void openCreateDeliveryManEmployee(ActionEvent event)throws IOException {
+    	openScreen("create-deliveryMan-employee.fxml",mainPaneRegister);
+    	initializeChoiceBoxAmountOrdersDeliveryMan();
+    	/*
+    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-deliveryMan-employee.fxml"));
+    	fxml.setController(this);
+    	Parent root = fxml.load();
+    	mainPaneRegister.getChildren().setAll(root);
+    	*/
+    }
+
+    @FXML
+    public void openCreateWaiterEmployee(ActionEvent event) throws IOException{
+    	openScreen("create-waiter-employee.fxml",mainPaneRegister);
+    	initializeChoiceBoxAmounTablesWaiter();
+    	/*
+    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-waiter-employee.fxml"));
+    	fxml.setController(this);
+    	Parent root = fxml.load();
+    	mainPaneRegister.getChildren().setAll(root);
+    	*/
+    }
     
 
+    @FXML
+    public void backToLogin(ActionEvent event) {
+    	openScreen("login.fxml",mainPaneRegister);
+    }
 
+    //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //CREATE-CASHIER-EMPLOYEE.FXML THINGS**********************************************************************************************************************************************************
+    
+    @FXML
+    private Pane mainPaneCreateCashier;
 
+    @FXML
+    private TextField txtNameCashier;
+
+    @FXML
+    private TextField txtUserCashier;
+
+    @FXML
+    private TextField txtPasswordCashier;
+
+    @FXML
+    private TextField txtLastNameCashier;
+
+    @FXML
+    private TextField txtIdCashier;
+
+    @FXML
+    private TextField txtPhoneCashier;
+
+    @FXML
+    private RadioButton rbYesCashier;
+
+    @FXML
+    private RadioButton rbNoCashier;
+
+    @FXML
+    public void backFromCashierToRegister1(ActionEvent event) {
+    	openScreen("register1.fxml",mainPaneCreateCashier);
+    	
+    }
+
+    @FXML
+    void createCashierEmployee(ActionEvent event) {
+
+    }
+
+    @FXML
+    void noCreateCashierEmployee(ActionEvent event) {
+
+    }
+
+    
+    //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //CREATE-CHEF-EMPLOYEE.FXML THINGS**********************************************************************************************************************************************************
+    
+    @FXML
+    private Pane mainPaneCreateChef;
+
+    @FXML
+    private TextField txtNameChef;
+
+    @FXML
+    private TextField txtUserChef;
+
+    @FXML
+    private TextField txtPasswordChef;
+
+    @FXML
+    private TextField txtLastNameChef;
+
+    @FXML
+    private TextField txtIdChef;
+
+    @FXML
+    private TextField txtPhoneChef;
+
+    @FXML
+    private TextArea txtDishesChef;
+
+    @FXML
+    public void backFromChefToRegister1(ActionEvent event) {
+    	openScreen("register1.fxml",mainPaneCreateChef);
+    }
+
+    @FXML
+    void createChefEmployee(ActionEvent event) {
+
+    }
+
+    @FXML
+    void noCreateChefEmployee(ActionEvent event) {
+
+    }
+    
+    //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //CREATE-WAITER-EMPLOYEE.FXML THINGS**********************************************************************************************************************************************************
+    
+    @FXML
+    private Pane mainPaneCreateWaiter;
+
+    @FXML
+    private TextField txtNameWaiter;
+
+    @FXML
+    private ChoiceBox<Integer> choiceBoxAmounTablesWaiter;
+
+    @FXML
+    private TextField txtUserWaiter;
+
+    @FXML
+    private TextField txtPasswordWaiter;
+
+    @FXML
+    private TextField txtLastNameWaiter;
+
+    @FXML
+    private TextField txtIdWaiter;
+
+    @FXML
+    private TextField txtPhoneWaiter;
+    
+    public void initializeChoiceBoxAmounTablesWaiter() {
+    	ObservableList<Integer>tables = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
+    	choiceBoxAmounTablesWaiter.setItems(tables);
+    }
+
+    @FXML
+    public void backFromWaiterToRegister1(ActionEvent event) {
+    	openScreen("register1.fxml",mainPaneCreateWaiter);
+    }
+
+    @FXML
+    void createWaiterEmployee(ActionEvent event) {
+
+    }
+
+    @FXML
+    void noCreateWaiterEmployee(ActionEvent event) {
+
+    }
+    
+    //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //CREATE-DELIVERYMAN-EMPLOYEE.FXML THINGS**********************************************************************************************************************************************************
+
+    @FXML
+    private Pane mainPaneCreateDeliveryMan;
+
+    @FXML
+    private TextField txtNameDeliveryMan;
+
+    @FXML
+    private ChoiceBox<Integer> choiceBoxAmountOrdersDeliveryMan;
+
+    @FXML
+    private TextField txtUserDeliveryMan;
+
+    @FXML
+    private TextField txtPasswordDeliveryMan;
+
+    @FXML
+    private TextField txtLastNameDeliveryMan;
+
+    @FXML
+    private TextField txtIdDeliveryMan;
+
+    @FXML
+    private TextField txtPhoneDeliveryMan;
+    
+    
+    public void initializeChoiceBoxAmountOrdersDeliveryMan() {
+    	ObservableList<Integer>orders = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
+    	choiceBoxAmountOrdersDeliveryMan.setItems(orders);
+    }
+
+    @FXML
+    public void backFromDeliveryManToRegister1(ActionEvent event) {
+    	openScreen("register1.fxml",mainPaneCreateDeliveryMan);
+    }
+
+    @FXML
+    void createDeliveryManEmployee(ActionEvent event) {
+
+    }
+
+    @FXML
+    void noCreateDeliveryManEmployee(ActionEvent event) {
+
+    }
+    
+    //**********************************************************************************************
+
+    
 }

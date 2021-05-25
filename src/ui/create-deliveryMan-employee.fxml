@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPaneCreateEmployee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="697.0" styleClass="pane" stylesheets="@../styles/gradientPanes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="mainPaneCreateDeliveryMan" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="697.0" styleClass="pane" stylesheets="@../styles/gradientPanes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="149.0" layoutY="19.0" prefHeight="436.0" prefWidth="399.0" style="-fx-background-color: white; -fx-background-radius: 20;">
          <children>
@@ -26,26 +26,26 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="173.0" layoutY="82.0" />
+            <TextField fx:id="txtNameDeliveryMan" layoutX="173.0" layoutY="82.0" />
             <Label layoutX="79.0" layoutY="309.0" text="Capacidad máxima de pedidos por hora">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <ChoiceBox layoutX="125.0" layoutY="329.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="choiceBoxAmountOrdersDeliveryMan" layoutX="125.0" layoutY="329.0" prefWidth="150.0" />
             <Label layoutX="108.0" layoutY="237.0" text="Usuario:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="174.0" layoutY="234.0" />
+            <TextField fx:id="txtUserDeliveryMan" layoutX="174.0" layoutY="234.0" />
             <Label layoutX="92.0" layoutY="277.0" text="Contraseña:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="174.0" layoutY="274.0" />
-            <Button layoutX="116.0" layoutY="385.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Crear" textFill="WHITE">
+            <TextField fx:id="txtPasswordDeliveryMan" layoutX="174.0" layoutY="274.0" />
+            <Button layoutX="91.0" layoutY="385.0" mnemonicParsing="false" onAction="#createDeliveryManEmployee" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Crear" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -53,7 +53,7 @@
                   <DropShadow />
                </effect>
             </Button>
-            <Button layoutX="220.0" layoutY="385.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Cancelar" textFill="WHITE">
+            <Button layoutX="183.0" layoutY="385.0" mnemonicParsing="false" onAction="#noCreateDeliveryManEmployee" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Cancelar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -66,19 +66,27 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="174.0" layoutY="120.0" />
+            <TextField fx:id="txtLastNameDeliveryMan" layoutX="174.0" layoutY="120.0" />
             <Label layoutX="77.0" layoutY="162.0" text="Identificación:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="174.0" layoutY="159.0" />
+            <TextField fx:id="txtIdDeliveryMan" layoutX="174.0" layoutY="159.0" />
             <Label layoutX="106.0" layoutY="199.0" text="Teléfono:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="174.0" layoutY="196.0" />
+            <TextField fx:id="txtPhoneDeliveryMan" layoutX="174.0" layoutY="196.0" />
+            <Button layoutX="293.0" layoutY="385.0" mnemonicParsing="false" onAction="#backFromDeliveryManToRegister1" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Atrás" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
          </children>
          <effect>
             <DropShadow color="#000000e1" height="59.0" radius="24.25" width="40.0" />
