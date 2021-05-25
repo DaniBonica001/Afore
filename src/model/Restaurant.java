@@ -85,4 +85,41 @@ public class Restaurant {
 		}
 	}
 
+	public void deleteProduct(String id) {	
+		Product findProduct= findProduct(id);
+		
+		if(findProduct!=null) {
+			products.remove(findProduct);
+		}
+		else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al encontrar producto");
+			alert.setHeaderText("Producto inexistente");
+			alert.setContentText("El producto con id "+id+" no está actualmente en la lista de productos del restaurante.");
+			alert.showAndWait();
+		}
+	}
+	
+	public void updateProduct(String id,String name,String category,String size, String price, int availability,String description) {
+		Product findProduct= findProduct(id);
+		
+		if(findProduct!=null) {
+			findProduct.setName(name);
+			findProduct.setCategory(category);
+			findProduct.setSize(size);
+			findProduct.setPrice(price);
+			findProduct.setAvailability(availability);
+			findProduct.setDescription(description);
+		}
+		else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al encontrar producto");
+			alert.setHeaderText("Producto inexistente");
+			alert.setContentText("El producto con id "+id+" no está actualmente en la lista de productos del restaurante.");
+			alert.showAndWait();
+		}
+		
+	}
+
+
 }
