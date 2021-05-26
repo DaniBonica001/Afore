@@ -30,8 +30,8 @@
                   <Font name="System Italic" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="126.0" layoutY="78.0" prefHeight="25.0" prefWidth="140.0" />
-            <Button layoutX="291.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar" textFill="WHITE">
+            <TextField fx:id="deleteProductId" layoutX="126.0" layoutY="78.0" prefHeight="25.0" prefWidth="140.0" />
+            <Button layoutX="291.0" layoutY="76.0" mnemonicParsing="false" onAction="#findProductById" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -44,7 +44,7 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="125.0" layoutY="117.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="deleteProductName" editable="false" layoutX="125.0" layoutY="117.0" prefHeight="25.0" prefWidth="140.0" />
             <Label layoutX="51.0" layoutY="163.0" text="Categoría:">
                <font>
                   <Font name="System Italic" size="14.0" />
@@ -55,21 +55,21 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="126.0" layoutY="161.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="deleteProductCategory" editable="false" layoutX="126.0" layoutY="161.0" prefHeight="25.0" prefWidth="140.0" />
             <Label layoutX="72.0" layoutY="244.0" text="Precio:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="126.0" layoutY="241.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="deleteProductPrice" editable="false" layoutX="126.0" layoutY="241.0" prefHeight="25.0" prefWidth="140.0" />
             <Label layoutX="26.0" layoutY="281.0" text="Disponibilidad:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="126.0" layoutY="278.0" prefHeight="25.0" prefWidth="140.0" />
-            <TextField layoutX="126.0" layoutY="203.0" prefHeight="25.0" prefWidth="140.0" />
-            <Button layoutX="108.0" layoutY="333.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Eliminar" textFill="WHITE">
+            <TextField fx:id="deleteProductAvailability" editable="false" layoutX="126.0" layoutY="278.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="deleteProductSize" editable="false" layoutX="126.0" layoutY="203.0" prefHeight="25.0" prefWidth="140.0" />
+            <Button layoutX="108.0" layoutY="333.0" mnemonicParsing="false" onAction="#deleteProductButtonEliminar" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Eliminar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -77,7 +77,7 @@
                   <DropShadow />
                </effect>
             </Button>
-            <Button layoutX="212.0" layoutY="333.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Cancelar" textFill="WHITE">
+            <Button layoutX="212.0" layoutY="333.0" mnemonicParsing="false" onAction="#deleteProductButtonCancel" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Cancelar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

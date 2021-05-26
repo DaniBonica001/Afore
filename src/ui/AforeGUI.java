@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import model.Product;
 import model.Restaurant;
 
 
@@ -634,6 +635,86 @@ public class AforeGUI {
     }
     
     //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //DELETE PRODUCT THINGS**********************************************************************************************************************************************************
+    @FXML
+    private TextField deleteProductId;
 
+    @FXML
+    private TextField deleteProductName;
+
+    @FXML
+    private TextField deleteProductCategory;
+
+    @FXML
+    private TextField deleteProductPrice;
+
+    @FXML
+    private TextField deleteProductAvailability;
+
+    @FXML
+    private TextField deleteProductSize;
+
+    @FXML
+    public void deleteProductButtonCancel(ActionEvent event) {
+    	deleteProductId.setText(null);
+    	deleteProductName.setText(null);
+    	deleteProductCategory.setText(null);
+    	deleteProductPrice.setText(null);
+    	deleteProductAvailability.setText(null);
+    	deleteProductSize.setText(null);
+    }
+
+    @FXML
+    public void deleteProductButtonEliminar(ActionEvent event) {
+        Product findProduct= restaurant.findProduct(deleteProductId.getText());
+        
+        if(findProduct!=null) {
+        	restaurant.getProducts().remove(findProduct);
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Producto eliminado");
+			alert.setHeaderText("El producto ha sido eliminado satisfactoriamente");
+			alert.setContentText("El producto con "+findProduct.getName()+" ha sido eliminado");
+			alert.showAndWait();
+			deleteProductId.setText(null);
+    		deleteProductName.setText(null);
+    		deleteProductAvailability.setText(null);
+    		deleteProductCategory.setText(null);
+    		deleteProductPrice.setText(null);
+    		deleteProductSize.setText(null);
+        }
+        else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error en la eliminación del producto");
+			alert.setHeaderText("Producto no encontrado");
+			alert.setContentText("El producto con id "+deleteProductId.getText()+" no se ha encontrado.");
+			alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void findProductById(ActionEvent event) {
+    	Product findProduct= restaurant.findProduct(deleteProductId.getText());
+    	
+    	if(findProduct!=null) {
+    		deleteProductName.setText(findProduct.getName());
+    		deleteProductAvailability.setText(String.valueOf(findProduct.getAvailability()));
+    		deleteProductCategory.setText(findProduct.getCategory());
+    		deleteProductPrice.setText(findProduct.getPrice());
+    		deleteProductSize.setText(findProduct.getSize());
+    	}
+    	else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al buscar el producto");
+			alert.setHeaderText("Producto no encontrado");
+			alert.setContentText("El producto con id "+deleteProductId.getText()+" no se ha encontrado.");
+			alert.showAndWait();
+    	}
+    }
+    //**********************************************************************************************
     
 }
