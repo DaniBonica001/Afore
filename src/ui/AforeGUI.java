@@ -12,9 +12,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -109,168 +111,79 @@ public class AforeGUI {
     @FXML
     public void buttonCreateClient(ActionEvent event) throws IOException {
     	openScreen("create-client.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-client.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
+    	
     }
  
     @FXML
     public void buttonCreateProduct(ActionEvent event) throws IOException{
-    	openScreen("create-product.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-product.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
+    	openScreen("create-product.fxml",paneToChange);   
     	initializeChoiceBoxCategoryProduct();
     	initializeChoiceBoxSizeProduct();
     }
 
     @FXML
     public void buttonDeleteClient(ActionEvent event) throws IOException{
-    	openScreen("delete-client.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("delete-client.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
+    	openScreen("delete-client.fxml",paneToChange);  
     }
 
     @FXML
     public void buttonDeleteEmployee(ActionEvent event) throws IOException{
-    	openScreen("delete-employee.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("delete-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
+    	openScreen("delete-employee.fxml",paneToChange);    	
     }
 
     @FXML
     public void buttonDeletepProduct(ActionEvent event) throws IOException{
-    	openScreen("delete-product.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("delete-product.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
+    	openScreen("delete-product.fxml",paneToChange);    
     }
 
     @FXML
     public void buttonDeliveryFood(ActionEvent event) throws IOException{
     	openScreen("domicilios.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("domicilios.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
     }
 
     @FXML
     public void buttonEnableDisableClient(ActionEvent event) throws IOException{
     	openScreen("disable-client.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("disable-client.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
     }
 
     @FXML
     public void buttonEnableDisableEmployee(ActionEvent event) throws IOException{
     	openScreen("disable-employee.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("disable-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
     }
 
     @FXML
     public void buttonEnableDisableProduct(ActionEvent event) throws IOException{
     	openScreen("disable-product.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("disable-product.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
     }
 
     @FXML
     public void buttonExitMenu(ActionEvent event) throws IOException{
     	openScreen("login.fxml",mainPaneMenu);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("login.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	mainPaneMenu.getChildren().setAll(root);
-    	*/
     }
 
     @FXML
     public void buttonRateServiceClient(ActionEvent event) throws IOException{
     	openScreen("grade-service.fxml",paneToChange);
-    	/*
-       	FXMLLoader fxml = new FXMLLoader (getClass().getResource("grade-service.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
     }
 
     @FXML
     public void buttonReserve(ActionEvent event) throws IOException{
-    	openScreen("reserva.fxml",paneToChange);    	
-    	/*
-       	FXMLLoader fxml = new FXMLLoader (getClass().getResource("reserva.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
+    	openScreen("reserva.fxml",paneToChange);
     }
 
     @FXML
     public void buttonUpdateClient(ActionEvent event) throws IOException{
     	openScreen("update-client.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("update-client.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
     }
 
     @FXML
     public void buttonUpdateEmployee(ActionEvent event) throws IOException{
     	openScreen("update-employee.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("update-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
     }
 
     @FXML
     public void buttonUpdateProduct(ActionEvent event) throws IOException{
     	openScreen("update-product.fxml",paneToChange);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("update-product.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	paneToChange.getChildren().setAll(root);
-    	*/
     }
     
     //**********************************************************************************************
@@ -319,36 +232,31 @@ public class AforeGUI {
 
     @FXML
     public void createProduct(ActionEvent event) {
-    String id = txtIdProduct.getText();
-    String name = txtNameProduct.getText();
-    String category = choiceBoxCategoryProduct.getValue();
-    String size= choiceBoxSizeProduct.getValue();
-    String price = txtPriceProduct.getText();
-   // int available = Integer.parseInt(txtAvailabilityProduct.getText());
-    String description = txtDescriptionProduct.getText();
-    
-    if (!id.equals("") && !name.equals("") && !category.equals("") && !size.equals("") && !price.equals("") && !txtAvailabilityProduct.getText().equals("") && !description.equals("")) {
-    	restaurant.addProduct(id,name,category,size,price,Integer.parseInt(txtAvailabilityProduct.getText()),description);
-    	txtIdProduct.setText("");
-        txtNameProduct.setText("");
-        choiceBoxCategoryProduct.setValue(null);
-        choiceBoxSizeProduct.setValue(null);
-        txtPriceProduct.setText("");
-        txtAvailabilityProduct.setText("");
-        txtDescriptionProduct.setText("");
-    	
-    }else if (id.equals("") || name.equals("") || category.equals("") || size.equals("") || price.equals("") || txtAvailabilityProduct.getText().equals("") || description.equals("")) {
-    	Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error al guardar datos");
-		alert.setHeaderText("Campos incompletos");
-		alert.setContentText("Todos los campos deben ser llenados");
-		alert.showAndWait();
-    }
-    //Dialog<String> dialog = createDialog();
-	//dialog.setTitle("Error al guardar datos");
-	//dialog.setContentText("Todos los campos de texto deben ser llenados");
-	//dialog.show();   
+    	String id = txtIdProduct.getText();
+    	String name = txtNameProduct.getText();
+    	String category = choiceBoxCategoryProduct.getValue();
+    	String size= choiceBoxSizeProduct.getValue();
+    	String price = txtPriceProduct.getText();
+    	// int available = Integer.parseInt(txtAvailabilityProduct.getText());
+    	String description = txtDescriptionProduct.getText();
 
+    	if (!id.equals("") && !name.equals("") && !category.equals("") && !size.equals("") && !price.equals("") && !txtAvailabilityProduct.getText().equals("") && !description.equals("")) {
+    		restaurant.addProduct(id,name,category,size,price,Integer.parseInt(txtAvailabilityProduct.getText()),description);
+    		txtIdProduct.setText("");
+    		txtNameProduct.setText("");
+    		choiceBoxCategoryProduct.setValue(null);
+    		choiceBoxSizeProduct.setValue(null);
+    		txtPriceProduct.setText("");
+    		txtAvailabilityProduct.setText("");
+    		txtDescriptionProduct.setText("");
+
+    	}else if (id.equals("") || name.equals("") || category.equals("") || size.equals("") || price.equals("") || txtAvailabilityProduct.getText().equals("") || description.equals("")) {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al guardar datos");
+    		alert.setHeaderText("Campos incompletos");
+    		alert.setContentText("Todos los campos deben ser llenados");
+    		alert.showAndWait();
+    	}
     }
 
     @FXML
@@ -381,47 +289,29 @@ public class AforeGUI {
     @FXML
     public void openCreateCashierEmployee(ActionEvent event) throws IOException{
     	openScreen("create-cashier-employee.fxml",mainPaneRegister);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-cashier-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	mainPaneRegister.getChildren().setAll(root);
-    	*/
+    	initializeToggleGroupCashier();
+    }
+    public void initializeToggleGroupCashier() {
+    	ToggleGroup tgCashier = new ToggleGroup();
+    	this.rbYesCashier.setToggleGroup(tgCashier);
+    	this.rbNoCashier.setToggleGroup(tgCashier);    	
     }
     
     @FXML
     public void openCreateChefEmployee(ActionEvent event)throws IOException {
     	openScreen("create-chef-employee.fxml",mainPaneRegister);
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-chef-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	mainPaneRegister.getChildren().setAll(root);
-    	*/
     }
 
     @FXML
     public void openCreateDeliveryManEmployee(ActionEvent event)throws IOException {
     	openScreen("create-deliveryMan-employee.fxml",mainPaneRegister);
     	initializeChoiceBoxAmountOrdersDeliveryMan();
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-deliveryMan-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	mainPaneRegister.getChildren().setAll(root);
-    	*/
     }
 
     @FXML
     public void openCreateWaiterEmployee(ActionEvent event) throws IOException{
     	openScreen("create-waiter-employee.fxml",mainPaneRegister);
     	initializeChoiceBoxAmounTablesWaiter();
-    	/*
-    	FXMLLoader fxml = new FXMLLoader (getClass().getResource("create-waiter-employee.fxml"));
-    	fxml.setController(this);
-    	Parent root = fxml.load();
-    	mainPaneRegister.getChildren().setAll(root);
-    	*/
     }
     
 
@@ -448,7 +338,7 @@ public class AforeGUI {
     private TextField txtUserCashier;
 
     @FXML
-    private TextField txtPasswordCashier;
+    private PasswordField pfPasswordCashier;
 
     @FXML
     private TextField txtLastNameCashier;
@@ -472,13 +362,62 @@ public class AforeGUI {
     }
 
     @FXML
-    void createCashierEmployee(ActionEvent event) {
-
+    public void createCashierEmployee(ActionEvent event) {
+    	if (!txtNameCashier.getText().equals("") && !txtUserCashier.getText().equals("") &&
+    			!pfPasswordCashier.getText().equals("") && !txtLastNameCashier.getText().equals("") &&
+    			!txtIdCashier.getText().equals("") && !txtPhoneCashier.getText().equals("") && rbYesCashier.isSelected() || rbNoCashier.isSelected() ) {
+    		
+    		String nameCashier = txtNameCashier.getText();
+    		String lastNameCashier = txtLastNameCashier.getText();
+    		String idCashier = txtIdCashier.getText();
+    		String phoneCashier = txtPhoneCashier.getText();
+    		String userCashier = txtUserCashier.getText();
+    		String passCashier = pfPasswordCashier.getText();
+    		boolean waiter = false;
+    		
+    		if (rbYesCashier.isSelected()) {
+        		waiter = true;
+        	}else if (rbNoCashier.isSelected()) {
+        		waiter = false;
+        	}    		
+    		restaurant.addEmployee(userCashier,passCashier,nameCashier,lastNameCashier,idCashier,phoneCashier,waiter);
+    		
+    		txtNameCashier.setText("");
+        	txtUserCashier.setText("");
+        	pfPasswordCashier.setText("");
+        	txtLastNameCashier.setText("");
+        	txtIdCashier.setText("");
+        	txtPhoneCashier.setText("");
+        	if (rbYesCashier.isSelected()) {
+        		rbYesCashier.setSelected(false);
+        	}else if (rbNoCashier.isSelected()) {
+        		rbNoCashier.setSelected(false);
+        	}   		
+    		
+    	}else if (txtNameCashier.getText().equals("") || txtUserCashier.getText().equals("") ||
+    			pfPasswordCashier.getText().equals("") || txtLastNameCashier.getText().equals("") ||
+    			txtIdCashier.getText().equals("") || txtPhoneCashier.getText().equals("") || !rbYesCashier.isSelected() || !rbNoCashier.isSelected()) {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al guardar datos");
+    		alert.setHeaderText("Campos incompletos");
+    		alert.setContentText("Todos los campos deben ser llenados");
+    		alert.showAndWait();
+    	}
     }
 
     @FXML
-    void noCreateCashierEmployee(ActionEvent event) {
-
+    public void noCreateCashierEmployee(ActionEvent event) {
+    	txtNameCashier.setText("");
+    	txtUserCashier.setText("");
+    	pfPasswordCashier.setText("");
+    	txtLastNameCashier.setText("");
+    	txtIdCashier.setText("");
+    	txtPhoneCashier.setText("");
+    	if (rbYesCashier.isSelected()) {
+    		rbYesCashier.setSelected(false);
+    	}else if (rbNoCashier.isSelected()) {
+    		rbNoCashier.setSelected(false);
+    	}
     }
 
     
@@ -500,7 +439,7 @@ public class AforeGUI {
     private TextField txtUserChef;
 
     @FXML
-    private TextField txtPasswordChef;
+    private PasswordField pfPasswordChef;
 
     @FXML
     private TextField txtLastNameChef;
@@ -520,13 +459,51 @@ public class AforeGUI {
     }
 
     @FXML
-    void createChefEmployee(ActionEvent event) {
-
+    public void createChefEmployee(ActionEvent event) {
+    	if (!txtNameChef.getText().equals("") && !txtUserChef.getText().equals("") && 
+    			!pfPasswordChef.getText().equals("") && !txtLastNameChef.getText().equals("") &&
+    			!txtIdChef.getText().equals("") && !txtPhoneChef.getText().equals("") &&
+    			!txtDishesChef.getText().equals("")) {
+    		
+    		String nameChef = txtNameChef.getText();
+    		String lastNameChef = txtLastNameChef.getText();
+    		String idChef = txtIdChef.getText();
+    		String phoneChef = txtPhoneChef.getText();
+    		String userChef = txtUserChef.getText();
+    		String passChef = pfPasswordChef.getText();
+    		String dishes = txtDishesChef.getText();
+    		
+    		restaurant.addEmployee(userChef, passChef, nameChef, lastNameChef, idChef, phoneChef, dishes);
+    	  	txtNameChef.setText("");
+        	txtUserChef.setText("");
+        	pfPasswordChef.setText("");
+        	txtLastNameChef.setText("");
+        	txtIdChef.setText("");
+        	txtPhoneChef.setText("");
+        	txtDishesChef.setText("");    
+        	
+    	}else if (txtNameChef.getText().equals("") || txtUserChef.getText().equals("") || 
+    			pfPasswordChef.getText().equals("") || txtLastNameChef.getText().equals("") ||
+    			txtIdChef.getText().equals("") || txtPhoneChef.getText().equals("") ||
+    			txtDishesChef.getText().equals("")) {
+    		
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al guardar datos");
+    		alert.setHeaderText("Campos incompletos");
+    		alert.setContentText("Todos los campos deben ser llenados");
+    		alert.showAndWait();    		
+    	}
     }
 
     @FXML
-    void noCreateChefEmployee(ActionEvent event) {
-
+    public void noCreateChefEmployee(ActionEvent event) {
+    	txtNameChef.setText("");
+    	txtUserChef.setText("");
+    	pfPasswordChef.setText("");
+    	txtLastNameChef.setText("");
+    	txtIdChef.setText("");
+    	txtPhoneChef.setText("");
+    	txtDishesChef.setText("");    	
     }
     
     //**********************************************************************************************
@@ -550,7 +527,7 @@ public class AforeGUI {
     private TextField txtUserWaiter;
 
     @FXML
-    private TextField txtPasswordWaiter;
+    private PasswordField pfPasswordWaiter;
 
     @FXML
     private TextField txtLastNameWaiter;
@@ -572,13 +549,51 @@ public class AforeGUI {
     }
 
     @FXML
-    void createWaiterEmployee(ActionEvent event) {
-
+    public void createWaiterEmployee(ActionEvent event) {
+    	if (!txtNameWaiter.getText().equals("") && !txtUserWaiter.getText().equals("") &&
+    			!pfPasswordWaiter.getText().equals("") && !txtLastNameWaiter.getText().equals("") &&
+    			!txtIdWaiter.getText().equals("") && !txtPhoneWaiter.getText().equals("") && 
+    			!choiceBoxAmounTablesWaiter.getSelectionModel().isEmpty()) {
+    		
+    		String nameWaiter = txtNameWaiter.getText();
+    		String lastNameWaiter = txtLastNameWaiter.getText();
+    		String idWaiter = txtIdWaiter.getText();
+    		String phoneWaiter = txtPhoneWaiter.getText();
+    		String userWaiter = txtUserWaiter.getText();
+    		String passWaiter = pfPasswordWaiter.getText();
+    		int tables = choiceBoxAmounTablesWaiter.getSelectionModel().getSelectedItem();
+    		
+    		restaurant.addEmployee(userWaiter,passWaiter,nameWaiter,lastNameWaiter,idWaiter,phoneWaiter,tables);
+        	txtNameWaiter.setText("");
+        	txtUserWaiter.setText("");
+        	pfPasswordWaiter.setText("");
+        	txtLastNameWaiter.setText("");
+        	txtIdWaiter.setText("");
+        	txtPhoneWaiter.setText("");
+        	choiceBoxAmounTablesWaiter.getSelectionModel().clearSelection();
+    	
+    	}else if (txtNameWaiter.getText().equals("") || txtUserWaiter.getText().equals("") ||
+    			pfPasswordWaiter.getText().equals("") || txtLastNameWaiter.getText().equals("") ||
+    			txtIdWaiter.getText().equals("") || txtPhoneWaiter.getText().equals("") || 
+    			choiceBoxAmounTablesWaiter.getSelectionModel().isEmpty()) {    		
+    		
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al guardar datos");
+    		alert.setHeaderText("Campos incompletos");
+    		alert.setContentText("Todos los campos deben ser llenados");
+    		alert.showAndWait();        		
+    	}
     }
 
     @FXML
-    void noCreateWaiterEmployee(ActionEvent event) {
-
+    public void noCreateWaiterEmployee(ActionEvent event) {
+    	txtNameWaiter.setText("");
+    	txtUserWaiter.setText("");
+    	pfPasswordWaiter.setText("");
+    	txtLastNameWaiter.setText("");
+    	txtIdWaiter.setText("");
+    	txtPhoneWaiter.setText("");
+    	choiceBoxAmounTablesWaiter.getSelectionModel().clearSelection();
     }
     
     //**********************************************************************************************
@@ -602,7 +617,7 @@ public class AforeGUI {
     private TextField txtUserDeliveryMan;
 
     @FXML
-    private TextField txtPasswordDeliveryMan;
+    private PasswordField pfPasswordDeliveryMan;
 
     @FXML
     private TextField txtLastNameDeliveryMan;
@@ -625,13 +640,53 @@ public class AforeGUI {
     }
 
     @FXML
-    void createDeliveryManEmployee(ActionEvent event) {
-
+    public void createDeliveryManEmployee(ActionEvent event) {
+    	if (!txtNameDeliveryMan.getText().equals("") && !txtUserDeliveryMan.getText().equals("") &&
+    			!pfPasswordDeliveryMan.getText().equals("") && !txtLastNameDeliveryMan.getText().equals("") &&
+    			!txtIdDeliveryMan.getText().equals("") && !txtPhoneDeliveryMan.getText().equals("") &&
+    			!choiceBoxAmountOrdersDeliveryMan.getSelectionModel().isEmpty()) {
+    		
+    		String nameDM = txtNameDeliveryMan.getText();
+    		String lastNameDm = txtLastNameDeliveryMan.getText();
+    		String idDM = txtIdDeliveryMan.getText();
+    		String phoneDM = txtPhoneDeliveryMan.getText();
+    		String userDM = txtUserDeliveryMan.getText();
+    		String passDM = pfPasswordDeliveryMan.getText();
+    		int orders = choiceBoxAmountOrdersDeliveryMan.getSelectionModel().getSelectedItem();
+    		
+    		restaurant.addEmployeeDM(userDM, passDM, nameDM, lastNameDm, idDM, phoneDM, orders);
+    		txtNameDeliveryMan.setText("");
+        	txtUserDeliveryMan.setText("");
+        	pfPasswordDeliveryMan.setText("");
+        	txtLastNameDeliveryMan.setText("");
+        	txtIdDeliveryMan.setText("");
+        	txtPhoneDeliveryMan.setText("");
+        	choiceBoxAmountOrdersDeliveryMan.getSelectionModel().clearSelection();    		
+    	
+    	}else if (txtNameDeliveryMan.getText().equals("") || txtUserDeliveryMan.getText().equals("") ||
+    			pfPasswordDeliveryMan.getText().equals("") || txtLastNameDeliveryMan.getText().equals("") ||
+    			txtIdDeliveryMan.getText().equals("") || txtPhoneDeliveryMan.getText().equals("") ||
+    			choiceBoxAmountOrdersDeliveryMan.getSelectionModel().isEmpty()) {
+    		
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al guardar datos");
+    		alert.setHeaderText("Campos incompletos");
+    		alert.setContentText("Todos los campos deben ser llenados");
+    		alert.showAndWait();    
+    		
+    	}
+    		
     }
 
     @FXML
-    void noCreateDeliveryManEmployee(ActionEvent event) {
-
+    public void noCreateDeliveryManEmployee(ActionEvent event) {
+    	txtNameDeliveryMan.setText("");
+    	txtUserDeliveryMan.setText("");
+    	pfPasswordDeliveryMan.setText("");
+    	txtLastNameDeliveryMan.setText("");
+    	txtIdDeliveryMan.setText("");
+    	txtPhoneDeliveryMan.setText("");
+    	choiceBoxAmountOrdersDeliveryMan.getSelectionModel().clearSelection();
     }
     
     //**********************************************************************************************
@@ -661,12 +716,12 @@ public class AforeGUI {
 
     @FXML
     public void deleteProductButtonCancel(ActionEvent event) {
-    	deleteProductId.setText(null);
-    	deleteProductName.setText(null);
-    	deleteProductCategory.setText(null);
-    	deleteProductPrice.setText(null);
-    	deleteProductAvailability.setText(null);
-    	deleteProductSize.setText(null);
+    	deleteProductId.setText("");
+    	deleteProductName.setText("");
+    	deleteProductCategory.setText("");
+    	deleteProductPrice.setText("");
+    	deleteProductAvailability.setText("");
+    	deleteProductSize.setText("");
     }
 
     @FXML

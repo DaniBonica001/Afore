@@ -18,6 +18,8 @@ public class Restaurant {
 	//Constructor
 	public Restaurant() {
 		products = new ArrayList<Product>();
+		deliveries = new ArrayList<FoodDelivery>();
+		employees = new ArrayList<Employee>();		
 	}
 	
 	//Getters and Setters
@@ -118,6 +120,110 @@ public class Restaurant {
 			alert.setContentText("El producto con id "+id+" no está actualmente en la lista de productos del restaurante.");
 			alert.showAndWait();
 		}
+		
+	}
+	
+	public Employee findEmployee(String id) {
+		Employee employee = null;
+		boolean exit = false;
+		for (int i=0;i<employees.size() && !exit;i++) {
+			if (employees.get(i).getId().equals(id)) {
+				exit = true;
+				employee = employees.get(i);						
+			}
+		}
+		return employee;
+	}
+
+	//Create a cashier employee
+	public void addEmployee(String userCashier, String passCashier, String nameCashier, String lastNameCashier,
+			String idCashier, String phoneCashier, boolean waiter) {
+		
+		Employee findEmployee = findEmployee(idCashier);
+		
+		if (findEmployee == null) {
+			employees.add(new Cashier(userCashier,passCashier,nameCashier,lastNameCashier,idCashier,phoneCashier,waiter));
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Creación del empleado");
+			alert.setHeaderText("El empleado ha sido creado");
+			alert.setContentText("El empleado con id "+idCashier+" ha sido creado exitosamente.");
+			alert.showAndWait();			
+		}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error en la creación del empleado");
+			alert.setHeaderText("El empleado ya existe");
+			alert.setContentText("El empleado con id "+idCashier+" ya se ha creado.");
+			alert.showAndWait();
+		}		
+	}
+
+	//Create a chef employee
+	public void addEmployee(String userChef, String passChef, String nameChef, String lastNameChef, String idChef,
+			String phoneChef, String dishes) {
+		
+		Employee findEmployee = findEmployee(idChef);
+		
+		if (findEmployee == null) {
+			employees.add(new Chef (userChef,passChef,nameChef,lastNameChef,idChef,phoneChef,dishes));
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Creación del empleado");
+			alert.setHeaderText("El empleado ha sido creado");
+			alert.setContentText("El empleado con id "+idChef+" ha sido creado exitosamente.");
+			alert.showAndWait();			
+		}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error en la creación del empleado");
+			alert.setHeaderText("El empleado ya existe");
+			alert.setContentText("El empleado con id "+idChef+" ya se ha creado.");
+			alert.showAndWait();
+		}
+		
+	}
+
+	//Create a waiter employee
+	public void addEmployee(String userWaiter, String passWaiter, String nameWaiter, String lastNameWaiter,
+			String idWaiter, String phoneWaiter, int tables) {
+		
+		Employee findEmployee = findEmployee(idWaiter);
+		
+		if (findEmployee == null) {
+			employees.add(new Waiter(userWaiter,passWaiter,nameWaiter,lastNameWaiter,idWaiter,phoneWaiter,tables));
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Creación del empleado");
+			alert.setHeaderText("El empleado ha sido creado");
+			alert.setContentText("El empleado con id "+idWaiter+" ha sido creado exitosamente.");
+			alert.showAndWait();			
+		}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error en la creación del empleado");
+			alert.setHeaderText("El empleado ya existe");
+			alert.setContentText("El empleado con id "+idWaiter+" ya se ha creado.");
+			alert.showAndWait();
+		}		
+	}
+
+	//Create a delivery man employee
+	public void addEmployeeDM(String userDM, String passDM, String nameDM, String lastNameDm, String idDM,
+			String phoneDM, int orders) {
+		
+		Employee findEmployee = findEmployee(idDM);
+		
+		if (findEmployee == null) {
+			employees.add(new DeliveryMan(userDM,passDM,nameDM,lastNameDm,idDM,phoneDM,orders));
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Creación del empleado");
+			alert.setHeaderText("El empleado ha sido creado");
+			alert.setContentText("El empleado con id "+idDM+" ha sido creado exitosamente.");
+			alert.showAndWait();			
+		}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error en la creación del empleado");
+			alert.setHeaderText("El empleado ya existe");
+			alert.setContentText("El empleado con id "+idDM+" ya se ha creado.");
+			alert.showAndWait();
+		}	
+		
+
 		
 	}
 
