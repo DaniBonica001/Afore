@@ -20,6 +20,4 @@ This problem brings with it that people decide many times not to go out or on ma
 
 ##Documentation
 
-[Links](http://localhost/)
-
-[Links with title](http://localhost/ "link title")
+[Documentation of the app](docs/Documentacion/Tarea Integradora 3.pdf)
