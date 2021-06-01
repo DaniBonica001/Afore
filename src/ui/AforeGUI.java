@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,14 +60,7 @@ public class AforeGUI {
     
     @FXML
     public void buttonLogin(ActionEvent event) throws IOException {
-    	openScreen("menu.fxml",mainPaneLogin);
-    	/*    	
-    	FXMLLoader menufxml = new FXMLLoader (getClass().getResource("menu.fxml"));
-    	menufxml.setController(this);
-    	Parent root = menufxml.load();
-    	mainPaneLogin.getChildren().setAll(root);
-    	*/
-    	
+    	openScreen("menu.fxml",mainPaneLogin);    	
     }
     
     @FXML
@@ -110,8 +104,7 @@ public class AforeGUI {
 
     @FXML
     public void buttonCreateClient(ActionEvent event) throws IOException {
-    	openScreen("create-client.fxml",paneToChange);
-    	
+    	openScreen("create-client.fxml",paneToChange); 	
     }
  
     @FXML
@@ -184,6 +177,12 @@ public class AforeGUI {
     @FXML
     public void buttonUpdateProduct(ActionEvent event) throws IOException{
     	openScreen("update-product.fxml",paneToChange);
+    	
+		ObservableList<String>categories = FXCollections.observableArrayList("Bebida","Entrada","Plato principal","Postre","Vino","Ensalada","Respostería");
+		choiceBoxUpdateCategoryProduct.setItems(categories);
+		
+    	ObservableList<String>sizes = FXCollections.observableArrayList("Personal","Para dos","Familiar");
+    	choiceBoxUpdateSizeProduct.setItems(sizes);
     }
     
     //**********************************************************************************************
@@ -771,5 +770,128 @@ public class AforeGUI {
     	}
     }
     //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //UPDATE PRODUCT THINGS**********************************************************************************************************************************************************
+     
+    @FXML
+    private Pane mainPaneUpdateProduct;
+
+    @FXML
+    private TextField txtUpdateProductId;
+
+    @FXML
+    private TextField txtUpdateProductName;
+
+    @FXML
+    private TextField txtUpdateProductPrice;
+
+    @FXML
+    private TextField txtUpdateProductAvailability;
+
+    @FXML
+    private ChoiceBox<String> choiceBoxUpdateCategoryProduct;
+    
+    @FXML
+    private ChoiceBox<String> choiceBoxUpdateSizeProduct;
+    
+    
+
+    @FXML
+    public void buttonUpdateProductFind(ActionEvent event) {
+    	if(txtUpdateProductId.getText()!=null) {
+    		Product product=restaurant.findProduct(txtUpdateProductId.getText());
+    		if(product!=null) {
+    			txtUpdateProductName.setText(product.getName());
+    			txtUpdateProductPrice.setText(product.getPrice());
+    			txtUpdateProductAvailability.setText(String.valueOf(product.getAvailability()));
+    			choiceBoxUpdateCategoryProduct.setValue(product.getCategory());
+    			choiceBoxUpdateSizeProduct.setValue(product.getSize());
+	
+    		}else {
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error al buscar el producto");
+    			alert.setHeaderText("Producto no encontrado");
+    			alert.setContentText("El producto con id "+txtUpdateProductId.getText()+" no se ha encontrado.");
+    			alert.showAndWait();
+    		}
+    		
+    	}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al buscar el producto");
+			alert.setHeaderText("Campo de id requerido");
+			alert.setContentText("El campo del id debe ser ingresado.");
+			alert.showAndWait();
+    	}
+    }
+
+    @FXML
+    public void buttonUpdateProductUpdate(ActionEvent event) {
+    	String name=txtUpdateProductName.getText();
+    	String price=txtUpdateProductPrice.getText();
+    	String availability=txtUpdateProductAvailability.getText();
+    	
+    	Product product=restaurant.findProduct(txtUpdateProductId.getText());
+    	if(product!=null) {
+    		if(choiceBoxUpdateSizeProduct.getValue()!=null && choiceBoxUpdateCategoryProduct.getValue()!=null && !name.equals("") && !price.equals("") && !availability.equals("")) {
+	    		try {
+	    		product.setName(name);
+	    		product.setPrice(price);
+	    		product.setSize(choiceBoxUpdateSizeProduct.getValue());
+	    		product.setAvailability(Integer.parseInt(availability));
+	    		product.setCategory(choiceBoxUpdateCategoryProduct.getValue());
+	    		
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Producto actualizado satisfactotiamente");
+				alert.setHeaderText("El producto ha sido actuaizado");
+				alert.setContentText("El producto fue actualizado satisfactoriamente.");
+				alert.showAndWait();
+				
+		    	txtUpdateProductName.setText(null);
+		    	txtUpdateProductId.setText(null);
+		    	txtUpdateProductPrice.setText(null);
+		    	txtUpdateProductAvailability.setText(null);
+		    	choiceBoxUpdateCategoryProduct.setValue(null);
+		    	choiceBoxUpdateSizeProduct.setValue(null);
+	    		
+	    		
+	    		}catch(NumberFormatException e) {
+	    			Alert alert = new Alert(AlertType.ERROR);
+	    			alert.setTitle("Error al leer disponibilidad");
+	    			alert.setHeaderText("La disponibilidad debe ser numérica");
+	    			alert.setContentText("La disponibilidad "+txtUpdateProductAvailability.getText()+" no es correcta, debe ser numérica.");
+	    			alert.showAndWait();
+	    		}
+    		}
+    		else {
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error al actualizar datos");
+    			alert.setHeaderText("Todos los campos son requeridos");
+    			alert.setContentText("Todos los campos deben estar llenos");
+    			alert.showAndWait();
+    		}
+    	}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al buscar el producto");
+			alert.setHeaderText("Producto no encontrado");
+			alert.setContentText("El producto con id "+txtUpdateProductId.getText()+" no se ha encontrado.");
+			alert.showAndWait();
+    	}
+    	
+    }
+
+    @FXML
+    public void buttonUpdateProuctCancel(ActionEvent event) {
+    	txtUpdateProductName.setText(null);
+    	txtUpdateProductId.setText(null);
+    	txtUpdateProductPrice.setText(null);
+    	txtUpdateProductAvailability.setText(null);
+    	choiceBoxUpdateCategoryProduct.setValue(null);
+    	choiceBoxUpdateSizeProduct.setValue(null);
+    	
+    }
     
 }
