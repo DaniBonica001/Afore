@@ -226,6 +226,37 @@ public class Restaurant {
 
 		
 	}
+	
+	public Client findLastClient(Client current) {
+		if(current.getNext()==null) {
+			return current;
+		}
+		else {
+			return findLastClient(current.getNext());
+		}
+
+	}
+	
+	public Client findClient(String id) {
+		Client client=firstClient;
+		boolean salir=false;
+		
+		while(client!=null && client.getNext()!=null && salir==false) {//PRIMERO HACE ESTE CICLO PARA BUSCAR ALGUNO QUE TENGA EL MISMO ID
+			
+			if(client.getId().equals(id)) {
+				salir=true;
+				return client;
+			}
+			else {
+				client=client.getNext();
+			}
+		}	
+		if(salir==false) {//AQUI YA SE SALIÓ DEL CICLO POR LO QUE NO ENCONTRÓ A NADIE CON EL ID, SI SALIR ES FALSO ENTONCES RETORNE NULL, SI SALIR FUERA TRUE SE HUBIERA SALIDO DENTRO DEL CICLO
+			return null;
+		}else {
+			return null;
+		}
+	}
 
 
 }

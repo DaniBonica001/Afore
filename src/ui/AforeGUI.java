@@ -21,6 +21,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import model.Client;
 import model.Condition;
 import model.Product;
 import model.Restaurant;
@@ -1003,6 +1004,85 @@ public class AforeGUI {
 			alert.setContentText("El campo del id debe ser ingresado.");
 			alert.showAndWait();
     	}
+    }
+  //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //DISABLE PRODUCT THINGS**********************************************************************************************************************************************************
+     
+    
+    @FXML
+    private Pane mainPaneCreateClient;
+
+    @FXML
+    private TextField txtcreateClientName;
+
+    @FXML
+    private TextField txtcreateClientId;
+
+    @FXML
+    private TextField txtcreateClientAdress;
+
+    @FXML
+    private TextField txtcreateClientPhone;
+
+    @FXML
+    private TextArea txtcreateClientObservation;
+
+    @FXML
+    void buttonCreateClientRegister(ActionEvent event) {
+    	if(!txtcreateClientName.getText().equals("") && !txtcreateClientId.getText().equals("")) {
+    		String name=txtcreateClientName.getText();
+    		String id=txtcreateClientId.getText();
+    		String address=txtcreateClientAdress.getText();
+    		String obs=txtcreateClientObservation.getText();
+    		String phone=txtcreateClientPhone.getText();
+    		Client client=new Client (name, id, address, phone, obs);
+    		
+
+    		if(restaurant.findClient(id)==null) {
+        		if(restaurant.getFirstClient()==null) {//SI NO HAY CLIENTES
+        			restaurant.setFirstClient(client);
+        		}
+        		else {//SI YA HAY CLIENTES BUSCA EL ULTIMO Y LE ASIGNA EL .NEXT
+        			Client lastClient=restaurant.findLastClient(restaurant.getFirstClient());
+        			lastClient.setNext(client);
+        		}
+    			Alert alert = new Alert(AlertType.CONFIRMATION);
+    			alert.setTitle("Cliente creado");
+    			alert.setHeaderText("El cliente ha sido creado");
+    			alert.setContentText("El cliente con el id "+id+" ha sido creado satisfactoriamente.");
+    			alert.showAndWait();
+    			
+    		}else {
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error al crear el cliente");
+    			alert.setHeaderText("Cliente Existente");
+    			alert.setContentText("El cliente con el id "+id+" ya está registrado en el restaurante.");
+    			alert.showAndWait();
+    		}
+    		
+    	}
+    	else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al buscar el producto");
+			alert.setHeaderText("Campo de id y nombre requeridos");
+			alert.setContentText("El campo del id y nombre son obligatorios.");
+			alert.showAndWait();	
+    	}
+    }
+
+    @FXML
+    void buttonCreateClientCancel(ActionEvent event) {
+
+    }
+
+    @FXML
+    void buttonOpenReserva(ActionEvent event) {
+
     }
     
 }
