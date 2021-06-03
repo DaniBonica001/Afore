@@ -21,6 +21,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import model.Condition;
 import model.Product;
 import model.Restaurant;
 
@@ -892,6 +893,116 @@ public class AforeGUI {
     	choiceBoxUpdateCategoryProduct.setValue(null);
     	choiceBoxUpdateSizeProduct.setValue(null);
     	
+    }
+    
+  //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //DISABLE PRODUCT THINGS**********************************************************************************************************************************************************
+     
+
+    @FXML
+    private Pane mainPaneDeleteClient;
+
+    @FXML
+    private TextField txtDisableProductId;
+
+    @FXML
+    private TextField txtDisableProductName;
+
+    @FXML
+    private RadioButton rbDisableProductHabilitado;
+
+    @FXML
+    private RadioButton rbDisableProductDeshabilitado;
+
+    @FXML
+    private TextField txtDisableProductSize;
+
+    @FXML
+    private TextField txtDisableProductPrice;
+
+    @FXML
+    private TextField txtDisableProductCategory;
+
+    @FXML
+    private TextField txtDisableProductAvailabiility;
+    
+    @FXML
+    private ToggleGroup state;
+    
+    @FXML
+    public void buttonDisableProductFind(ActionEvent event) {
+    	if(txtDisableProductId.getText()!=null) {
+    		Product product=restaurant.findProduct(txtDisableProductId.getText());
+    		if(product!=null) {
+    			txtDisableProductName.setText(product.getName());
+    			txtDisableProductPrice.setText(product.getPrice());
+    			txtDisableProductAvailabiility.setText(String.valueOf(product.getAvailability()));
+    			txtDisableProductCategory.setText(product.getCategory());
+    			txtDisableProductSize.setText(product.getSize());
+    			if(product.getCondition()==Condition.ACTIVE) {
+    				rbDisableProductHabilitado.setSelected(true);
+    			}
+    			else if(product.getCondition()==Condition.INACTIVE) {
+    				rbDisableProductDeshabilitado.setSelected(true);
+    			}
+	
+    		}else {
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error al buscar el producto");
+    			alert.setHeaderText("Producto no encontrado");
+    			alert.setContentText("El producto con id "+txtDisableProductId.getText()+" no se ha encontrado.");
+    			alert.showAndWait();
+    		}
+    		
+    	}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al buscar el producto");
+			alert.setHeaderText("Campo de id requerido");
+			alert.setContentText("El campo del id debe ser ingresado.");
+			alert.showAndWait();
+    	}
+    }
+
+    @FXML
+    public void buttonDisableProductUpdateEstado(ActionEvent event) {
+    	if(txtDisableProductId.getText()!=null) {
+    		Product product=restaurant.findProduct(txtDisableProductId.getText());
+    		if(product!=null) {
+    			if(rbDisableProductDeshabilitado.isSelected()) {
+    				product.setCondition(Condition.INACTIVE);
+    				Alert alert = new Alert(AlertType.CONFIRMATION);
+    				alert.setTitle("Estado actualizado");
+    				alert.setHeaderText("El estado ha sido cambiado");
+    				alert.setContentText("El estado del producto ha sido cambiado a inactivo");
+    				alert.showAndWait();
+    				
+    			}else if(rbDisableProductHabilitado.isSelected()){
+    				product.setCondition(Condition.ACTIVE);
+    				Alert alert = new Alert(AlertType.CONFIRMATION);
+    				alert.setTitle("Estado actualizado");
+    				alert.setHeaderText("El estado ha sido cambiado");
+    				alert.setContentText("El estado del producto ha sido cambiado a activo");
+    				alert.showAndWait();
+    			}
+    		}else {
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error al buscar el producto");
+    			alert.setHeaderText("Producto no encontrado");
+    			alert.setContentText("El producto con id "+txtDisableProductId.getText()+" no se ha encontrado.");
+    			alert.showAndWait();
+    		}
+    	}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al buscar el producto");
+			alert.setHeaderText("Campo de id requerido");
+			alert.setContentText("El campo del id debe ser ingresado.");
+			alert.showAndWait();
+    	}
     }
     
 }

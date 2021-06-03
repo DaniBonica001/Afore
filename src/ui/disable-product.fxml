@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -31,8 +32,8 @@
                   <Font name="System Italic" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="128.0" layoutY="68.0" prefHeight="25.0" prefWidth="140.0" />
-            <Button layoutX="291.0" layoutY="66.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar" textFill="WHITE">
+            <TextField fx:id="txtDisableProductId" layoutX="128.0" layoutY="68.0" prefHeight="25.0" prefWidth="140.0" />
+            <Button layoutX="291.0" layoutY="66.0" mnemonicParsing="false" onAction="#buttonDisableProductFind" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -45,7 +46,7 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField editable="false" layoutX="127.0" layoutY="109.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDisableProductName" editable="false" layoutX="127.0" layoutY="109.0" prefHeight="25.0" prefWidth="140.0" />
             <Label layoutX="71.0" layoutY="22.0" prefHeight="30.0" prefWidth="229.0" text="Datos Producto" textAlignment="RIGHT">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
@@ -54,15 +55,7 @@
                   <Insets left="40.0" />
                </padding>
             </Label>
-            <Button layoutX="95.0" layoutY="344.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Deshabilitar" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </Button>
-            <Button layoutX="199.0" layoutY="344.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Habilitar" textFill="WHITE">
+            <Button layoutX="124.0" layoutY="340.0" mnemonicParsing="false" onAction="#buttonDisableProductUpdateEstado" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Actualizar Estado" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -75,8 +68,11 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <RadioButton layoutX="121.0" layoutY="307.0" mnemonicParsing="false" text="Habilitado" />
-            <RadioButton layoutX="208.0" layoutY="307.0" mnemonicParsing="false" text="Deshabilitado" />
+            <RadioButton fx:id="rbDisableProductHabilitado" layoutX="121.0" layoutY="307.0" mnemonicParsing="false" text="Habilitado">
+               <toggleGroup>
+                  <ToggleGroup fx:id="state" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="rbDisableProductDeshabilitado" layoutX="208.0" layoutY="307.0" mnemonicParsing="false" text="Deshabilitado" toggleGroup="$state" />
             <Label layoutX="52.0" layoutY="154.0" text="Categoría:">
                <font>
                   <Font name="System Italic" size="14.0" />
@@ -87,20 +83,20 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="128.0" layoutY="191.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDisableProductSize" layoutX="128.0" layoutY="191.0" prefHeight="25.0" prefWidth="140.0" />
             <Label layoutX="68.0" layoutY="232.0" text="Precio:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="129.0" layoutY="229.0" prefHeight="25.0" prefWidth="140.0" />
-            <TextField editable="false" layoutX="128.0" layoutY="152.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDisableProductPrice" layoutX="129.0" layoutY="229.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDisableProductCategory" editable="false" layoutX="128.0" layoutY="152.0" prefHeight="25.0" prefWidth="140.0" />
             <Label layoutX="22.0" layoutY="267.0" text="Disponibilidad:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="129.0" layoutY="264.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDisableProductAvailabiility" layoutX="129.0" layoutY="264.0" prefHeight="25.0" prefWidth="140.0" />
          </children>
       </Pane>
       <Pane layoutX="471.0" layoutY="62.0" prefHeight="394.0" prefWidth="200.0" style="-fx-background-color: White; -fx-background-radius: 20;">
