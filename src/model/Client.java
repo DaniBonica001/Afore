@@ -12,6 +12,7 @@ public class Client {
 	//Relations
 	private Client next;
 	private Client previous;
+	private Condition condition;
 	
 	//Constructor
 	public Client(String name,String id,String address,String phone,String obs) {
@@ -20,6 +21,7 @@ public class Client {
 	this.address = address;
 	this.phone = phone;
 	observations = obs;		
+	condition = Condition.ACTIVE;
 	}
 
 	//Getters and Setters
@@ -78,7 +80,15 @@ public class Client {
 
 	public Client getPrevious() {
 		return previous;
-	}	
+	}
+	
+	public void setCondition(Condition condition) {
+		this.condition = condition;
+	}
+
+	public Condition getCondition() {
+		return condition;
+	}
 	
 	//*****************************************************************************************
 

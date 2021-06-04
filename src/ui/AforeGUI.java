@@ -187,7 +187,14 @@ public class AforeGUI {
 
     @FXML
     public void buttonEnableDisableClient(ActionEvent event) throws IOException{
-    	openScreen("disable-client.fxml",paneToChange);
+    	openScreen("disable-client.fxml",paneToChange);    	
+    	initializeToggleGroupDisableClient();
+    }
+    
+    public void initializeToggleGroupDisableClient() {
+    	ToggleGroup tgDisClient = new ToggleGroup();
+    	this.rbDisableClientHabilitado.setToggleGroup(tgDisClient);
+    	this.rbDisableClientDeshabilitado.setToggleGroup(tgDisClient);
     }
 
     @FXML
@@ -854,12 +861,12 @@ public class AforeGUI {
 				alert.setContentText("El producto fue actualizado satisfactoriamente.");
 				alert.showAndWait();
 				
-		    	txtUpdateProductName.setText(null);
-		    	txtUpdateProductId.setText(null);
-		    	txtUpdateProductPrice.setText(null);
-		    	txtUpdateProductAvailability.setText(null);
-		    	choiceBoxUpdateCategoryProduct.setValue(null);
-		    	choiceBoxUpdateSizeProduct.setValue(null);
+		    	txtUpdateProductName.setText("");
+		    	txtUpdateProductId.setText("");
+		    	txtUpdateProductPrice.setText("");
+		    	txtUpdateProductAvailability.setText("");
+		    	choiceBoxUpdateCategoryProduct.setValue("");
+		    	choiceBoxUpdateSizeProduct.setValue("");
 	    		
 	    		
 	    		}catch(NumberFormatException e) {
@@ -908,7 +915,7 @@ public class AforeGUI {
      
 
     @FXML
-    private Pane mainPaneDisableClient;
+    private Pane mainPaneDisableProduct;
 
     @FXML
     private TextField txtDisableProductId;
@@ -1119,14 +1126,21 @@ public class AforeGUI {
     		txtDeleteClientIde.setText(clientToDelete.getId());
     		txtDeleteClientAddress.setText(clientToDelete.getAddress());
     		txtDeleteClientPhone.setText(clientToDelete.getPhone());
-    	}else {
+    			
+    	}else if (clientToDelete == null && txtDeleteClientId.getText().equals("")){      	
     		Alert alert = new Alert(AlertType.ERROR);
-    		alert.setTitle("Error al buscar el cliente");
-    		alert.setHeaderText("Cliente no encontrado");
-    		alert.setContentText("El cliente con id "+txtDeleteClientId.getText()+" no se ha encontrado.");
-    		alert.showAndWait();
-    	}    		
-    	
+			alert.setTitle("Error en la eliminación del cliente");
+			alert.setHeaderText("Cliente no encontrado");
+			alert.setContentText("Es necesario el id para realizar la búsqueda del cliente");
+			alert.showAndWait();
+			
+    	}else if (clientToDelete == null && !txtDeleteClientId.getText().equals("")) {
+    		Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error en la eliminación del cliente");
+			alert.setHeaderText("Cliente no encontrado");
+			alert.setContentText("El cliente con id "+txtDeleteClientId.getText()+" no se ha encontrado");
+			alert.showAndWait();
+    	}    	
     }
     
     @FXML
@@ -1137,12 +1151,25 @@ public class AforeGUI {
     		Order hasOrders = restaurant.findClientOrder(clientToDelete);
     		
     		if (hasOrders == null) {
-    			Client prev = clientToDelete.getPrevious();
-            	Client next = clientToDelete.getNext();
-            	
-            	prev.setNext(next);
-            	next.setPrevious(prev);
-            	
+    			
+    			if (clientToDelete.equals(restaurant.getFirstClient())) {
+    				clientToDelete.getNext().setPrevious(null);
+    				restaurant.setFirstClient(clientToDelete.getNext());
+    				clientToDelete.setNext(null);   
+    				
+    			}else {
+    				Client prev = clientToDelete.getPrevious();
+                	Client next = clientToDelete.getNext();
+                	
+        			if (clientToDelete.getNext()!=null) {
+        				next.setPrevious(prev);
+        			}
+        			if (clientToDelete.getPrevious()!=null) {
+        				prev.setNext(next);
+        			}
+    			}
+    		
+    		
             	txtDeleteClientId.setText("");
             	txtDeleteClientName.setText("");
         		txtDeleteClientIde.setText("");
@@ -1156,7 +1183,7 @@ public class AforeGUI {
     			alert.showAndWait(); 
     		
     		}else {
-    			Alert alert = new Alert(AlertType.CONFIRMATION);
+    			Alert alert = new Alert(AlertType.ERROR);
     			alert.setTitle("Error en la eliminación del cliente");
     			alert.setHeaderText("El cliente tiene una orden pendiente");
     			alert.setContentText("El cliente con id"+clientToDelete.getId()+" no podrá ser eliminado");
@@ -1164,12 +1191,12 @@ public class AforeGUI {
     		}
          		
     		
-    	}else {
+    	}else{    		
     		Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error en la eliminación del cliente");
 			alert.setHeaderText("Cliente no encontrado");
-			alert.setContentText("El cliente con id "+txtDeleteClientId.getText()+" no se ha encontrado.");
-			alert.showAndWait();
+			alert.setContentText("El cliente con id "+txtDeleteClientId.getText()+" no se ha encontrado");
+			alert.showAndWait();			
     	}
     }
 
@@ -1180,6 +1207,237 @@ public class AforeGUI {
 		txtDeleteClientIde.setText("");
 		txtDeleteClientAddress.setText("");
 		txtDeleteClientPhone.setText("");
+    }
+    
+    
+    //*********************************************************************************************************************************************************************************************+
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //UPDATE CLIENT THINGS**********************************************************************************************************************************************************
+    
+    @FXML
+    private Pane mainPaneUpdateClient;
+
+    @FXML
+    private TextField txtUpdateClientName;
+
+    @FXML
+    private TextField txtUpdateClientAddress;
+
+    @FXML
+    private TextField txtUpdateClientPhone;
+
+    @FXML
+    private TextArea txtUpdateClientObs;
+
+    @FXML
+    private TextField txtUpdateClientId;
+    
+    @FXML
+    private TextField txtUpdateClientIde;
+
+    @FXML
+    public void buttonFindClientToUpdate(ActionEvent event) {
+    	Client clientToUpd = restaurant.findClient(txtUpdateClientId.getText());
+    	if (clientToUpd!=null) {
+    		txtUpdateClientName.setText(clientToUpd.getName());
+    		txtUpdateClientIde.setText(clientToUpd.getId());
+        	txtUpdateClientAddress.setText(clientToUpd.getAddress());
+        	txtUpdateClientPhone.setText(clientToUpd.getPhone());
+        	txtUpdateClientObs.setText(clientToUpd.getObservations()); 
+
+    	}else if (clientToUpd == null && txtUpdateClientId.getText().equals("")){
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al actualizar el cliente");
+    		alert.setHeaderText("Cliente no encontrado");
+    		alert.setContentText("Es necesario el id para realizar la búsqueda del cliente");
+    		alert.showAndWait();
+    		
+    	}else if (clientToUpd == null && !txtUpdateClientId.getText().equals("")) {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al actualizar el cliente");
+    		alert.setHeaderText("Cliente no encontrado");
+    		alert.setContentText("El cliente con id "+txtUpdateClientId.getText()+" no se ha encontrado.");
+    		alert.showAndWait();
+    	}
+    }
+    
+    @FXML
+    public void buttonClientToUpdate(ActionEvent event) {
+    	Client clientToUpd = restaurant.findClient(txtUpdateClientId.getText());    	
+    	
+    	if (clientToUpd!=null) {
+    		if (!txtUpdateClientName.getText().equals("") && !txtUpdateClientIde.getText().equals("") && !txtUpdateClientAddress.getText().equals("") && !txtUpdateClientPhone.getText().equals("")) {
+        		
+        		String name = txtUpdateClientName.getText();
+        		String id = txtUpdateClientIde.getText();
+        		String address = txtUpdateClientAddress.getText();
+        		String phone = txtUpdateClientPhone.getText();
+        		
+        		clientToUpd.setName(name);
+        		clientToUpd.setId(id);
+        		clientToUpd.setAddress(address);
+        		clientToUpd.setPhone(phone);
+        		clientToUpd.setObservations(txtUpdateClientObs.getText());    
+        		
+        		Alert alert = new Alert(AlertType.CONFIRMATION);
+        		alert.setTitle("Cliente actualizado satisfactoriamente");
+        		alert.setHeaderText("Cliente actualizado");
+        		alert.setContentText("Se ha actualizado la información del cliente.");
+        		alert.showAndWait();
+        		
+        		txtUpdateClientId.setText("");
+            	txtUpdateClientName.setText("");
+            	txtUpdateClientIde.setText("");
+            	txtUpdateClientAddress.setText("");
+            	txtUpdateClientPhone.setText("");
+            	txtUpdateClientObs.setText(""); 
+        		
+        	}else {
+        		Alert alert = new Alert(AlertType.ERROR);
+        		alert.setTitle("Error al actualizar el cliente");
+        		alert.setHeaderText("Datos incompletos");
+        		alert.setContentText("El nombre, dirección y teléfono son necesarios.");
+        		alert.showAndWait();
+        	}
+    	
+    	}else{
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al actualizar el cliente");
+    		alert.setHeaderText("Cliente no encontrado");
+    		alert.setContentText("El cliente con id "+txtUpdateClientId.getText()+" no se ha encontrado.");
+    		alert.showAndWait();
+    	
+    	}
+    
+    }  
+
+    @FXML
+    public void buttonNoClientToUpdate(ActionEvent event) {
+    	txtUpdateClientId.setText("");
+    	txtUpdateClientName.setText("");
+    	txtUpdateClientIde.setText("");
+    	txtUpdateClientAddress.setText("");
+    	txtUpdateClientPhone.setText("");
+    	txtUpdateClientObs.setText("");    	
+    }
+    
+    
+    //*********************************************************************************************************************************************************************************************+
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //DISABLE CLIENT THINGS**********************************************************************************************************************************************************
+   
+    @FXML
+    private Pane mainPaneDisableClient;
+
+    @FXML
+    private TextField txtDisableClientId;
+
+    @FXML
+    private TextField txtDisableClientName;
+
+    @FXML
+    private TextField txtDisableClientIde;
+
+    @FXML
+    private TextField txtDisableClientAddress;
+
+    @FXML
+    private TextField txtDisableClientPhone;
+
+    @FXML
+    private RadioButton rbDisableClientHabilitado;
+
+    @FXML
+    private RadioButton rbDisableClientDeshabilitado;
+
+    @FXML
+    public void buttonFindClientToDisable(ActionEvent event) {
+    	Client clientToDis = restaurant.findClient(txtDisableClientId.getText());
+    	
+    	if (clientToDis!=null) {
+    		txtDisableClientName.setText(clientToDis.getName());
+    		txtDisableClientIde.setText(clientToDis.getId());
+    		txtDisableClientAddress.setText(clientToDis.getAddress());
+    		txtDisableClientPhone.setText(clientToDis.getPhone());
+    		if (clientToDis.getCondition() == Condition.ACTIVE) {
+    			rbDisableClientHabilitado.setSelected(true);
+    		}else if (clientToDis.getCondition() == Condition.INACTIVE) {
+    			rbDisableClientDeshabilitado.setSelected(true);
+    		}
+    		
+    	}else if (clientToDis == null && txtDisableClientId.getText().equals("")){
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al buscar el cliente");
+    		alert.setHeaderText("Cliente no encontrado");
+    		alert.setContentText("Es necesario el id para realizar la búsquda del cliente");
+    		alert.showAndWait();
+    		
+    	}else if (clientToDis == null && !txtDisableClientId.getText().equals("")) {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al buscar el cliente");
+    		alert.setHeaderText("Cliente no encontrado");
+    		alert.setContentText("El cliente con id "+txtDisableClientId.getText()+" no se ha encontrado.");
+    		alert.showAndWait();    		
+    	}
+    }
+
+    @FXML
+    public void butttonDisableClientUpdateState(ActionEvent event) {    	
+    	if (!txtDisableClientId.getText().equals("")) {
+    		Client clientToDis = restaurant.findClient(txtDisableClientId.getText());
+        	
+        	if (clientToDis!=null) {
+        		if (rbDisableClientHabilitado.isSelected()) {
+        			clientToDis.setCondition(Condition.ACTIVE);    
+        			Alert alert = new Alert(AlertType.CONFIRMATION);
+    				alert.setTitle("Estado actualizado");
+    				alert.setHeaderText("El estado ha sido cambiado");
+    				alert.setContentText("El estado del cliente ha sido cambiado a activo");
+    				alert.showAndWait();
+        		}else if (rbDisableClientDeshabilitado.isSelected()) {
+        			clientToDis.setCondition(Condition.INACTIVE);
+        			Alert alert = new Alert(AlertType.CONFIRMATION);
+    				alert.setTitle("Estado actualizado");
+    				alert.setHeaderText("El estado ha sido cambiado");
+    				alert.setContentText("El estado del cliente ha sido cambiado a inactivo");
+    				alert.showAndWait();
+        		}
+        		
+        		txtDisableClientId.setText("");
+        		txtDisableClientName.setText("");
+        		txtDisableClientIde.setText("");
+        		txtDisableClientAddress.setText("");
+        		txtDisableClientPhone.setText("");
+        		if (rbDisableClientHabilitado.isSelected()) {
+        			rbDisableClientHabilitado.setSelected(false);
+        		}else if (rbDisableClientDeshabilitado.isSelected()) {
+        			rbDisableClientDeshabilitado.setSelected(false);
+        		}
+        		
+        		        		
+        	}else {
+        		Alert alert = new Alert(AlertType.ERROR);
+        		alert.setTitle("Error al buscar el cliente");
+        		alert.setHeaderText("Cliente no encontrado");
+        		alert.setContentText("El cliente con id "+txtDisableClientId.getText()+" no se ha encontrado.");
+        		alert.showAndWait();
+        	}
+    	}else {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al buscar el cliente");
+    		alert.setHeaderText("Campos incompletos");
+    		alert.setContentText("El id es necesario para realizar la búsqueda del cliente");
+    		alert.showAndWait();
+    	}
+    
     }
 
     

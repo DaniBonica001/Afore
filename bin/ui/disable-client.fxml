@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPaneDeleteClient" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="697.0" styleClass="pane" stylesheets="@../styles/gradientPanes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="mainPaneDisableClient" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="697.0" styleClass="pane" stylesheets="@../styles/gradientPanes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="99.0" layoutY="7.0" prefHeight="35.0" prefWidth="277.0" text="Deshabilitar Cliente" textAlignment="RIGHT">
          <font>
@@ -31,8 +31,8 @@
                   <Font name="System Italic" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="125.0" layoutY="82.0" prefHeight="25.0" prefWidth="140.0" />
-            <Button layoutX="290.0" layoutY="80.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar" textFill="WHITE">
+            <TextField fx:id="txtDisableClientId" layoutX="128.0" layoutY="82.0" prefHeight="25.0" prefWidth="140.0" />
+            <Button layoutX="290.0" layoutY="80.0" mnemonicParsing="false" onAction="#buttonFindClientToDisable" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -60,10 +60,10 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField editable="false" layoutX="128.0" layoutY="117.0" prefHeight="25.0" prefWidth="140.0" />
-            <TextField editable="false" layoutX="128.0" layoutY="159.0" prefHeight="25.0" prefWidth="140.0" />
-            <TextField editable="false" layoutX="128.0" layoutY="202.0" prefHeight="25.0" prefWidth="140.0" />
-            <TextField editable="false" layoutX="128.0" layoutY="240.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDisableClientName" editable="false" layoutX="128.0" layoutY="117.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDisableClientIde" editable="false" layoutX="128.0" layoutY="159.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDisableClientAddress" editable="false" layoutX="128.0" layoutY="202.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDisableClientPhone" editable="false" layoutX="128.0" layoutY="240.0" prefHeight="25.0" prefWidth="140.0" />
             <Label layoutX="71.0" layoutY="22.0" prefHeight="30.0" prefWidth="229.0" text="Datos Cliente" textAlignment="RIGHT">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
@@ -72,15 +72,7 @@
                   <Insets left="40.0" />
                </padding>
             </Label>
-            <Button layoutX="94.0" layoutY="326.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Deshabilitar" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </Button>
-            <Button layoutX="198.0" layoutY="326.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Habilitar" textFill="WHITE">
+            <Button layoutX="134.0" layoutY="322.0" mnemonicParsing="false" onAction="#butttonDisableClientUpdateState" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Actualizar estado" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -93,8 +85,8 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <RadioButton layoutX="120.0" layoutY="279.0" mnemonicParsing="false" text="Habilitado" />
-            <RadioButton layoutX="207.0" layoutY="279.0" mnemonicParsing="false" text="Deshabilitado" />
+            <RadioButton fx:id="rbDisableClientHabilitado" layoutX="120.0" layoutY="279.0" mnemonicParsing="false" text="Habilitado" />
+            <RadioButton fx:id="rbDisableClientDeshabilitado" layoutX="207.0" layoutY="279.0" mnemonicParsing="false" text="Deshabilitado" />
          </children>
       </Pane>
       <Pane layoutX="471.0" layoutY="62.0" prefHeight="394.0" prefWidth="200.0" style="-fx-background-color: White; -fx-background-radius: 20;">
