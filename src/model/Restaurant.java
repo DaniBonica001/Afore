@@ -65,7 +65,7 @@ public class Restaurant {
 		return firstClient;
 	}	
 	
-	//***********************************
+	//***********************************************************************************************************************
 	
 	public Product findProduct(String id) {
 		Product product=null;
@@ -297,5 +297,16 @@ public class Restaurant {
 		}		
 	}
 
+	public Order findClientOrder(Client client) {
+		Order order = null;
+		boolean exit = false;
+		for (int i=0;i<orders.size() && !exit;i++) {
+			if (orders.get(i).getClient().equals(client)) {
+				exit = true;
+				order = orders.get(i);				
+			}
+		}
+		return order;
+	}
 
 }

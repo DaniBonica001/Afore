@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import model.Client;
 import model.Condition;
+import model.Order;
 import model.Product;
 import model.Restaurant;
 
@@ -1133,23 +1134,35 @@ public class AforeGUI {
     	Client clientToDelete = restaurant.findClient(txtDeleteClientId.getText());
     	
     	if (clientToDelete!=null) {
-        	Client prev = clientToDelete.getPrevious();
-        	Client next = clientToDelete.getNext();
-        	
-        	prev.setNext(next);
-        	next.setPrevious(prev);
-        	
-        	txtDeleteClientId.setText("");
-        	txtDeleteClientName.setText("");
-    		txtDeleteClientIde.setText("");
-    		txtDeleteClientAddress.setText("");
-    		txtDeleteClientPhone.setText("");
+    		Order hasOrders = restaurant.findClientOrder(clientToDelete);
     		
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Cliente eliminado");
-			alert.setHeaderText("El cliente ha sido eliminado satisfactoriamente");
-			alert.setContentText("El cliente con id"+clientToDelete.getId()+" ha sido eliminado");
-			alert.showAndWait();  		
+    		if (hasOrders == null) {
+    			Client prev = clientToDelete.getPrevious();
+            	Client next = clientToDelete.getNext();
+            	
+            	prev.setNext(next);
+            	next.setPrevious(prev);
+            	
+            	txtDeleteClientId.setText("");
+            	txtDeleteClientName.setText("");
+        		txtDeleteClientIde.setText("");
+        		txtDeleteClientAddress.setText("");
+        		txtDeleteClientPhone.setText("");
+        		
+    			Alert alert = new Alert(AlertType.CONFIRMATION);
+    			alert.setTitle("Cliente eliminado");
+    			alert.setHeaderText("El cliente ha sido eliminado satisfactoriamente");
+    			alert.setContentText("El cliente con id"+clientToDelete.getId()+" ha sido eliminado");
+    			alert.showAndWait(); 
+    		
+    		}else {
+    			Alert alert = new Alert(AlertType.CONFIRMATION);
+    			alert.setTitle("Error en la eliminación del cliente");
+    			alert.setHeaderText("El cliente tiene una orden pendiente");
+    			alert.setContentText("El cliente con id"+clientToDelete.getId()+" no podrá ser eliminado");
+    			alert.showAndWait(); 
+    		}
+         		
     		
     	}else {
     		Alert alert = new Alert(AlertType.ERROR);
