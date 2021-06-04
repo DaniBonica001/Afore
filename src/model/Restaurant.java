@@ -12,6 +12,7 @@ public class Restaurant {
 	private List<Product>products;
 	private List<FoodDelivery>deliveries;
 	private List<Employee>employees;
+	private List<Order>orders;
 	private Client firstClient;
 	
 	
@@ -19,7 +20,8 @@ public class Restaurant {
 	public Restaurant() {
 		products = new ArrayList<Product>();
 		deliveries = new ArrayList<FoodDelivery>();
-		employees = new ArrayList<Employee>();		
+		employees = new ArrayList<Employee>();	
+		orders = new ArrayList<Order>();
 	}
 	
 	//Getters and Setters
@@ -46,6 +48,14 @@ public class Restaurant {
 	public List<Employee> getEmployees(){
 		return employees;
 	}	
+	
+	public void setOrders(List<Order>orders) {
+		this.orders = orders;		
+	}
+	
+	public List<Order> getOrders(){
+		return orders;
+	}
 
 	public void setFirstClient(Client firstClient) {
 		this.firstClient = firstClient;
@@ -227,6 +237,8 @@ public class Restaurant {
 		
 	}
 	
+		
+	//Método recursivo
 	public Client findLastClient(Client current) {
 		if(current.getNext()==null) {
 			return current;
@@ -239,23 +251,50 @@ public class Restaurant {
 	
 	public Client findClient(String id) {
 		Client client=firstClient;
+		Client findClient=null;
 		boolean salir=false;
 		
-		while(client!=null && client.getNext()!=null && salir==false) {//PRIMERO HACE ESTE CICLO PARA BUSCAR ALGUNO QUE TENGA EL MISMO ID
+		while(client!=null && !salir) {
+		//PRIMERO HACE ESTE CICLO PARA BUSCAR ALGUNO QUE TENGA EL MISMO ID
 			
 			if(client.getId().equals(id)) {
 				salir=true;
-				return client;
+				findClient=client;				
 			}
 			else {
 				client=client.getNext();
 			}
-		}	
-		if(salir==false) {//AQUI YA SE SALIÓ DEL CICLO POR LO QUE NO ENCONTRÓ A NADIE CON EL ID, SI SALIR ES FALSO ENTONCES RETORNE NULL, SI SALIR FUERA TRUE SE HUBIERA SALIDO DENTRO DEL CICLO
-			return null;
+		}			
+		return findClient;
+	}
+	
+
+	public void addClient(String name,String id,String address,String phone,String obs) {
+		Client findClient = findClient(id);
+		if (findClient==null) {
+			Client newClient = new Client (name, id, address, phone, obs);
+			
+			if(firstClient==null) {//SI NO HAY CLIENTES
+    			firstClient = newClient;
+    		}else {
+    			Client lastClient = findLastClient(firstClient);
+    			lastClient.setNext(newClient);
+    			newClient.setPrevious(lastClient);
+    		}
+			
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Cliente creado");
+			alert.setHeaderText("El cliente ha sido creado");
+			alert.setContentText("El cliente con el id "+id+" ha sido creado satisfactoriamente.");
+			alert.showAndWait();
+			
 		}else {
-			return null;
-		}
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al crear el cliente");
+			alert.setHeaderText("Cliente Existente");
+			alert.setContentText("El cliente con el id "+id+" ya está registrado en el restaurante.");
+			alert.showAndWait();
+		}		
 	}
 
 

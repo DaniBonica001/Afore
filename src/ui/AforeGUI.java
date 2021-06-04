@@ -1,8 +1,6 @@
 package ui;
 
 import java.io.IOException;
-import java.text.ParseException;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -73,6 +71,56 @@ public class AforeGUI {
     @FXML
     public void buttonRegister(ActionEvent event) {
     	openScreen("register1.fxml",mainPaneLogin);
+    }
+    
+    //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //REGISTER1.FXML THINGS**********************************************************************************************************************************************************
+    
+    @FXML
+    private Pane mainPaneRegister;
+    
+    @FXML
+    void createAdministratorUser(ActionEvent event) {
+
+    }
+    
+    @FXML
+    public void openCreateCashierEmployee(ActionEvent event) throws IOException{
+    	openScreen("create-cashier-employee.fxml",mainPaneRegister);
+    	initializeToggleGroupCashier();
+    }
+    public void initializeToggleGroupCashier() {
+    	ToggleGroup tgCashier = new ToggleGroup();
+    	this.rbYesCashier.setToggleGroup(tgCashier);
+    	this.rbNoCashier.setToggleGroup(tgCashier);    	
+    }
+    
+    @FXML
+    public void openCreateChefEmployee(ActionEvent event)throws IOException {
+    	openScreen("create-chef-employee.fxml",mainPaneRegister);
+    }
+
+    @FXML
+    public void openCreateDeliveryManEmployee(ActionEvent event)throws IOException {
+    	openScreen("create-deliveryMan-employee.fxml",mainPaneRegister);
+    	initializeChoiceBoxAmountOrdersDeliveryMan();
+    }
+
+    @FXML
+    public void openCreateWaiterEmployee(ActionEvent event) throws IOException{
+    	openScreen("create-waiter-employee.fxml",mainPaneRegister);
+    	initializeChoiceBoxAmounTablesWaiter();
+    }
+    
+
+    @FXML
+    public void backToLogin(ActionEvent event) {
+    	openScreen("login.fxml",mainPaneRegister);
     }
     
     //**********************************************************************************************
@@ -187,140 +235,7 @@ public class AforeGUI {
     	choiceBoxUpdateSizeProduct.setItems(sizes);
     }
     
-    //**********************************************************************************************
-    //+
-    //+
-    //+
-    //+
-    //+  
-    //CREATE-PRODUCT.FXML THINGS**************************************************************************
-       
     
-    @FXML
-    private Pane mainPaneCreateProduct;
-
-    @FXML
-    private TextField txtIdProduct;
-    
-    @FXML
-    private TextField txtNameProduct;
-
-    @FXML
-    private ChoiceBox<String> choiceBoxCategoryProduct;
-
-    @FXML
-    private ChoiceBox<String> choiceBoxSizeProduct;
-    
-    @FXML
-    private TextField txtPriceProduct;
-
-    @FXML
-    private TextField txtAvailabilityProduct;
-
-    @FXML
-    private TextArea txtDescriptionProduct;
-    
-    
-    public void initializeChoiceBoxCategoryProduct(){
-    	ObservableList<String>categories = FXCollections.observableArrayList("Bebida","Entrada","Plato principal","Postre","Vino","Ensalada","Respostería");
-    	choiceBoxCategoryProduct.setItems(categories);
-    }
-    
-    public void initializeChoiceBoxSizeProduct(){
-    	ObservableList<String>sizes = FXCollections.observableArrayList("Personal","Para dos","Familiar");
-    	choiceBoxSizeProduct.setItems(sizes);
-    }
-
-    @FXML
-    public void createProduct(ActionEvent event) {
-    	String id = txtIdProduct.getText();
-    	String name = txtNameProduct.getText();
-    	String category = choiceBoxCategoryProduct.getValue();
-    	String size= choiceBoxSizeProduct.getValue();
-    	String price = txtPriceProduct.getText();
-    	// int available = Integer.parseInt(txtAvailabilityProduct.getText());
-    	String description = txtDescriptionProduct.getText();
-
-    	if (!id.equals("") && !name.equals("") && !category.equals("") && !size.equals("") && !price.equals("") && !txtAvailabilityProduct.getText().equals("") && !description.equals("")) {
-    		restaurant.addProduct(id,name,category,size,price,Integer.parseInt(txtAvailabilityProduct.getText()),description);
-    		txtIdProduct.setText("");
-    		txtNameProduct.setText("");
-    		choiceBoxCategoryProduct.setValue(null);
-    		choiceBoxSizeProduct.setValue(null);
-    		txtPriceProduct.setText("");
-    		txtAvailabilityProduct.setText("");
-    		txtDescriptionProduct.setText("");
-
-    	}else if (id.equals("") || name.equals("") || category.equals("") || size.equals("") || price.equals("") || txtAvailabilityProduct.getText().equals("") || description.equals("")) {
-    		Alert alert = new Alert(AlertType.ERROR);
-    		alert.setTitle("Error al guardar datos");
-    		alert.setHeaderText("Campos incompletos");
-    		alert.setContentText("Todos los campos deben ser llenados");
-    		alert.showAndWait();
-    	}
-    }
-
-    @FXML
-    public void noCreateProduct(ActionEvent event) {
-       	txtIdProduct.setText("");
-        txtNameProduct.setText("");
-        choiceBoxCategoryProduct.setValue(null);
-        choiceBoxSizeProduct.setValue(null);
-        txtPriceProduct.setText("");
-        txtAvailabilityProduct.setText("");
-        txtDescriptionProduct.setText("");
-    }
-    
-  	//**********************************************************************************************
-    //+
-    //+
-    //+
-    //+
-    //+     
-    //REGISTER1.FXML THINGS**********************************************************************************************************************************************************
-    
-    @FXML
-    private Pane mainPaneRegister;
-    
-    @FXML
-    void createAdministratorUser(ActionEvent event) {
-
-    }
-    
-    @FXML
-    public void openCreateCashierEmployee(ActionEvent event) throws IOException{
-    	openScreen("create-cashier-employee.fxml",mainPaneRegister);
-    	initializeToggleGroupCashier();
-    }
-    public void initializeToggleGroupCashier() {
-    	ToggleGroup tgCashier = new ToggleGroup();
-    	this.rbYesCashier.setToggleGroup(tgCashier);
-    	this.rbNoCashier.setToggleGroup(tgCashier);    	
-    }
-    
-    @FXML
-    public void openCreateChefEmployee(ActionEvent event)throws IOException {
-    	openScreen("create-chef-employee.fxml",mainPaneRegister);
-    }
-
-    @FXML
-    public void openCreateDeliveryManEmployee(ActionEvent event)throws IOException {
-    	openScreen("create-deliveryMan-employee.fxml",mainPaneRegister);
-    	initializeChoiceBoxAmountOrdersDeliveryMan();
-    }
-
-    @FXML
-    public void openCreateWaiterEmployee(ActionEvent event) throws IOException{
-    	openScreen("create-waiter-employee.fxml",mainPaneRegister);
-    	initializeChoiceBoxAmounTablesWaiter();
-    }
-    
-
-    @FXML
-    public void backToLogin(ActionEvent event) {
-    	openScreen("login.fxml",mainPaneRegister);
-    }
-
     //**********************************************************************************************
     //+
     //+
@@ -695,6 +610,90 @@ public class AforeGUI {
     //+
     //+
     //+
+    //+  
+    //CREATE-PRODUCT.FXML THINGS**************************************************************************
+       
+    
+    @FXML
+    private Pane mainPaneCreateProduct;
+
+    @FXML
+    private TextField txtIdProduct;
+    
+    @FXML
+    private TextField txtNameProduct;
+
+    @FXML
+    private ChoiceBox<String> choiceBoxCategoryProduct;
+
+    @FXML
+    private ChoiceBox<String> choiceBoxSizeProduct;
+    
+    @FXML
+    private TextField txtPriceProduct;
+
+    @FXML
+    private TextField txtAvailabilityProduct;
+
+    @FXML
+    private TextArea txtDescriptionProduct;
+    
+    
+    public void initializeChoiceBoxCategoryProduct(){
+    	ObservableList<String>categories = FXCollections.observableArrayList("Bebida","Entrada","Plato principal","Postre","Vino","Ensalada","Respostería");
+    	choiceBoxCategoryProduct.setItems(categories);
+    }
+    
+    public void initializeChoiceBoxSizeProduct(){
+    	ObservableList<String>sizes = FXCollections.observableArrayList("Personal","Para dos","Familiar");
+    	choiceBoxSizeProduct.setItems(sizes);
+    }
+
+    @FXML
+    public void createProduct(ActionEvent event) {
+    	String id = txtIdProduct.getText();
+    	String name = txtNameProduct.getText();
+    	String category = choiceBoxCategoryProduct.getValue();
+    	String size= choiceBoxSizeProduct.getValue();
+    	String price = txtPriceProduct.getText();
+    	// int available = Integer.parseInt(txtAvailabilityProduct.getText());
+    	String description = txtDescriptionProduct.getText();
+
+    	if (!id.equals("") && !name.equals("") && !category.equals("") && !size.equals("") && !price.equals("") && !txtAvailabilityProduct.getText().equals("") && !description.equals("")) {
+    		restaurant.addProduct(id,name,category,size,price,Integer.parseInt(txtAvailabilityProduct.getText()),description);
+    		txtIdProduct.setText("");
+    		txtNameProduct.setText("");
+    		choiceBoxCategoryProduct.setValue(null);
+    		choiceBoxSizeProduct.setValue(null);
+    		txtPriceProduct.setText("");
+    		txtAvailabilityProduct.setText("");
+    		txtDescriptionProduct.setText("");
+
+    	}else if (id.equals("") || name.equals("") || category.equals("") || size.equals("") || price.equals("") || txtAvailabilityProduct.getText().equals("") || description.equals("")) {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al guardar datos");
+    		alert.setHeaderText("Campos incompletos");
+    		alert.setContentText("Todos los campos deben ser llenados");
+    		alert.showAndWait();
+    	}
+    }
+
+    @FXML
+    public void noCreateProduct(ActionEvent event) {
+       	txtIdProduct.setText("");
+        txtNameProduct.setText("");
+        choiceBoxCategoryProduct.setValue(null);
+        choiceBoxSizeProduct.setValue(null);
+        txtPriceProduct.setText("");
+        txtAvailabilityProduct.setText("");
+        txtDescriptionProduct.setText("");
+    }
+    
+    //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
     //+     
     //DELETE PRODUCT THINGS**********************************************************************************************************************************************************
     @FXML
@@ -731,17 +730,19 @@ public class AforeGUI {
         
         if(findProduct!=null) {
         	restaurant.getProducts().remove(findProduct);
+        	
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Producto eliminado");
 			alert.setHeaderText("El producto ha sido eliminado satisfactoriamente");
 			alert.setContentText("El producto con "+findProduct.getName()+" ha sido eliminado");
 			alert.showAndWait();
-			deleteProductId.setText(null);
-    		deleteProductName.setText(null);
-    		deleteProductAvailability.setText(null);
-    		deleteProductCategory.setText(null);
-    		deleteProductPrice.setText(null);
-    		deleteProductSize.setText(null);
+			
+			deleteProductId.setText("");
+    		deleteProductName.setText("");
+    		deleteProductAvailability.setText("");
+    		deleteProductCategory.setText("");
+    		deleteProductPrice.setText("");
+    		deleteProductSize.setText("");
         }
         else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -906,7 +907,7 @@ public class AforeGUI {
      
 
     @FXML
-    private Pane mainPaneDeleteClient;
+    private Pane mainPaneDisableClient;
 
     @FXML
     private TextField txtDisableProductId;
@@ -1005,15 +1006,15 @@ public class AforeGUI {
 			alert.showAndWait();
     	}
     }
-  //**********************************************************************************************
+    
+    //**********************************************************************************************
     //+
     //+
     //+
     //+
     //+     
-    //DISABLE PRODUCT THINGS**********************************************************************************************************************************************************
-     
-    
+    //CREATE CLIENT THINGS**********************************************************************************************************************************************************
+         
     @FXML
     private Pane mainPaneCreateClient;
 
@@ -1033,38 +1034,21 @@ public class AforeGUI {
     private TextArea txtcreateClientObservation;
 
     @FXML
-    void buttonCreateClientRegister(ActionEvent event) {
+    public void buttonCreateClientRegister(ActionEvent event) {
     	if(!txtcreateClientName.getText().equals("") && !txtcreateClientId.getText().equals("")) {
     		String name=txtcreateClientName.getText();
     		String id=txtcreateClientId.getText();
     		String address=txtcreateClientAdress.getText();
     		String obs=txtcreateClientObservation.getText();
     		String phone=txtcreateClientPhone.getText();
-    		Client client=new Client (name, id, address, phone, obs);
     		
-
-    		if(restaurant.findClient(id)==null) {
-        		if(restaurant.getFirstClient()==null) {//SI NO HAY CLIENTES
-        			restaurant.setFirstClient(client);
-        		}
-        		else {//SI YA HAY CLIENTES BUSCA EL ULTIMO Y LE ASIGNA EL .NEXT
-        			Client lastClient=restaurant.findLastClient(restaurant.getFirstClient());
-        			lastClient.setNext(client);
-        		}
-    			Alert alert = new Alert(AlertType.CONFIRMATION);
-    			alert.setTitle("Cliente creado");
-    			alert.setHeaderText("El cliente ha sido creado");
-    			alert.setContentText("El cliente con el id "+id+" ha sido creado satisfactoriamente.");
-    			alert.showAndWait();
-    			
-    		}else {
-    			Alert alert = new Alert(AlertType.ERROR);
-    			alert.setTitle("Error al crear el cliente");
-    			alert.setHeaderText("Cliente Existente");
-    			alert.setContentText("El cliente con el id "+id+" ya está registrado en el restaurante.");
-    			alert.showAndWait();
-    		}
+    		restaurant.addClient(name, id, address, phone, obs); 	
     		
+        	txtcreateClientName.setText("");
+    		txtcreateClientId.setText("");
+    		txtcreateClientAdress.setText("");
+    		txtcreateClientObservation.setText("");
+    		txtcreateClientPhone.setText("");
     	}
     	else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -1076,13 +1060,114 @@ public class AforeGUI {
     }
 
     @FXML
-    void buttonCreateClientCancel(ActionEvent event) {
-
+    public void buttonCreateClientCancel(ActionEvent event) {
+    	txtcreateClientName.setText("");
+		txtcreateClientId.setText("");
+		txtcreateClientAdress.setText("");
+		txtcreateClientObservation.setText("");
+		txtcreateClientPhone.setText("");
+		
     }
 
     @FXML
-    void buttonOpenReserva(ActionEvent event) {
-
+    public void buttonOpenReserva(ActionEvent event) {
+    	openScreen("reserva.fxml",paneToChange);
     }
+    
+    
+    //*********************************************************************************************************************************************************************************************+
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //DELETE CLIENT THINGS**********************************************************************************************************************************************************
+    
+    @FXML
+    private Pane mainPaneDeleteClient;
+
+    @FXML
+    private TextField txtDeleteClientId;
+
+    @FXML
+    private TextField txtDeleteClientName;
+
+    @FXML
+    private TextField txtDeleteClientIde;
+
+    @FXML
+    private TextField txtDeleteClientAddress;
+
+    @FXML
+    private TextField txtDeleteClientPhone;
+
+    @FXML
+    private Label labelMaxAfore;
+
+    @FXML
+    private Label labelCurrentPeople;
+
+    @FXML
+    private Label labelEmptySpaces;
+
+    @FXML
+    public void buttonFindClientToDelete(ActionEvent event) {    	
+    	Client clientToDelete = restaurant.findClient(txtDeleteClientId.getText());
+    	if (clientToDelete!=null) {
+    		txtDeleteClientName.setText(clientToDelete.getName());
+    		txtDeleteClientIde.setText(clientToDelete.getId());
+    		txtDeleteClientAddress.setText(clientToDelete.getAddress());
+    		txtDeleteClientPhone.setText(clientToDelete.getPhone());
+    	}else {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error al buscar el cliente");
+    		alert.setHeaderText("Cliente no encontrado");
+    		alert.setContentText("El cliente con id "+txtDeleteClientId.getText()+" no se ha encontrado.");
+    		alert.showAndWait();
+    	}    		
+    	
+    }
+    
+    @FXML
+    public void buttonClientToDelete(ActionEvent event) {
+    	Client clientToDelete = restaurant.findClient(txtDeleteClientId.getText());
+    	
+    	if (clientToDelete!=null) {
+        	Client prev = clientToDelete.getPrevious();
+        	Client next = clientToDelete.getNext();
+        	
+        	prev.setNext(next);
+        	next.setPrevious(prev);
+        	
+        	txtDeleteClientId.setText("");
+        	txtDeleteClientName.setText("");
+    		txtDeleteClientIde.setText("");
+    		txtDeleteClientAddress.setText("");
+    		txtDeleteClientPhone.setText("");
+    		
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Cliente eliminado");
+			alert.setHeaderText("El cliente ha sido eliminado satisfactoriamente");
+			alert.setContentText("El cliente con id"+clientToDelete.getId()+" ha sido eliminado");
+			alert.showAndWait();  		
+    		
+    	}else {
+    		Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error en la eliminación del cliente");
+			alert.setHeaderText("Cliente no encontrado");
+			alert.setContentText("El cliente con id "+txtDeleteClientId.getText()+" no se ha encontrado.");
+			alert.showAndWait();
+    	}
+    }
+
+    @FXML
+    public void buttonNoClientToDelete(ActionEvent event) {
+    	txtDeleteClientId.setText("");
+    	txtDeleteClientName.setText("");
+		txtDeleteClientIde.setText("");
+		txtDeleteClientAddress.setText("");
+		txtDeleteClientPhone.setText("");
+    }
+
     
 }

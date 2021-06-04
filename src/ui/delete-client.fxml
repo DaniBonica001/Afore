@@ -30,8 +30,8 @@
                   <Font name="System Italic" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="125.0" layoutY="82.0" prefHeight="25.0" prefWidth="140.0" />
-            <Button layoutX="290.0" layoutY="80.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar" textFill="WHITE">
+            <TextField fx:id="txtDeleteClientId" layoutX="125.0" layoutY="82.0" prefHeight="25.0" prefWidth="140.0" />
+            <Button layoutX="290.0" layoutY="80.0" mnemonicParsing="false" onAction="#buttonFindClientToDelete" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -59,10 +59,10 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField editable="false" layoutX="128.0" layoutY="117.0" prefHeight="25.0" prefWidth="140.0" />
-            <TextField editable="false" layoutX="128.0" layoutY="159.0" prefHeight="25.0" prefWidth="140.0" />
-            <TextField editable="false" layoutX="128.0" layoutY="202.0" prefHeight="25.0" prefWidth="140.0" />
-            <TextField editable="false" layoutX="127.0" layoutY="252.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDeleteClientName" editable="false" layoutX="128.0" layoutY="117.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDeleteClientIde" editable="false" layoutX="128.0" layoutY="159.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDeleteClientAddress" editable="false" layoutX="128.0" layoutY="202.0" prefHeight="25.0" prefWidth="140.0" />
+            <TextField fx:id="txtDeleteClientPhone" editable="false" layoutX="127.0" layoutY="252.0" prefHeight="25.0" prefWidth="140.0" />
             <Label layoutX="71.0" layoutY="22.0" prefHeight="30.0" prefWidth="229.0" text="Datos Cliente" textAlignment="RIGHT">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
@@ -71,7 +71,7 @@
                   <Insets left="40.0" />
                </padding>
             </Label>
-            <Button layoutX="96.0" layoutY="312.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Eliminar" textFill="WHITE">
+            <Button layoutX="96.0" layoutY="312.0" mnemonicParsing="false" onAction="#buttonClientToDelete" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Eliminar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -79,7 +79,7 @@
                   <DropShadow />
                </effect>
             </Button>
-            <Button layoutX="200.0" layoutY="312.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Cancelar" textFill="WHITE">
+            <Button layoutX="200.0" layoutY="312.0" mnemonicParsing="false" onAction="#buttonNoClientToDelete" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Cancelar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -102,7 +102,7 @@
                   <DropShadow color="#f66b1c" />
                </effect>
             </Label>
-            <Label layoutX="67.0" layoutY="187.0" text="X personas">
+            <Label fx:id="labelMaxAfore" layoutX="67.0" layoutY="187.0" text="X personas">
                <font>
                   <Font size="15.0" />
                </font>
@@ -115,7 +115,7 @@
                   <DropShadow color="#f66b1c" />
                </effect>
             </Label>
-            <Label layoutX="61.0" layoutY="256.0" text="X personas">
+            <Label fx:id="labelCurrentPeople" layoutX="61.0" layoutY="256.0" text="X personas">
                <font>
                   <Font size="15.0" />
                </font>
@@ -128,7 +128,7 @@
                   <DropShadow color="#f66b1c" />
                </effect>
             </Label>
-            <Label layoutX="62.0" layoutY="335.0" text="X personas">
+            <Label fx:id="labelEmptySpaces" layoutX="62.0" layoutY="335.0" text="X personas">
                <font>
                   <Font size="15.0" />
                </font>
