@@ -1,6 +1,11 @@
 package ui;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,13 +31,19 @@ import model.Product;
 import model.Restaurant;
 
 
+
 public class AforeGUI {	
 	
 	//Relations
 	private Restaurant restaurant;
 	
+	//Constructor #1
 	public AforeGUI(Restaurant rest) {
 		restaurant = rest;
+	}
+	
+	//Constructor #2
+	public AforeGUI() {		
 	}
 	
 	public void openScreen(String nameFxml, Pane paneToOpen)  {
@@ -60,7 +71,7 @@ public class AforeGUI {
 	private TextField txtPasswordLogin;
     
     @FXML
-    public void buttonLogin(ActionEvent event) throws IOException {
+    public void buttonLogin(ActionEvent event) {
     	openScreen("menu.fxml",mainPaneLogin);    	
     }
     
@@ -73,6 +84,73 @@ public class AforeGUI {
     public void buttonRegister(ActionEvent event) {
     	openScreen("register1.fxml",mainPaneLogin);
     }
+    
+    
+  //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+  
+    //MENU-ADMIN.FXML THINGS**************************************************************************
+    @FXML
+    private Pane paneToChangeAdm;
+    
+    public Thread hora;
+    public Thread hilo;
+
+    @FXML
+    void buttonOpenEmployeeManagement(ActionEvent event) {
+    	openScreen("employees.fxml",paneToChangeAdm);    	
+
+		hora = new Thread(new Runnable() {
+			public void run() {
+				while (true) {
+					updateHour();
+				}
+			}
+		});
+		hora.start();
+    }
+    
+    public void updateHour() {
+		hilo = new Thread(new Runnable() {
+			public void run() {
+				labelHour.setText(calculateHour());
+			}
+		});
+		while (true) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException ex) {
+			}
+
+			// UI update is run on the Application thread
+			Platform.runLater(hilo);
+		}
+	}
+
+	// This method helps to calculate the hour in a military hour
+	public String calculateHour() {
+		String hora;
+		String min;
+		String seg;
+		String message;
+		Calendar calendario = new GregorianCalendar();
+		Date horaActual = new Date();
+		calendario.setTime(horaActual);
+
+		hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY)
+				: "0" + calendario.get(Calendar.HOUR_OF_DAY);
+		min = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE)
+				: "0" + calendario.get(Calendar.MINUTE);
+		seg = calendario.get(Calendar.SECOND) > 9 ? "" + calendario.get(Calendar.SECOND)
+				: "0" + calendario.get(Calendar.SECOND);
+
+		message = hora + ":" + min + ":" + seg;
+		return message;
+	}
+    
     
     //**********************************************************************************************
     //+
@@ -1439,6 +1517,94 @@ public class AforeGUI {
     	}
     
     }
+    
+    
+    
+    
+    
+    
+    
+    //*********************************************************************************************************************************************************************************************+
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //EMPLOYEES THINGS**********************************************************************************************************************************************************
+   
+    @FXML
+    private TextField txtEntryEmployeeId;
+
+    @FXML
+    private TextField txtEntryEmployeeName;
+
+    @FXML
+    private TextField txtEntryEmployeePhone;
+
+    @FXML
+    private TextField txtEntryEmployeeUser;
+
+    @FXML
+    private TextField txtEntryEmployeeWork;
+
+    @FXML
+    private TextField txtExitEmployeeId;
+
+    @FXML
+    private TextField txtExitEmployeeName;
+
+    @FXML
+    private TextField txtExitEmployeePhone;
+
+    @FXML
+    private TextField txtExitEmployeeUser;
+
+    @FXML
+    private TextField txtExitEmployeeWork;
+
+    @FXML
+    private Label labelHour;
+    
+    
+
+    public Label getLabelHour() {
+		return labelHour;
+	}
+
+	public void setLabelHour(Label labelHour) {
+		this.labelHour = labelHour;
+	}
+
+	@FXML
+    void buttonEntry(ActionEvent event) {
+    	
+    }
+
+    @FXML
+    void buttonExit(ActionEvent event) {
+
+    }
+
+    @FXML
+    void buttonFindEntryEmployee(ActionEvent event) {
+
+    }
+
+    @FXML
+    void buttonFindExitEmployee(ActionEvent event) {
+
+    }
+
+    @FXML
+    void buttonNoEntry(ActionEvent event) {
+
+    }
+
+    @FXML
+    void buttonNoExit(ActionEvent event) {
+
+    }
+    
 
     
 }
