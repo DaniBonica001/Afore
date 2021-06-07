@@ -90,6 +90,8 @@ public class Product {
 	public Condition getCondition() {
 		return condition;
 	}
+
+
 	
 	//*********************************************************************************************************
 

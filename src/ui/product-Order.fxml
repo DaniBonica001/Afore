@@ -64,7 +64,7 @@
             </RadioButton>
          </children>
       </Pane>
-      <Button layoutX="463.0" layoutY="49.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="3.0" rotate="90.0" style="-fx-background-radius: 50; -fx-background-color: #FFC300;">
+      <Button layoutX="463.0" layoutY="49.0" mnemonicParsing="false" onAction="#buttonShowTables" prefHeight="21.0" prefWidth="3.0" rotate="90.0" style="-fx-background-radius: 50; -fx-background-color: #FFC300;">
          <font>
             <Font size="9.0" />
          </font>

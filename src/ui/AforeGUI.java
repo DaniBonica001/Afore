@@ -83,6 +83,7 @@ public class AforeGUI {
     @FXML
     public void buttonRegister(ActionEvent event) {
     	openScreen("register1.fxml",mainPaneLogin);
+    	
     }
     
     
@@ -255,7 +256,8 @@ public class AforeGUI {
 
     @FXML
     public void buttonDeletepProduct(ActionEvent event) throws IOException{
-    	openScreen("delete-product.fxml",paneToChange);    
+    	openScreen("delete-product.fxml",paneToChange);  
+    	
     }
 
     @FXML
@@ -749,8 +751,8 @@ public class AforeGUI {
     		restaurant.addProduct(id,name,category,size,price,Integer.parseInt(txtAvailabilityProduct.getText()),description);
     		txtIdProduct.setText("");
     		txtNameProduct.setText("");
-    		choiceBoxCategoryProduct.setValue(null);
-    		choiceBoxSizeProduct.setValue(null);
+    		choiceBoxCategoryProduct.getSelectionModel().clearSelection();
+    		choiceBoxSizeProduct.getSelectionModel().clearSelection();
     		txtPriceProduct.setText("");
     		txtAvailabilityProduct.setText("");
     		txtDescriptionProduct.setText("");
@@ -812,36 +814,45 @@ public class AforeGUI {
 
     @FXML
     public void deleteProductButtonEliminar(ActionEvent event) {
-        Product findProduct= restaurant.findProduct(deleteProductId.getText());
-        
-        if(findProduct!=null) {
-        	restaurant.getProducts().remove(findProduct);
-        	
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Producto eliminado");
-			alert.setHeaderText("El producto ha sido eliminado satisfactoriamente");
-			alert.setContentText("El producto con "+findProduct.getName()+" ha sido eliminado");
-			alert.showAndWait();
-			
-			deleteProductId.setText("");
-    		deleteProductName.setText("");
-    		deleteProductAvailability.setText("");
-    		deleteProductCategory.setText("");
-    		deleteProductPrice.setText("");
-    		deleteProductSize.setText("");
-        }
-        else {
-			Alert alert = new Alert(AlertType.ERROR);
+    	if (!deleteProductId.getText().equals("")) {
+    		 Product findProduct= restaurant.findProductBinarySearch(deleteProductId.getText());
+    		 
+    	        if(findProduct!=null) {
+    	        	restaurant.deleteProduct(deleteProductId.getText());
+    	        	
+    				Alert alert = new Alert(AlertType.CONFIRMATION);
+    				alert.setTitle("Producto eliminado");
+    				alert.setHeaderText("El producto ha sido eliminado satisfactoriamente");
+    				alert.setContentText("El producto con "+findProduct.getName()+" ha sido eliminado");
+    				alert.showAndWait();
+    				
+    				deleteProductId.setText("");
+    	    		deleteProductName.setText("");
+    	    		deleteProductAvailability.setText("");
+    	    		deleteProductCategory.setText("");
+    	    		deleteProductPrice.setText("");
+    	    		deleteProductSize.setText("");
+    	        }
+    	        else {
+    				Alert alert = new Alert(AlertType.ERROR);
+    				alert.setTitle("Error en la eliminación del producto");
+    				alert.setHeaderText("Producto no encontrado");
+    				alert.setContentText("El producto con id "+deleteProductId.getText()+" no se ha encontrado.");
+    				alert.showAndWait();
+    	        }
+    	}else {
+    		Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error en la eliminación del producto");
-			alert.setHeaderText("Producto no encontrado");
-			alert.setContentText("El producto con id "+deleteProductId.getText()+" no se ha encontrado.");
+			alert.setHeaderText("Campos incompletos");
+			alert.setContentText("Es necesario el id del productos para poder eliminarlo");
 			alert.showAndWait();
-        }
+    	}
+       
     }
 
     @FXML
     public void findProductById(ActionEvent event) {
-    	Product findProduct= restaurant.findProduct(deleteProductId.getText());
+    	Product findProduct= restaurant.findProductBinarySearch(deleteProductId.getText());
     	
     	if(findProduct!=null) {
     		deleteProductName.setText(findProduct.getName());
@@ -892,7 +903,7 @@ public class AforeGUI {
     @FXML
     public void buttonUpdateProductFind(ActionEvent event) {
     	if(txtUpdateProductId.getText()!=null) {
-    		Product product=restaurant.findProduct(txtUpdateProductId.getText());
+    		Product product=restaurant.findProductBinarySearch(txtUpdateProductId.getText());
     		if(product!=null) {
     			txtUpdateProductName.setText(product.getName());
     			txtUpdateProductPrice.setText(product.getPrice());
@@ -923,64 +934,70 @@ public class AforeGUI {
     	String price=txtUpdateProductPrice.getText();
     	String availability=txtUpdateProductAvailability.getText();
     	
-    	Product product=restaurant.findProduct(txtUpdateProductId.getText());
-    	if(product!=null) {
-    		if(choiceBoxUpdateSizeProduct.getValue()!=null && choiceBoxUpdateCategoryProduct.getValue()!=null && !name.equals("") && !price.equals("") && !availability.equals("")) {
-	    		try {
-	    		product.setName(name);
-	    		product.setPrice(price);
-	    		product.setSize(choiceBoxUpdateSizeProduct.getValue());
-	    		product.setAvailability(Integer.parseInt(availability));
-	    		product.setCategory(choiceBoxUpdateCategoryProduct.getValue());
-	    		
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Producto actualizado satisfactotiamente");
-				alert.setHeaderText("El producto ha sido actuaizado");
-				alert.setContentText("El producto fue actualizado satisfactoriamente.");
-				alert.showAndWait();
-				
-		    	txtUpdateProductName.setText("");
-		    	txtUpdateProductId.setText("");
-		    	txtUpdateProductPrice.setText("");
-		    	txtUpdateProductAvailability.setText("");
-		    	choiceBoxUpdateCategoryProduct.setValue("");
-		    	choiceBoxUpdateSizeProduct.setValue("");
-	    		
-	    		
-	    		}catch(NumberFormatException e) {
-	    			Alert alert = new Alert(AlertType.ERROR);
-	    			alert.setTitle("Error al leer disponibilidad");
-	    			alert.setHeaderText("La disponibilidad debe ser numérica");
-	    			alert.setContentText("La disponibilidad "+txtUpdateProductAvailability.getText()+" no es correcta, debe ser numérica.");
-	    			alert.showAndWait();
-	    		}
-    		}
-    		else {
+    	if (!txtUpdateProductId.getText().equals("")) {
+    		Product product=restaurant.findProductBinarySearch(txtUpdateProductId.getText());
+    		
+        	if(product!=null) {
+        		
+        		if(choiceBoxUpdateSizeProduct.getSelectionModel().isEmpty() == false && choiceBoxUpdateCategoryProduct.getSelectionModel().isEmpty()==false && !name.equals("") && !price.equals("") && !availability.equals("")) {
+    	    		try {
+    	    		product.setName(name);
+    	    		product.setPrice(price);
+    	    		product.setSize(choiceBoxUpdateSizeProduct.getValue());
+    	    		product.setAvailability(Integer.parseInt(availability));
+    	    		product.setCategory(choiceBoxUpdateCategoryProduct.getValue());
+    	    		//Aquí llamo a la persistencia
+    	    		
+    				Alert alert = new Alert(AlertType.CONFIRMATION);
+    				alert.setTitle("Producto actualizado satisfactotiamente");
+    				alert.setHeaderText("El producto ha sido actuaizado");
+    				alert.setContentText("El producto fue actualizado satisfactoriamente.");
+    				alert.showAndWait();
+    				
+    		    	txtUpdateProductName.setText("");
+    		    	txtUpdateProductId.setText("");
+    		    	txtUpdateProductPrice.setText("");
+    		    	txtUpdateProductAvailability.setText("");
+    		    	choiceBoxUpdateCategoryProduct.getSelectionModel().clearSelection();
+    		    	choiceBoxUpdateSizeProduct.getSelectionModel().clearSelection();
+    	    		
+    	    		
+    	    		}catch(NumberFormatException e) {
+    	    			Alert alert = new Alert(AlertType.ERROR);
+    	    			alert.setTitle("Error al leer disponibilidad");
+    	    			alert.setHeaderText("La disponibilidad debe ser numérica");
+    	    			alert.setContentText("La disponibilidad "+txtUpdateProductAvailability.getText()+" no es correcta, debe ser numérica.");
+    	    			alert.showAndWait();
+    	    		}
+        		}
+        		else {
+        			Alert alert = new Alert(AlertType.ERROR);
+        			alert.setTitle("Error al actualizar datos");
+        			alert.setHeaderText("Todos los campos son requeridos");
+        			alert.setContentText("Todos los campos deben estar llenos");
+        			alert.showAndWait();
+        		}
+        	}else {
     			Alert alert = new Alert(AlertType.ERROR);
-    			alert.setTitle("Error al actualizar datos");
-    			alert.setHeaderText("Todos los campos son requeridos");
-    			alert.setContentText("Todos los campos deben estar llenos");
+    			alert.setTitle("Error al buscar el producto");
+    			alert.setHeaderText("Producto no encontrado");
+    			alert.setContentText("El producto con id "+txtUpdateProductId.getText()+" no se ha encontrado.");
     			alert.showAndWait();
-    		}
-    	}else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error al buscar el producto");
-			alert.setHeaderText("Producto no encontrado");
-			alert.setContentText("El producto con id "+txtUpdateProductId.getText()+" no se ha encontrado.");
-			alert.showAndWait();
+        	}
     	}
+    	
+    	
     	
     }
 
     @FXML
     public void buttonUpdateProuctCancel(ActionEvent event) {
-    	txtUpdateProductName.setText(null);
-    	txtUpdateProductId.setText(null);
-    	txtUpdateProductPrice.setText(null);
-    	txtUpdateProductAvailability.setText(null);
-    	choiceBoxUpdateCategoryProduct.setValue(null);
-    	choiceBoxUpdateSizeProduct.setValue(null);
-    	
+    	txtUpdateProductName.setText("");
+    	txtUpdateProductId.setText("");
+    	txtUpdateProductPrice.setText("");
+    	txtUpdateProductAvailability.setText("");
+    	choiceBoxUpdateCategoryProduct.getSelectionModel().clearSelection();
+    	choiceBoxUpdateSizeProduct.getSelectionModel().clearSelection();
     }
     
   //**********************************************************************************************
@@ -1077,6 +1094,8 @@ public class AforeGUI {
     				alert.setContentText("El estado del producto ha sido cambiado a activo");
     				alert.showAndWait();
     			}
+    			
+    			//Aquí invoco el método de la resistencia
     		}else {
     			Alert alert = new Alert(AlertType.ERROR);
     			alert.setTitle("Error al buscar el producto");
@@ -1223,59 +1242,47 @@ public class AforeGUI {
     
     @FXML
     public void buttonClientToDelete(ActionEvent event) {
-    	Client clientToDelete = restaurant.findClient(txtDeleteClientId.getText());
     	
-    	if (clientToDelete!=null) {
-    		Order hasOrders = restaurant.findClientOrder(clientToDelete);
+    	if (!txtDeleteClientId.getText().equals("")) {
+    		Client clientToDelete = restaurant.findClient(txtDeleteClientId.getText());
     		
-    		if (hasOrders == null) {
-    			
-    			if (clientToDelete.equals(restaurant.getFirstClient())) {
-    				clientToDelete.getNext().setPrevious(null);
-    				restaurant.setFirstClient(clientToDelete.getNext());
-    				clientToDelete.setNext(null);   
-    				
-    			}else {
-    				Client prev = clientToDelete.getPrevious();
-                	Client next = clientToDelete.getNext();
-                	
-        			if (clientToDelete.getNext()!=null) {
-        				next.setPrevious(prev);
-        			}
-        			if (clientToDelete.getPrevious()!=null) {
-        				prev.setNext(next);
-        			}
-    			}
-    		
-    		
-            	txtDeleteClientId.setText("");
-            	txtDeleteClientName.setText("");
-        		txtDeleteClientIde.setText("");
-        		txtDeleteClientAddress.setText("");
-        		txtDeleteClientPhone.setText("");
+    		if (clientToDelete!=null) {
+        		Order hasOrders = restaurant.findClientOrder(clientToDelete);
         		
-    			Alert alert = new Alert(AlertType.CONFIRMATION);
-    			alert.setTitle("Cliente eliminado");
-    			alert.setHeaderText("El cliente ha sido eliminado satisfactoriamente");
-    			alert.setContentText("El cliente con id"+clientToDelete.getId()+" ha sido eliminado");
-    			alert.showAndWait(); 
-    		
-    		}else {
-    			Alert alert = new Alert(AlertType.ERROR);
+        		if (hasOrders == null) {        			
+        			
+        			restaurant.deleteClient(txtDeleteClientId.getText());        		
+        		
+                	txtDeleteClientId.setText("");
+                	txtDeleteClientName.setText("");
+            		txtDeleteClientIde.setText("");
+            		txtDeleteClientAddress.setText("");
+            		txtDeleteClientPhone.setText("");
+            		
+        			Alert alert = new Alert(AlertType.CONFIRMATION);
+        			alert.setTitle("Cliente eliminado");
+        			alert.setHeaderText("El cliente ha sido eliminado satisfactoriamente");
+        			alert.setContentText("El cliente con id"+clientToDelete.getId()+" ha sido eliminado");
+        			alert.showAndWait(); 
+        		
+        		}else {
+        			Alert alert = new Alert(AlertType.ERROR);
+        			alert.setTitle("Error en la eliminación del cliente");
+        			alert.setHeaderText("El cliente tiene una orden pendiente");
+        			alert.setContentText("El cliente con id"+clientToDelete.getId()+" no podrá ser eliminado");
+        			alert.showAndWait(); 
+        		}
+             		
+        		
+        	}else{    		
+        		Alert alert = new Alert(AlertType.ERROR);
     			alert.setTitle("Error en la eliminación del cliente");
-    			alert.setHeaderText("El cliente tiene una orden pendiente");
-    			alert.setContentText("El cliente con id"+clientToDelete.getId()+" no podrá ser eliminado");
-    			alert.showAndWait(); 
-    		}
-         		
-    		
-    	}else{    		
-    		Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error en la eliminación del cliente");
-			alert.setHeaderText("Cliente no encontrado");
-			alert.setContentText("El cliente con id "+txtDeleteClientId.getText()+" no se ha encontrado");
-			alert.showAndWait();			
+    			alert.setHeaderText("Cliente no encontrado");
+    			alert.setContentText("El cliente con id "+txtDeleteClientId.getText()+" no se ha encontrado");
+    			alert.showAndWait();			
+        	}
     	}
+    	
     }
 
     @FXML
@@ -1360,6 +1367,7 @@ public class AforeGUI {
         		clientToUpd.setAddress(address);
         		clientToUpd.setPhone(phone);
         		clientToUpd.setObservations(txtUpdateClientObs.getText());    
+        		//Aquí pongo el método de persistencia
         		
         		Alert alert = new Alert(AlertType.CONFIRMATION);
         		alert.setTitle("Cliente actualizado satisfactoriamente");
@@ -1489,6 +1497,8 @@ public class AforeGUI {
     				alert.showAndWait();
         		}
         		
+        		//Aquí pongo el método de persistencia
+        		
         		txtDisableClientId.setText("");
         		txtDisableClientName.setText("");
         		txtDisableClientIde.setText("");
@@ -1517,10 +1527,6 @@ public class AforeGUI {
     	}
     
     }
-    
-    
-    
-    
     
     
     
@@ -1564,17 +1570,7 @@ public class AforeGUI {
 
     @FXML
     private Label labelHour;
-    
-    
-
-    public Label getLabelHour() {
-		return labelHour;
-	}
-
-	public void setLabelHour(Label labelHour) {
-		this.labelHour = labelHour;
-	}
-
+  
 	@FXML
     void buttonEntry(ActionEvent event) {
     	
