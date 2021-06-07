@@ -1,8 +1,9 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
-
-
+import java.util.Date;
 import java.util.List;
 
 import javafx.scene.control.Alert;
@@ -16,6 +17,7 @@ public class Restaurant {
 	private List<Employee>employees;
 	private List<Order>orders;
 	private Client firstClient;
+	private Day rootDay;
 	
 	
 	//Constructor
@@ -24,6 +26,7 @@ public class Restaurant {
 		deliveries = new ArrayList<FoodDelivery>();
 		employees = new ArrayList<Employee>();	
 		orders = new ArrayList<Order>();
+		rootDay=null;
 	}
 	
 	//Getters and Setters
@@ -514,6 +517,154 @@ public class Restaurant {
 				prev.setNext(next);
 			}
 		}		
+	}
+
+	public void addGrade(Day current, int gradeAtencion, int gradeFood, int day, int month, int year) {
+		//1. VERIFICAR SI EL DÍA ACTUAL YA EXISTE EN EL ARBOL BINARO
+		Day findDay=findDay(rootDay, day, month, year);
+		if(findDay!=null) {
+			//2. SI EXISTE MODIFICAR SU NOTA DE ATENCION Y COMIDA
+			//System.out.println("***********gradeFood es"+gradeFood);
+			//System.out.println("ANTES EL PROMEDIO DE LA COMIDA ESTABA EN"+findDay.getAverageFoodGrade());
+			findDay.setAverageFoodGrade((findDay.getAverageFoodGrade()+gradeFood)/2);
+			findDay.setAverageServiceGrade((findDay.getAverageServiceGrade()+gradeAtencion)/2);
+			//System.out.println("SE HA CAMBIADO EL PROMEDIO DEL DIA DE COMIDA"+findDay.getAverageFoodGrade());
+		}
+		//3. SI NO EXISTE CREAR UNA NUEVA CLASE DAY Y AÑADIRLA AL ARBOL BINARIO
+		else {
+			/*
+		Date date = new Date();
+		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		int year  = localDate.getYear();
+		int month = localDate.getMonthValue();
+		int day   = localDate.getDayOfMonth();
+			 */
+
+			Day newDay= new Day(day, month, year, gradeAtencion, gradeFood);
+
+			//SI NO EXISTE ESE DÍA EN EL ARBOL BINARIO
+			if(current==null) {
+				setRootDay(newDay);
+				System.out.println("Se añadió el primer dia");
+			}else {
+				if(newDay.getYear()<current.getYear()) {// si su año es menor que el current automaticamente mirar a la izquierda
+					if(current.getLeft()==null) {
+						current.setLeft(newDay);
+						System.out.println("AÑO Se añadió a la izquierda de "+ current.getDay()+"/"+current.getMonth()+"/"+current.getYear());
+					}else {
+						addGrade(current.getLeft(), gradeAtencion, gradeFood, day, month, year);
+					}
+				}else if(newDay.getYear()==current.getYear()) {//si su año es igual al current entonces hay que mirar el mes para ver cual es mayor
+					if(newDay.getMonth()<current.getMonth()) {// si su mes es menor que el current automaticamente mirar a la izquierda
+						if(current.getLeft()==null) {
+							current.setLeft(newDay);
+							System.out.println("MES Se añadió a la izquierda de "+ current.getDay()+"/"+current.getMonth()+"/"+current.getYear());
+						}else {
+							addGrade(current.getLeft(), gradeAtencion, gradeFood, day, month, year);
+						}
+					}else if(newDay.getMonth()==current.getMonth()) {//si su mes es igual al current entonces hay que mirar el dia para ver cual es mayor
+						if(newDay.getDay()<=current.getDay()) {// si su dia es menor-igual que el current automaticamente mirar a la izquierda
+							if(current.getLeft()==null) {
+								current.setLeft(newDay);
+								System.out.println("DIA Se añadió a la izquierda de "+ current.getDay()+"/"+current.getMonth()+"/"+current.getYear());
+							}else {
+								addGrade(current.getLeft(), gradeAtencion, gradeFood, day, month, year);
+							}
+						}else {//si el dia es mayor que el current entonces mirar para la derecha automaticamente
+							if(current.getRight()==null) {//si aún no hay right entonces lo asigna
+								current.setRight(newDay);
+								System.out.println("DIA Se añadió a la derecha de "+ current.getDay()+"/"+current.getMonth()+"/"+current.getYear());
+							}
+							else {//si hay right entonces recursividad pero partiendo del right
+								addGrade(current.getRight(), gradeAtencion, gradeFood, day, month, year);
+							}
+						}
+
+					}else {//si el mes es mayor que el current entonces mirar para la derecha automaticamente
+						if(current.getRight()==null) {//si aún no hay right entonces lo asigna
+							current.setRight(newDay);
+							System.out.println("MES Se añadió a la derecha de "+ current.getDay()+"/"+current.getMonth()+"/"+current.getYear());
+						}
+						else {//si hay right entonces recursividad pero partiendo del right
+							addGrade(current.getRight(), gradeAtencion, gradeFood, day, month, year);
+						}
+					}
+
+				}else {//si el año es mayor que el current entonces mirar para la derecha automaticamente
+					if(current.getRight()==null) {//si aún no hay right entonces lo asigna
+						current.setRight(newDay);
+						System.out.println("AÑO Se añadió a la derecha de "+ current.getDay()+"/"+current.getMonth()+"/"+current.getYear());
+					}
+					else {//si hay right entonces recursividad pero partiendo del right
+						addGrade(current.getRight(), gradeAtencion, gradeFood, day, month, year);
+					}
+				}
+			}
+		}
+		
+	}
+	
+	public Day findDay(Day current, int day, int month, int year) {
+		Day findDay=null;
+		if(current==null) {
+			return null;
+		}
+		else {
+		if(current.getDay()==day && current.getMonth()==month && current.getYear()==year) {
+			findDay=current;
+			return findDay;
+		}else {
+			if(year<current.getYear()) {//si el año es menor al del actual entonces mire a la izquierda
+				if(current.getLeft()==null) {//si no tiene nada a la izquierda es porque no existe ese dia
+					return null;
+				}else {//si existe alguno a la izquierda engonces recursividad con el que está a la izquierda
+					return findDay(current.getLeft(), day, month, year);
+				}
+			}else if(current.getYear()==year) {
+				if(month<current.getMonth()) {//si el mes es menor al del actual mirar a la izquierda
+					if(current.getLeft()==null) {//si no hay nada a la izquierda entonces no existe
+						return null;
+					}else {
+						return findDay(current.getLeft(), day, month, year);
+					}
+				}else if(month==current.getMonth()) {
+					if(day<=current.getDay()) {//si el mes es menor al del actual mirar a la izquierda
+						if(current.getLeft()==null) {//si no hay nada a la izquierda entonces no existe
+							return null;
+						}else {
+							return findDay(current.getLeft(), day, month, year);
+						}
+					}else {
+						if(current.getRight()==null) {//si no hay nada a la izquierda entonces no existe
+							return null;
+						}else {
+							return findDay(current.getRight(), day, month, year);
+						}
+					}
+				}else {
+					if(current.getRight()==null) {//si no hay nada a la izquierda entonces no existe
+						return null;
+					}else {
+						return findDay(current.getRight(), day, month, year);
+					}
+				}
+			}else {//Si el año es mayor al actual
+				if(current.getRight()==null) {//si no tiene nada a la izquierda es porque no existe ese dia
+					return null;
+				}else {//si existe alguno a la izquierda engonces recursividad con el que está a la izquierda
+					return findDay(current.getRight(), day, month, year);
+				}
+			}
+		}
+		}
+	}
+
+	public Day getRootDay() {
+		return rootDay;
+	}
+
+	public void setRootDay(Day rootDay) {
+		this.rootDay = rootDay;
 	}
 
 }

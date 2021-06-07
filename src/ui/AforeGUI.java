@@ -1601,6 +1601,95 @@ public class AforeGUI {
 
     }
     
+  //*********************************************************************************************************************************************************************************************+
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //GRADE-SERVICE THINGS**********************************************************************************************************************************************************
+   
+    @FXML
+    private Pane mainPaneGradeServiceClient;
+
+    @FXML
+    private ToggleGroup atencionGrade;
+
+    @FXML
+    private ToggleGroup comidaGrade;
+    
+    @FXML
+    private RadioButton rbAtencionGrade1;
+    @FXML
+    private RadioButton rbAtencionGrade2;
+    @FXML
+    private RadioButton rbAtencionGrade3;
+    @FXML
+    private RadioButton rbAtencionGrade4;
+    @FXML
+    private RadioButton rbAtencionGrade5;
+
+    @FXML
+    private RadioButton rbFoodGrade1;
+    @FXML
+    private RadioButton rbFoodGrade2;
+    @FXML
+    private RadioButton rbFoodGrade3;
+    @FXML
+    private RadioButton rbFoodGrade4;
+    @FXML
+    private RadioButton rbFoodGrade5;
+    
+    @FXML
+    private TextField txtDay;
+
+    @FXML
+    private TextField txtMonth;
+
+    @FXML
+    private TextField txtYear;
+
+    @FXML
+    public void buttonRegisterGrades(ActionEvent event) {
+    	if(atencionGrade.getSelectedToggle()!=null && comidaGrade.getSelectedToggle()!=null) {
+    		int gradeAtencion=0;
+    		int gradeFood=0;
+    		
+    		if(rbAtencionGrade1.isSelected()) {
+    			gradeAtencion=1;
+    		}else if(rbAtencionGrade2.isSelected()) {
+    			gradeAtencion=2;
+    		}else if(rbAtencionGrade3.isSelected()) {
+    			gradeAtencion=3;
+    		}else if(rbAtencionGrade4.isSelected()) {
+    			gradeAtencion=4;
+    		}else{
+    			gradeAtencion=5;
+    		}
+    		
+    		if(rbFoodGrade1.isSelected()) {
+    			gradeFood=1;
+    		}else if(rbFoodGrade2.isSelected()) {
+    			gradeFood=2;
+    		}else if(rbFoodGrade3.isSelected()) {
+    			gradeFood=3;
+    		}else if(rbFoodGrade4.isSelected()) {
+    			gradeFood=4;
+    		}else{
+    			gradeFood=5;
+    		}
+    		
+    		restaurant.addGrade(restaurant.getRootDay(), gradeAtencion, gradeFood, Integer.parseInt(txtDay.getText()),Integer.parseInt(txtMonth.getText()), Integer.parseInt(txtYear.getText()) );
+    	}
+    	else {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Campos necesarios");
+    		alert.setHeaderText("Campos obligatorios");
+    		alert.setContentText("Debe escoger una calificacion al servicio y a la comida.");
+    		alert.showAndWait();
+    	}
+    }
+    
 
     
 }
