@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import exceptions.NoNumericInputException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -247,20 +249,36 @@ public class Restaurant {
 			//System.out.println("No entre al if");
 		}
 	}
+    public static boolean isNumeric(String cadena) {
 
+        boolean resultado;
 
-	public void addProduct(String id,String name,String category,String size,String price,int available,String description) {
+        try {
+            Integer.parseInt(cadena);
+            resultado = true;
+        } catch (NumberFormatException excepcion) {
+            resultado = false;
+        }
+
+        return resultado;
+    }
+ 
+	public void addProduct(String id,String name,String category,String size,String price,int available,String description) throws NoNumericInputException{
 		Product findProduct = findProduct(id);		
 		if (findProduct==null) {
 			
-			products.add(new Product(id, name, category, size, price, available, description));
-			threadToSortProducts();			
-			
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Creación del producto");
-			alert.setHeaderText("El producto ha sido creado");
-			alert.setContentText("El producto con id "+id+" ha sido creado exitosamente.");
-			alert.showAndWait();
+			if(isNumeric(price)==true) {
+				products.add(new Product(id, name, category, size, price, available, description));
+				threadToSortProducts();			
+				
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Creación del producto");
+				alert.setHeaderText("El producto ha sido creado");
+				alert.setContentText("El producto con id "+id+" ha sido creado exitosamente.");
+				alert.showAndWait();
+			}else {
+				throw new NoNumericInputException("El precio debe ser numérico");
+			}
 		}else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error en la creación del producto");
@@ -577,7 +595,8 @@ public class Restaurant {
 		}
 
 	}
-
+	
+	//metodo recursivo
 	public void addGrade(Day current, int gradeAtencion, int gradeFood, int day, int month, int year) {
 		//1. VERIFICAR SI EL DÍA ACTUAL YA EXISTE EN EL ARBOL BINARO
 		Day findDay=findDay(rootDay, day, month, year);
@@ -663,6 +682,7 @@ public class Restaurant {
 		
 	}
 	
+	//metodo recursivo
 	public Day findDay(Day current, int day, int month, int year) {
 		Day findDay=null;
 		if(current==null) {

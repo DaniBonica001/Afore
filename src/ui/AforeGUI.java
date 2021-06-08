@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import exceptions.NoNumericInputException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -996,15 +997,25 @@ public class AforeGUI {
     	// int available = Integer.parseInt(txtAvailabilityProduct.getText());
     	String description = txtDescriptionProduct.getText();
 
+    	
+    	
     	if (!id.equals("") && !name.equals("") && !category.equals("") && !size.equals("") && !price.equals("") && !txtAvailabilityProduct.getText().equals("") && !description.equals("")) {
-    		restaurant.addProduct(id,name,category,size,price,Integer.parseInt(txtAvailabilityProduct.getText()),description);
-    		txtIdProduct.setText("");
-    		txtNameProduct.setText("");
-    		choiceBoxCategoryProduct.getSelectionModel().clearSelection();
-    		choiceBoxSizeProduct.getSelectionModel().clearSelection();
-    		txtPriceProduct.setText("");
-    		txtAvailabilityProduct.setText("");
-    		txtDescriptionProduct.setText("");
+    		try {
+    			restaurant.addProduct(id,name,category,size,price,Integer.parseInt(txtAvailabilityProduct.getText()),description);
+    			txtIdProduct.setText("");
+    			txtNameProduct.setText("");
+    			choiceBoxCategoryProduct.getSelectionModel().clearSelection();
+    			choiceBoxSizeProduct.getSelectionModel().clearSelection();
+    			txtPriceProduct.setText("");
+    			txtAvailabilityProduct.setText("");
+    			txtDescriptionProduct.setText("");
+    		}catch(NoNumericInputException nnie) {
+        		Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error al crear el producto");
+    			alert.setHeaderText("No fue posible crear el producto");
+    			alert.setContentText("No fue posible crear el producto, "+nnie.getMessage());
+    			alert.showAndWait();
+    		}
 
     	}else if (id.equals("") || name.equals("") || category.equals("") || size.equals("") || price.equals("") || txtAvailabilityProduct.getText().equals("") || description.equals("")) {
     		Alert alert = new Alert(AlertType.ERROR);
