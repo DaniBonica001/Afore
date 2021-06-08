@@ -1013,7 +1013,7 @@ public class AforeGUI {
         		Alert alert = new Alert(AlertType.ERROR);
     			alert.setTitle("Error al crear el producto");
     			alert.setHeaderText("No fue posible crear el producto");
-    			alert.setContentText("No fue posible crear el producto, "+nnie.getMessage());
+    			alert.setContentText(nnie.getMessage());
     			alert.showAndWait();
     		}
 
