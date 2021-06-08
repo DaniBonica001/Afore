@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
@@ -26,26 +25,20 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="146.0" layoutY="134.0" />
-            <Label layoutX="24.0" layoutY="333.0" text="Tipo de empleado:">
-               <font>
-                  <Font name="System Italic" size="14.0" />
-               </font>
-            </Label>
-            <ChoiceBox layoutX="146.0" layoutY="331.0" prefWidth="150.0" />
+            <TextField fx:id="txtUpdateEmployeeName" layoutX="146.0" layoutY="134.0" />
             <Label layoutX="81.0" layoutY="253.0" text="Usuario:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="147.0" layoutY="250.0" />
+            <TextField fx:id="txtUpdateEmployeeUser" layoutX="147.0" layoutY="250.0" />
             <Label layoutX="65.0" layoutY="293.0" text="Contraseña:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="147.0" layoutY="290.0" />
-            <Button layoutX="116.0" layoutY="385.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Actualizar" textFill="WHITE">
+            <TextField fx:id="txtUpdateEmployeePassword" layoutX="147.0" layoutY="290.0" />
+            <Button layoutX="114.0" layoutY="356.0" mnemonicParsing="false" onAction="#buttonUpdateEmployeeUpdate" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Actualizar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -53,7 +46,7 @@
                   <DropShadow />
                </effect>
             </Button>
-            <Button layoutX="220.0" layoutY="385.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Cancelar" textFill="WHITE">
+            <Button layoutX="221.0" layoutY="356.0" mnemonicParsing="false" onAction="#buttonCancelUpdateEmployee" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Cancelar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -66,22 +59,22 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="147.0" layoutY="172.0" />
+            <TextField fx:id="txtUpdateEmployeeLastName" layoutX="147.0" layoutY="172.0" />
             <Label layoutX="50.0" layoutY="92.0" text="Identificación:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="146.0" layoutY="89.0" />
+            <TextField fx:id="txtUpdateEmployeeId" layoutX="146.0" layoutY="89.0" />
             <Label layoutX="79.0" layoutY="215.0" text="Teléfono:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="147.0" layoutY="212.0" />
-            <Button layoutX="320.0" layoutY="89.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar " textFill="WHITE">
+            <TextField fx:id="txtUpdateEmployeePhone" layoutX="147.0" layoutY="212.0" />
+            <Button layoutX="320.0" layoutY="89.0" mnemonicParsing="false" onAction="#buttonFindEmployeeToUpdate" style="-fx-background-radius: 20; -fx-background-color: #F66B1C;" text="Buscar " textFill="WHITE">
                <font>
-                  <Font size="13.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
                <effect>
                   <DropShadow />

@@ -1,11 +1,7 @@
 package model;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -71,6 +67,22 @@ public class Restaurant {
 	}	
 	
 	//***********************************************************************************************************************
+	
+	public boolean logInUser(String username,String password) { //-->Clase Restaurant
+		boolean exit=false;
+		boolean open=false;
+		
+		for (int i=0;i<employees.size() && !exit;i++) {
+			if (employees.get(i) instanceof SystemUser) {
+				SystemUser objUser = (SystemUser)employees.get(i);
+				if (username.equals(objUser.getUsername()) && password.equals(objUser.getPassword()) && employees.get(i).getCondition().equals(Condition.ACTIVE)) {
+					exit=true;
+					open=true;					
+				}
+			}			
+		}
+		return open;
+	}
 	
 	public Product findProduct(String id) {
 		Product product=null;
@@ -200,6 +212,7 @@ public class Restaurant {
 				}
 				
 			}catch (NumberFormatException e) {
+				System.out.println("El télefono debe ser un valor numérico");
 				e.printStackTrace();
 			}
 		
@@ -271,8 +284,8 @@ public class Restaurant {
 		}
 	}
 	
-	/*
-	public void updateProduct(String id,String name,String category,String size, String price, int availability,String description) {
+	
+	public void updateProduct(String id,String name,String category,String size, String price, int availability) {
 		Product findProduct= findProduct(id);
 		
 		if(findProduct!=null) {
@@ -280,8 +293,7 @@ public class Restaurant {
 			findProduct.setCategory(category);
 			findProduct.setSize(size);
 			findProduct.setPrice(price);
-			findProduct.setAvailability(availability);
-			findProduct.setDescription(description);
+			findProduct.setAvailability(availability);		
 		}
 		else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -292,7 +304,7 @@ public class Restaurant {
 		}
 		
 	}
-	*/
+	
 	
 	public Employee findEmployee(String id) {
 		selectionSortEmployeeByPhone();
@@ -415,12 +427,40 @@ public class Restaurant {
 			alert.setHeaderText("El empleado ya existe");
 			alert.setContentText("El empleado con id "+idDM+" ya se ha creado.");
 			alert.showAndWait();
-		}	
-		
-
-		
+		}			
 	}
 	
+	
+	public void deleteEmployee(String id){
+		Employee findEmployee = findEmployee(id);
+		if (findEmployee!=null){
+			employees.remove(findEmployee);
+		}else{
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al encontrar cliente");
+			alert.setHeaderText("Cliente inexistente");
+			alert.setContentText("El cliente con id "+id+" no está actualmente en la lista de clientes del restaurante.");
+			alert.showAndWait();
+		}
+	}
+	
+	public void updateEmployee(String id, String name, String lastName, String phone, String user, String password) {
+		Employee findEmployee = findEmployee(id);
+		if (findEmployee!=null) {
+			findEmployee.setName(name);
+			findEmployee.setLastName(lastName);
+			findEmployee.setPhone(phone);
+			findEmployee.setUsername(user);
+			findEmployee.setPassword(password);
+		}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al encontrar empleado");
+			alert.setHeaderText("Empleado inexistente");
+			alert.setContentText("El emplado con id "+id+" no está actualmente en la lista de empleados del restaurante.");
+			alert.showAndWait();
+		}
+		
+	}
 		
 	//Método recursivo
 	public Client findLastClient(Client current) {
@@ -517,6 +557,25 @@ public class Restaurant {
 				prev.setNext(next);
 			}
 		}		
+	}
+	
+	public void updateClient(String id, String name, String address, String phone, String obs){ //-->Clase Restaurant
+		Client findClient = findClient(id);
+		
+		if (findClient!=null){
+	        	findClient.setId(id);
+			findClient.setName(name);
+	        	findClient.setAddress(address);
+	        	findClient.setPhone(phone);
+	        	findClient.setObservations(obs);   
+		}else{
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al encontrar el cliente");
+			alert.setHeaderText("Cliente inexistente");
+			alert.setContentText("El cliente con id "+id+" no está actualmente en la lista de clientes del restaurante.");
+			alert.showAndWait();
+		}
+
 	}
 
 	public void addGrade(Day current, int gradeAtencion, int gradeFood, int day, int month, int year) {
@@ -666,5 +725,7 @@ public class Restaurant {
 	public void setRootDay(Day rootDay) {
 		this.rootDay = rootDay;
 	}
+
+	
 
 }

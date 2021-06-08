@@ -24,11 +24,16 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import model.Cashier;
+import model.Chef;
 import model.Client;
 import model.Condition;
+import model.DeliveryMan;
+import model.Employee;
 import model.Order;
 import model.Product;
 import model.Restaurant;
+import model.Waiter;
 
 
 
@@ -70,9 +75,33 @@ public class AforeGUI {
 	@FXML
 	private TextField txtPasswordLogin;
     
-    @FXML
-    public void buttonLogin(ActionEvent event) {
-    	openScreen("menu.fxml",mainPaneLogin);    	
+	@FXML
+    public void buttonLogin(ActionEvent event) { //-->Clase AforeGUI
+	String email = txtEmailLogin.getText();
+	String password = txtPasswordLogin.getText();
+	
+	if (!email.equals("") && !password.equals("")){
+		boolean entry = restaurant.logInUser(email,password);
+
+		if (entry == true){
+	    		openScreen("menu.fxml",mainPaneLogin);   
+		}else{
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al ingresar");
+			alert.setHeaderText("Datos inexistentes");
+			alert.setContentText("El usuario y/o la contraseña son incorrectos, por favor intentelo de nuevo");
+			alert.showAndWait();
+		}
+
+	}else{
+
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error al ingresar");
+		alert.setHeaderText("Campos incompletos");
+		alert.setContentText("Es necesario ingresar su usuario y contraseña para poder acceder a las funcionalidades del programa");
+		alert.showAndWait();
+	}
+ 	
     }
     
     @FXML
@@ -311,7 +340,7 @@ public class AforeGUI {
     public void buttonUpdateEmployee(ActionEvent event) throws IOException{
     	openScreen("update-employee.fxml",paneToChange);
     }
-
+ 
     @FXML
     public void buttonUpdateProduct(ActionEvent event) throws IOException{
     	openScreen("update-product.fxml",paneToChange);
@@ -699,6 +728,226 @@ public class AforeGUI {
     //+
     //+
     //+  
+    //DELETE-EMPLOYEE.FXML THINGS**************************************************************************
+
+    @FXML
+    private Pane mainPaneDeleteEmployee;
+
+    @FXML
+    private TextField txtDeleteEmployeeId;
+
+    @FXML
+    private TextField txtDeleteEmployeeUser;
+
+    @FXML
+    private TextField txtDeleteEmployeeIde;
+
+    @FXML
+    private TextField txtDeleteEmployeePhone;
+
+    @FXML
+    private TextField txtDeleteEmployeeName;
+
+    @FXML
+    private TextField txtDeleteEmployeeTypeEmployee;
+
+    @FXML
+    public void buttonFindEmployeeToDelete(ActionEvent event) {
+    	if (!txtDeleteEmployeeId.getText().equals("")){
+    		Employee findEmployee = restaurant.findEmployee(txtDeleteEmployeeId.getText());
+
+    		if (findEmployee !=null){
+    			txtDeleteEmployeeName.setText(findEmployee.getName());
+    			txtDeleteEmployeeIde.setText(findEmployee.getId());
+    			txtDeleteEmployeePhone.setText(findEmployee.getPhone());
+    			txtDeleteEmployeeUser.setText(findEmployee.getUsername());
+    			if (findEmployee instanceof Cashier){
+    				txtDeleteEmployeeTypeEmployee.setText("Cajero");
+    			}else if (findEmployee instanceof Waiter){
+    				txtDeleteEmployeeTypeEmployee.setText("Mesero");
+    			}else if (findEmployee instanceof Chef){
+    				txtDeleteEmployeeTypeEmployee.setText("Chef");
+    			}else if (findEmployee instanceof DeliveryMan){
+    				txtDeleteEmployeeTypeEmployee.setText("Domiciliario");
+    			}
+    		}
+    	}
+    }
+
+
+    @FXML
+    public void buttonDeleteEmployeeDelete(ActionEvent event) {
+	if (!txtDeleteEmployeeId.getText().equals("")){
+		Employee findEmployee = restaurant.findEmployee(txtDeleteEmployeeId.getText());
+		
+		if (findEmployee!=null){
+
+			restaurant.deleteEmployee(txtDeleteEmployeeId.getText());
+			    			
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+    			alert.setTitle("Empleado eliminado");
+    			alert.setHeaderText("El empleado ha sido eliminado satisfactoriamente");
+    			alert.setContentText("El empleado con id"+findEmployee.getId()+" ha sido eliminado");
+    			alert.showAndWait();
+
+			txtDeleteEmployeeId.setText("");
+			txtDeleteEmployeeName.setText("");
+			txtDeleteEmployeeIde.setText("");
+			txtDeleteEmployeePhone.setText("");
+			txtDeleteEmployeeUser.setText("");
+			txtDeleteEmployeeTypeEmployee.setText("");
+
+	
+
+		}else{
+			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error en la eliminación del empleado");
+    			alert.setHeaderText("Empleado no encontrado");
+    			alert.setContentText("El empleado con id "+txtDeleteEmployeeId.getText()+" no se ha encontrado.");
+    			alert.showAndWait();
+
+		}
+
+
+	}else{
+
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error en la eliminación del empleado");
+		alert.setHeaderText("Campos incompletos");
+		alert.setContentText("Es necesario el id del empleado para poder eliminarlo");
+		alert.showAndWait();
+	}
+    }
+
+    @FXML
+    public void buttonCancelDeleteEmployee(ActionEvent event) {
+    	txtDeleteEmployeeId.setText("");
+    	txtDeleteEmployeeName.setText("");
+    	txtDeleteEmployeeIde.setText("");
+    	txtDeleteEmployeePhone.setText("");
+    	txtDeleteEmployeeUser.setText("");
+    	txtDeleteEmployeeTypeEmployee.setText("");
+    }
+    
+    //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+  
+    //UPDATE-EMPLOYEE.FXML THINGS**************************************************************************
+
+ @FXML
+    private Pane mainPaneCreateEmployee;
+
+    @FXML
+    private TextField txtUpdateEmployeeName;
+
+    @FXML
+    private TextField txtUpdateEmployeeUser;
+
+    @FXML
+    private TextField txtUpdateEmployeePassword;
+
+    @FXML
+    private TextField txtUpdateEmployeeLastName;
+
+    @FXML
+    private TextField txtUpdateEmployeeId;
+
+    @FXML
+    private TextField txtUpdateEmployeePhone;
+
+
+
+    @FXML
+    public void buttonFindEmployeeToUpdate(ActionEvent event) {
+    	if (!txtUpdateEmployeeId.getText().equals("")) {
+    		Employee findEmployee = restaurant.findEmployee(txtUpdateEmployeeId.getText());
+    		if (findEmployee!=null) {
+    	    	txtUpdateEmployeeName.setText(findEmployee.getName());
+    	    	txtUpdateEmployeeLastName.setText(findEmployee.getLastName());
+    	    	txtUpdateEmployeePhone.setText(findEmployee.getPhone());
+    	    	txtUpdateEmployeeUser.setText(findEmployee.getUsername());
+    	    	txtUpdateEmployeePassword.setText(findEmployee.getPassword());    	       	    	
+    		}    			
+    	}
+    }
+
+    @FXML
+    void buttonUpdateEmployeeUpdate(ActionEvent event) {
+    	if (!txtUpdateEmployeeId.getText().equals("")) {
+    		Employee findEmployee = restaurant.findEmployee(txtUpdateEmployeeId.getText());
+    		if (findEmployee!=null) {
+    			
+    			if (!txtUpdateEmployeeName.getText().equals("") && !txtUpdateEmployeeLastName.getText().equals("") &&
+    					!txtUpdateEmployeePhone.getText().equals("") && !txtUpdateEmployeeUser.getText().equals("") &&
+    					!txtUpdateEmployeePassword.getText().equals("")) {
+    				
+    				String name = txtUpdateEmployeeName.getText();
+    				String lastName = txtUpdateEmployeeLastName.getText();
+    				String phone = txtUpdateEmployeePhone.getText();
+    				String user = txtUpdateEmployeeUser.getText();
+    				String password = txtUpdateEmployeePassword.getText();
+    				
+    				
+    				restaurant.updateEmployee(txtUpdateEmployeeId.getText(),name,lastName,phone,user,password);
+    				
+    				Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("Empleado actualizado satisfactotiamente");
+					alert.setHeaderText("El empleado ha sido actuaizado");
+					alert.setContentText("El empleado fue actualizado satisfactoriamente.");
+					alert.showAndWait();
+					
+			    	txtUpdateEmployeeId.setText("");
+			    	txtUpdateEmployeeName.setText("");
+			    	txtUpdateEmployeeLastName.setText("");
+			    	txtUpdateEmployeePhone.setText("");
+			    	txtUpdateEmployeeUser.setText("");
+			    	txtUpdateEmployeePassword.setText("");    				
+    				
+    			}else {
+    				Alert alert = new Alert(AlertType.ERROR);
+    				alert.setTitle("Error al actualizar datos");
+    				alert.setHeaderText("Todos los campos son requeridos");
+    				alert.setContentText("Todos los campos deben estar llenos");
+    				alert.showAndWait();
+    			}
+    		}else {
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error al buscar el empleado");
+    			alert.setHeaderText("Empleado no encontrado");
+    			alert.setContentText("El empleado con id "+txtUpdateEmployeeId.getText()+" no se ha encontrado.");
+    			alert.showAndWait();
+    		}
+    	}else {
+    		Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error al actualizar datos");
+			alert.setHeaderText("Todos los campos son requeridos");
+			alert.setContentText("Es necesario el id para realizar la búsqueda del empleado a eliminar");
+			alert.showAndWait();
+    	}
+    }
+    
+    @FXML
+    public void buttonCancelUpdateEmployee(ActionEvent event) {
+    	txtUpdateEmployeeId.setText("");
+    	txtUpdateEmployeeName.setText("");
+    	txtUpdateEmployeeLastName.setText("");
+    	txtUpdateEmployeePhone.setText("");
+    	txtUpdateEmployeeUser.setText("");
+    	txtUpdateEmployeePassword.setText("");    	
+    }
+
+
+    
+    
+    //**********************************************************************************************
+    //+
+    //+
+    //+
+    //+
+    //+  
     //CREATE-PRODUCT.FXML THINGS**************************************************************************
        
     
@@ -929,65 +1178,61 @@ public class AforeGUI {
     }
 
     @FXML
-    public void buttonUpdateProductUpdate(ActionEvent event) {
+    public void buttonUpdateProductUpdate(ActionEvent event) { //-->Clase AforeGUI
     	String name=txtUpdateProductName.getText();
     	String price=txtUpdateProductPrice.getText();
-    	String availability=txtUpdateProductAvailability.getText();
-    	
+    	int availability = Integer.parseInt(txtUpdateProductAvailability.getText());
+
     	if (!txtUpdateProductId.getText().equals("")) {
     		Product product=restaurant.findProductBinarySearch(txtUpdateProductId.getText());
-    		
-        	if(product!=null) {
-        		
-        		if(choiceBoxUpdateSizeProduct.getSelectionModel().isEmpty() == false && choiceBoxUpdateCategoryProduct.getSelectionModel().isEmpty()==false && !name.equals("") && !price.equals("") && !availability.equals("")) {
-    	    		try {
-    	    		product.setName(name);
-    	    		product.setPrice(price);
-    	    		product.setSize(choiceBoxUpdateSizeProduct.getValue());
-    	    		product.setAvailability(Integer.parseInt(availability));
-    	    		product.setCategory(choiceBoxUpdateCategoryProduct.getValue());
-    	    		//Aquí llamo a la persistencia
-    	    		
-    				Alert alert = new Alert(AlertType.CONFIRMATION);
-    				alert.setTitle("Producto actualizado satisfactotiamente");
-    				alert.setHeaderText("El producto ha sido actuaizado");
-    				alert.setContentText("El producto fue actualizado satisfactoriamente.");
-    				alert.showAndWait();
+
+    		if(product!=null) {
+
+    			if(choiceBoxUpdateSizeProduct.getSelectionModel().isEmpty() == false && choiceBoxUpdateCategoryProduct.getSelectionModel().isEmpty()==false && !name.equals("") && !price.equals("") && availability!=0) {
+    				try {
+
+    					
+						restaurant.updateProduct(txtUpdateProductId.getText(),name,choiceBoxUpdateCategoryProduct.getSelectionModel().getSelectedItem(),choiceBoxUpdateSizeProduct.getSelectionModel().getSelectedItem(),price, availability);
+					
+    					
+    					Alert alert = new Alert(AlertType.CONFIRMATION);
+    					alert.setTitle("Producto actualizado satisfactotiamente");
+    					alert.setHeaderText("El producto ha sido actuaizado");
+    					alert.setContentText("El producto fue actualizado satisfactoriamente.");
+    					alert.showAndWait();
     				
-    		    	txtUpdateProductName.setText("");
-    		    	txtUpdateProductId.setText("");
-    		    	txtUpdateProductPrice.setText("");
-    		    	txtUpdateProductAvailability.setText("");
-    		    	choiceBoxUpdateCategoryProduct.getSelectionModel().clearSelection();
-    		    	choiceBoxUpdateSizeProduct.getSelectionModel().clearSelection();
-    	    		
-    	    		
-    	    		}catch(NumberFormatException e) {
-    	    			Alert alert = new Alert(AlertType.ERROR);
-    	    			alert.setTitle("Error al leer disponibilidad");
-    	    			alert.setHeaderText("La disponibilidad debe ser numérica");
-    	    			alert.setContentText("La disponibilidad "+txtUpdateProductAvailability.getText()+" no es correcta, debe ser numérica.");
-    	    			alert.showAndWait();
-    	    		}
-        		}
-        		else {
-        			Alert alert = new Alert(AlertType.ERROR);
-        			alert.setTitle("Error al actualizar datos");
-        			alert.setHeaderText("Todos los campos son requeridos");
-        			alert.setContentText("Todos los campos deben estar llenos");
-        			alert.showAndWait();
-        		}
-        	}else {
+
+    					txtUpdateProductName.setText("");
+    					txtUpdateProductId.setText("");
+    					txtUpdateProductPrice.setText("");
+    					txtUpdateProductAvailability.setText("");
+    					choiceBoxUpdateCategoryProduct.getSelectionModel().clearSelection();
+    					choiceBoxUpdateSizeProduct.getSelectionModel().clearSelection();
+
+
+    				}catch(NumberFormatException e) {
+    					Alert alert = new Alert(AlertType.ERROR);
+    					alert.setTitle("Error al leer disponibilidad");
+    					alert.setHeaderText("La disponibilidad debe ser numérica");
+    					alert.setContentText("La disponibilidad "+txtUpdateProductAvailability.getText()+" no es correcta, debe ser numérica.");
+    					alert.showAndWait();
+    				}
+    			}
+    			else {
+    				Alert alert = new Alert(AlertType.ERROR);
+    				alert.setTitle("Error al actualizar datos");
+    				alert.setHeaderText("Todos los campos son requeridos");
+    				alert.setContentText("Todos los campos deben estar llenos");
+    				alert.showAndWait();
+    			}
+    		}else {
     			Alert alert = new Alert(AlertType.ERROR);
     			alert.setTitle("Error al buscar el producto");
     			alert.setHeaderText("Producto no encontrado");
     			alert.setContentText("El producto con id "+txtUpdateProductId.getText()+" no se ha encontrado.");
     			alert.showAndWait();
-        	}
-    	}
-    	
-    	
-    	
+    		}
+    	}    	
     }
 
     @FXML
@@ -1351,56 +1596,54 @@ public class AforeGUI {
     }
     
     @FXML
-    public void buttonClientToUpdate(ActionEvent event) {
-    	Client clientToUpd = restaurant.findClient(txtUpdateClientId.getText());    	
-    	
-    	if (clientToUpd!=null) {
-    		if (!txtUpdateClientName.getText().equals("") && !txtUpdateClientIde.getText().equals("") && !txtUpdateClientAddress.getText().equals("") && !txtUpdateClientPhone.getText().equals("")) {
-        		
-        		String name = txtUpdateClientName.getText();
-        		String id = txtUpdateClientIde.getText();
-        		String address = txtUpdateClientAddress.getText();
-        		String phone = txtUpdateClientPhone.getText();
-        		
-        		clientToUpd.setName(name);
-        		clientToUpd.setId(id);
-        		clientToUpd.setAddress(address);
-        		clientToUpd.setPhone(phone);
-        		clientToUpd.setObservations(txtUpdateClientObs.getText());    
-        		//Aquí pongo el método de persistencia
-        		
-        		Alert alert = new Alert(AlertType.CONFIRMATION);
-        		alert.setTitle("Cliente actualizado satisfactoriamente");
-        		alert.setHeaderText("Cliente actualizado");
-        		alert.setContentText("Se ha actualizado la información del cliente.");
-        		alert.showAndWait();
-        		
-        		txtUpdateClientId.setText("");
-            	txtUpdateClientName.setText("");
-            	txtUpdateClientIde.setText("");
-            	txtUpdateClientAddress.setText("");
-            	txtUpdateClientPhone.setText("");
-            	txtUpdateClientObs.setText(""); 
-        		
-        	}else {
-        		Alert alert = new Alert(AlertType.ERROR);
-        		alert.setTitle("Error al actualizar el cliente");
-        		alert.setHeaderText("Datos incompletos");
-        		alert.setContentText("El nombre, dirección y teléfono son necesarios.");
-        		alert.showAndWait();
-        	}
-    	
-    	}else{
-    		Alert alert = new Alert(AlertType.ERROR);
-    		alert.setTitle("Error al actualizar el cliente");
-    		alert.setHeaderText("Cliente no encontrado");
-    		alert.setContentText("El cliente con id "+txtUpdateClientId.getText()+" no se ha encontrado.");
-    		alert.showAndWait();
-    	
-    	}
-    
+    public void buttonClientToUpdate(ActionEvent event) { //-->Clase AforeGUI
+    	if (!txtUpdateClientId.getText().equals("")){
+    		Client clientToUpd = restaurant.findClient(txtUpdateClientId.getText());    	
+
+    		if (clientToUpd!=null) {
+    			if (!txtUpdateClientName.getText().equals("") && !txtUpdateClientIde.getText().equals("") && !txtUpdateClientAddress.getText().equals("") && !txtUpdateClientPhone.getText().equals("")) {
+
+    				String name = txtUpdateClientName.getText();
+    				String id = txtUpdateClientIde.getText();
+    				String address = txtUpdateClientAddress.getText();
+    				String phone = txtUpdateClientPhone.getText();
+
+    				restaurant.updateClient(id,name,address,phone,txtUpdateClientObs.getText());
+
+    				Alert alert = new Alert(AlertType.CONFIRMATION);
+    				alert.setTitle("Cliente actualizado satisfactoriamente");
+    				alert.setHeaderText("Cliente actualizado");
+    				alert.setContentText("Se ha actualizado la información del cliente.");
+    				alert.showAndWait();
+
+    				txtUpdateClientId.setText("");
+    				txtUpdateClientName.setText("");
+    				txtUpdateClientIde.setText("");
+    				txtUpdateClientAddress.setText("");
+    				txtUpdateClientPhone.setText("");
+    				txtUpdateClientObs.setText(""); 
+
+    			}else {
+    				Alert alert = new Alert(AlertType.ERROR);
+    				alert.setTitle("Error al actualizar el cliente");
+    				alert.setHeaderText("Datos incompletos");
+    				alert.setContentText("El nombre, dirección y teléfono son necesarios.");
+    				alert.showAndWait();
+    			}	
+
+    		}else{
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error al actualizar el cliente");
+    			alert.setHeaderText("Cliente no encontrado");
+    			alert.setContentText("El cliente con id "+txtUpdateClientId.getText()+" no se ha encontrado.");
+    			alert.showAndWait();
+
+    		}
+    	}    
     }  
 
+    
+    
     @FXML
     public void buttonNoClientToUpdate(ActionEvent event) {
     	txtUpdateClientId.setText("");

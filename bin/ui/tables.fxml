@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <RadioButton contentDisplay="TOP" graphicTextGap="0.0" layoutX="33.0" layoutY="27.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="01">
          <font>
@@ -44,7 +43,7 @@
             <Label text="Table" />
          </graphic>
       </RadioButton>
-      <Button layoutX="514.0" layoutY="27.0" mnemonicParsing="false" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Agregar mesa" textFill="WHITE">
+      <Button layoutX="514.0" layoutY="27.0" mnemonicParsing="false" onAction="#buttonAddTable" style="-fx-background-color: #F66B1C; -fx-background-radius: 20;" text="Agregar mesa" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -57,7 +56,7 @@
             <Label text="Table" />
          </graphic>
       </RadioButton>
-      <Button layoutX="561.0" layoutY="472.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="3.0" rotate="-90.0" style="-fx-background-radius: 50; -fx-background-color: #FFC300;">
+      <Button layoutX="561.0" layoutY="501.0" mnemonicParsing="false" onAction="#buttonHideTables" prefHeight="21.0" prefWidth="3.0" rotate="-90.0" style="-fx-background-radius: 50; -fx-background-color: #FFC300;">
          <font>
             <Font size="9.0" />
          </font>
@@ -69,6 +68,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <ScrollBar layoutX="683.0" orientation="VERTICAL" prefHeight="508.0" prefWidth="14.0" />
+      <ScrollBar layoutX="683.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="14.0" />
    </children>
 </Pane>
