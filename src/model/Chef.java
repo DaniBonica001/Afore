@@ -1,7 +1,10 @@
 package model;
 
-public class Chef extends Employee{
-	
+import java.io.Serializable;
+
+public class Chef extends Employee implements Serializable{
+
+	private static final long serialVersionUID = 1;
 	//Attributes
 	private String dishes;
 	

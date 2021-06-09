@@ -1,7 +1,10 @@
 package model;
 
-public class DeliveryMan extends Employee{
+import java.io.Serializable;
 
+public class DeliveryMan extends Employee implements Serializable{
+
+	private static final long serialVersionUID = 1;
 	//Attributes
 	private int amountOrders;
 	

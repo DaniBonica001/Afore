@@ -1,0 +1,1 @@
+1;pasta;Plato principal;Personal;10000;1;1

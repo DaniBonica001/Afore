@@ -1,5 +1,17 @@
 package model;
 
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +19,12 @@ import exceptions.NoNumericInputException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class Restaurant {
+public class Restaurant implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	private static final String SAVE_PATH_FILE_EMPLOYEES = "data/EmployeesData.ap2";
+	private static final String SAVE_PATH_FILE_PRODUCT = "data/ProductsData.txt";
+	private static final String SAVE_PATH_FILE_CLIENTS = "data/ClientsData.ap2";
 	//Relations
 	private List<Product>products;
 	private List<FoodDelivery>deliveries;
@@ -101,7 +117,7 @@ public class Restaurant {
 	//Método de búsqueda binaria de un producto
 	public Product findProductBinarySearch (String id) {
 		bubbleSortProductById();
-		int idToFind = Integer.parseInt(id);
+		long idToFind = Long.parseLong(id);
 		Product product = null;
 		boolean found = false;
 		int start = 0;
@@ -109,7 +125,7 @@ public class Restaurant {
 		
 		while (start<=end && !found) {
 			int middle = (start + end)/2;
-			int changeId = Integer.parseInt(products.get(middle).getId());
+			long changeId = Long.parseLong(products.get(middle).getId());
 			
 			if (changeId == idToFind ) {
 				found = true;
@@ -122,6 +138,36 @@ public class Restaurant {
 		}
 		return product;
 	}
+	
+	
+	//Método de búsqueda binaria de un empleadp
+	public Employee findEmployeeBinarySearch (String id) {
+		bubbleSortEmployeeById();
+		long idToFind = Long.parseLong(id);
+		Employee employee = null;
+		boolean found = false;
+		int start = 0;
+		int end = employees.size()-1;
+		
+		while (start<=end && !found) {
+			int middle = (start + end)/2;
+			long changeId = Long.parseLong(employees.get(middle).getId());
+			
+			if (changeId == idToFind) {
+				found = true;
+				employee = employees.get(middle);
+			}else if (changeId > idToFind) {
+				end = middle-1;
+			}else if (changeId < idToFind) {
+				start = middle+1;
+			}
+			
+		}
+		return employee;
+	}
+	
+	
+	
 	
 
 	//Ordenamiento burbuja de productos por id - Ordena de menor a mayor
@@ -141,12 +187,34 @@ public class Restaurant {
 					}
 					
 				}catch (NumberFormatException e) {
+					System.out.println("El id debe ser un valor numérico");
 					e.printStackTrace();
 				}				
 			}
 		}
 		for (int i=0;i<products.size();i++) {
 			System.out.println(products.get(i).getId()+", "+products.get(i).getName()+", "+products.get(i).getPrice());
+		}
+	}
+	
+	//Ordenamiento burbuja de empleados por id - Ordena de menor a mayor
+	public void bubbleSortEmployeeById() {
+		for (int i=0;i<employees.size()-1;i++) {
+			for (int j=0;j<employees.size()-1;j++) {
+				try {
+					long id1 = Long.parseLong(employees.get(j).getId());
+					long id2 = Long.parseLong(employees.get(j+1).getId());	
+					
+					if (id1>id2) {
+						Employee temp = employees.get(j);
+						employees.set(j,employees.get(j+1));
+						employees.set(j+1, temp);
+					}
+				}catch (NumberFormatException e) {
+					System.out.println("El id debe ser un valor numérico");
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
@@ -269,6 +337,7 @@ public class Restaurant {
 			
 			if(isNumeric(price)==true) {
 				products.add(new Product(id, name, category, size, price, available, description));
+				exportProductsData();
 				threadToSortProducts();			
 				
 				Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -292,6 +361,7 @@ public class Restaurant {
 		Product findProduct= findProduct(id);		
 		if(findProduct!=null) {
 			products.remove(findProduct);
+			exportProductsData();
 		}
 		else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -311,7 +381,8 @@ public class Restaurant {
 			findProduct.setCategory(category);
 			findProduct.setSize(size);
 			findProduct.setPrice(price);
-			findProduct.setAvailability(availability);		
+			findProduct.setAvailability(availability);
+			exportProductsData();
 		}
 		else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -355,12 +426,13 @@ public class Restaurant {
 
 	//Create a cashier employee
 	public void addEmployee(String userCashier, String passCashier, String nameCashier, String lastNameCashier,
-			String idCashier, String phoneCashier, boolean waiter) {
+			String idCashier, String phoneCashier, boolean waiter) throws IOException {
 		
 		Employee findEmployee = findEmployee(idCashier);
 		
 		if (findEmployee == null) {
 			employees.add(new Cashier(userCashier,passCashier,nameCashier,lastNameCashier,idCashier,phoneCashier,waiter));
+			saveEmployeesData();
 			threadToSortEmployees();
 			
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -379,12 +451,13 @@ public class Restaurant {
 
 	//Create a chef employee
 	public void addEmployee(String userChef, String passChef, String nameChef, String lastNameChef, String idChef,
-			String phoneChef, String dishes) {
+			String phoneChef, String dishes) throws IOException {
 		
 		Employee findEmployee = findEmployee(idChef);
 		
 		if (findEmployee == null) {
 			employees.add(new Chef (userChef,passChef,nameChef,lastNameChef,idChef,phoneChef,dishes));
+			saveEmployeesData();
 			threadToSortEmployees();
 			
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -404,12 +477,13 @@ public class Restaurant {
 
 	//Create a waiter employee
 	public void addEmployee(String userWaiter, String passWaiter, String nameWaiter, String lastNameWaiter,
-			String idWaiter, String phoneWaiter, int tables) {
+			String idWaiter, String phoneWaiter, int tables) throws IOException {
 		
 		Employee findEmployee = findEmployee(idWaiter);
 		
 		if (findEmployee == null) {
 			employees.add(new Waiter(userWaiter,passWaiter,nameWaiter,lastNameWaiter,idWaiter,phoneWaiter,tables));
+			saveEmployeesData();
 			threadToSortEmployees();
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Creación del empleado");
@@ -427,12 +501,13 @@ public class Restaurant {
 
 	//Create a delivery man employee
 	public void addEmployeeDM(String userDM, String passDM, String nameDM, String lastNameDm, String idDM,
-			String phoneDM, int orders) {
+			String phoneDM, int orders) throws IOException {
 		
 		Employee findEmployee = findEmployee(idDM);
 		
 		if (findEmployee == null) {
 			employees.add(new DeliveryMan(userDM,passDM,nameDM,lastNameDm,idDM,phoneDM,orders));
+			saveEmployeesData();
 			threadToSortEmployees();
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Creación del empleado");
@@ -449,10 +524,12 @@ public class Restaurant {
 	}
 	
 	
-	public void deleteEmployee(String id){
+	public void deleteEmployee(String id) throws IOException{
+		selectionSortEmployeeByLastName();
 		Employee findEmployee = findEmployee(id);
 		if (findEmployee!=null){
 			employees.remove(findEmployee);
+			saveEmployeesData();
 		}else{
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error al encontrar cliente");
@@ -462,7 +539,7 @@ public class Restaurant {
 		}
 	}
 	
-	public void updateEmployee(String id, String name, String lastName, String phone, String user, String password) {
+	public void updateEmployee(String id, String name, String lastName, String phone, String user, String password) throws IOException {
 		Employee findEmployee = findEmployee(id);
 		if (findEmployee!=null) {
 			findEmployee.setName(name);
@@ -470,6 +547,7 @@ public class Restaurant {
 			findEmployee.setPhone(phone);
 			findEmployee.setUsername(user);
 			findEmployee.setPassword(password);
+			saveEmployeesData();
 		}else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error al encontrar empleado");
@@ -536,6 +614,12 @@ public class Restaurant {
     			newClient.setPrevious(lastClient);
     		}
 			
+			try {
+				saveClientsData();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Cliente creado");
 			alert.setHeaderText("El cliente ha sido creado");
@@ -574,7 +658,13 @@ public class Restaurant {
 			if (clientToDelete.getPrevious()!=null) {
 				prev.setNext(next);
 			}
-		}		
+		}	
+		
+		try {
+			saveClientsData();
+		} catch (IOException e) {			
+			e.printStackTrace();
+		}
 	}
 	
 	public void updateClient(String id, String name, String address, String phone, String obs){ //-->Clase Restaurant
@@ -586,6 +676,11 @@ public class Restaurant {
 	        	findClient.setAddress(address);
 	        	findClient.setPhone(phone);
 	        	findClient.setObservations(obs);   
+	        	try {
+					saveClientsData();
+				} catch (IOException e) {					
+					e.printStackTrace();
+				}
 		}else{
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error al encontrar el cliente");
@@ -745,7 +840,84 @@ public class Restaurant {
 	public void setRootDay(Day rootDay) {
 		this.rootDay = rootDay;
 	}
-
 	
+	
+	//Import employees Data (serializacion)
+	@SuppressWarnings("unchecked")
+	public boolean loadEmployeesData() throws IOException, ClassNotFoundException{
+		 File f = new File(SAVE_PATH_FILE_EMPLOYEES);
+		 boolean loaded = false;
+		 if(f.exists()){
+			 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			 employees = (List<Employee>)ois.readObject();
+			 ois.close();
+			 loaded = true;
+		 }		 
+		 return loaded;	
+	}
+	
+	//Export employees data (serializacion)
+	 public void saveEmployeesData() throws IOException{
+		 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SAVE_PATH_FILE_EMPLOYEES));
+		 oos.writeObject(employees);
+		 oos.close();
+	 }
+	 
+	 //Import clients data (serializacion)
+	 public void loadClientsData() throws FileNotFoundException, IOException, ClassNotFoundException {
+		 ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVE_PATH_FILE_CLIENTS));
+		 firstClient = (Client)in.readObject();
+		 in.close();		 
+	 }
 
+	 
+	 //Export clients data (serializacion)
+	 public void saveClientsData() throws IOException{
+		 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SAVE_PATH_FILE_CLIENTS));	
+		 Client currentClient = firstClient;
+		 
+		 while(currentClient!=null) {			 
+			 oos.writeObject(currentClient);
+			 currentClient = currentClient.getNext();
+		 }		 
+		 oos.close();
+	 }
+	 
+
+
+	 //Export products data (.txt)
+	 public void exportProductsData() {
+		 PrintWriter pw;
+		try {
+			pw = new PrintWriter(SAVE_PATH_FILE_PRODUCT);
+			 for (int i=0;i<products.size();i++) {
+				 Product myProduct = products.get(i);
+				 pw.println(myProduct.getId()+";"+myProduct.getName()+";"+myProduct.getCategory()+";"+myProduct.getSize()+";"+myProduct.getPrice()+";"+myProduct.getAvailability()+";"+myProduct.getDescription());			 
+			 }
+			 pw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}		 
+	 }
+	 
+	 //Import product data (.txt)
+	 public void importProductsData() throws IOException {
+		 BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader(SAVE_PATH_FILE_PRODUCT));
+		    String line = br.readLine();
+		    while(line!=null){
+		      String[] parts = line.split(";");
+		      //Invoca el método addContact
+		      addProduct(parts[0],parts[1],parts[2],parts[3],parts[4],Integer.parseInt(parts[5]),parts[6]);
+		      line = br.readLine();
+		    }
+		    br.close();
+		} catch (FileNotFoundException | NumberFormatException | NoNumericInputException e) {
+			e.printStackTrace();
+		}
+	
+	 }
+	 
+	 
 }

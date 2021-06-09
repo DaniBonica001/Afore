@@ -414,7 +414,11 @@ public class AforeGUI {
         	}else if (rbNoCashier.isSelected()) {
         		waiter = false;
         	}    		
-    		restaurant.addEmployee(userCashier,passCashier,nameCashier,lastNameCashier,idCashier,phoneCashier,waiter);
+    		try {
+				restaurant.addEmployee(userCashier,passCashier,nameCashier,lastNameCashier,idCashier,phoneCashier,waiter);
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}
     		
     		txtNameCashier.setText("");
         	txtUserCashier.setText("");
@@ -507,7 +511,11 @@ public class AforeGUI {
     		String passChef = pfPasswordChef.getText();
     		String dishes = txtDishesChef.getText();
     		
-    		restaurant.addEmployee(userChef, passChef, nameChef, lastNameChef, idChef, phoneChef, dishes);
+    		try {
+				restaurant.addEmployee(userChef, passChef, nameChef, lastNameChef, idChef, phoneChef, dishes);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
     	  	txtNameChef.setText("");
         	txtUserChef.setText("");
         	pfPasswordChef.setText("");
@@ -597,7 +605,11 @@ public class AforeGUI {
     		String passWaiter = pfPasswordWaiter.getText();
     		int tables = choiceBoxAmounTablesWaiter.getSelectionModel().getSelectedItem();
     		
-    		restaurant.addEmployee(userWaiter,passWaiter,nameWaiter,lastNameWaiter,idWaiter,phoneWaiter,tables);
+    		try {
+				restaurant.addEmployee(userWaiter,passWaiter,nameWaiter,lastNameWaiter,idWaiter,phoneWaiter,tables);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
         	txtNameWaiter.setText("");
         	txtUserWaiter.setText("");
         	pfPasswordWaiter.setText("");
@@ -688,7 +700,11 @@ public class AforeGUI {
     		String passDM = pfPasswordDeliveryMan.getText();
     		int orders = choiceBoxAmountOrdersDeliveryMan.getSelectionModel().getSelectedItem();
     		
-    		restaurant.addEmployeeDM(userDM, passDM, nameDM, lastNameDm, idDM, phoneDM, orders);
+    		try {
+				restaurant.addEmployeeDM(userDM, passDM, nameDM, lastNameDm, idDM, phoneDM, orders);
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}
     		txtNameDeliveryMan.setText("");
         	txtUserDeliveryMan.setText("");
         	pfPasswordDeliveryMan.setText("");
@@ -755,7 +771,7 @@ public class AforeGUI {
     @FXML
     public void buttonFindEmployeeToDelete(ActionEvent event) {
     	if (!txtDeleteEmployeeId.getText().equals("")){
-    		Employee findEmployee = restaurant.findEmployee(txtDeleteEmployeeId.getText());
+    		Employee findEmployee = restaurant.findEmployeeBinarySearch(txtDeleteEmployeeId.getText());
 
     		if (findEmployee !=null){
     			txtDeleteEmployeeName.setText(findEmployee.getName());
@@ -777,9 +793,9 @@ public class AforeGUI {
 
 
     @FXML
-    public void buttonDeleteEmployeeDelete(ActionEvent event) {
+    public void buttonDeleteEmployeeDelete(ActionEvent event) throws IOException {
 	if (!txtDeleteEmployeeId.getText().equals("")){
-		Employee findEmployee = restaurant.findEmployee(txtDeleteEmployeeId.getText());
+		Employee findEmployee = restaurant.findEmployeeBinarySearch(txtDeleteEmployeeId.getText());
 		
 		if (findEmployee!=null){
 
@@ -864,7 +880,7 @@ public class AforeGUI {
     @FXML
     public void buttonFindEmployeeToUpdate(ActionEvent event) {
     	if (!txtUpdateEmployeeId.getText().equals("")) {
-    		Employee findEmployee = restaurant.findEmployee(txtUpdateEmployeeId.getText());
+    		Employee findEmployee = restaurant.findEmployeeBinarySearch(txtUpdateEmployeeId.getText());
     		if (findEmployee!=null) {
     	    	txtUpdateEmployeeName.setText(findEmployee.getName());
     	    	txtUpdateEmployeeLastName.setText(findEmployee.getLastName());
@@ -876,9 +892,9 @@ public class AforeGUI {
     }
 
     @FXML
-    void buttonUpdateEmployeeUpdate(ActionEvent event) {
+    public void buttonUpdateEmployeeUpdate(ActionEvent event) throws IOException {
     	if (!txtUpdateEmployeeId.getText().equals("")) {
-    		Employee findEmployee = restaurant.findEmployee(txtUpdateEmployeeId.getText());
+    		Employee findEmployee = restaurant.findEmployeeBinarySearch(txtUpdateEmployeeId.getText());
     		if (findEmployee!=null) {
     			
     			if (!txtUpdateEmployeeName.getText().equals("") && !txtUpdateEmployeeLastName.getText().equals("") &&
@@ -1351,7 +1367,8 @@ public class AforeGUI {
     				alert.showAndWait();
     			}
     			
-    			//Aquí invoco el método de la resistencia
+    			restaurant.exportProductsData();
+    			    			
     		}else {
     			Alert alert = new Alert(AlertType.ERROR);
     			alert.setTitle("Error al buscar el producto");
@@ -1395,7 +1412,7 @@ public class AforeGUI {
     private TextArea txtcreateClientObservation;
 
     @FXML
-    public void buttonCreateClientRegister(ActionEvent event) {
+    public void buttonCreateClientRegister(ActionEvent event) throws IOException {
     	if(!txtcreateClientName.getText().equals("") && !txtcreateClientId.getText().equals("")) {
     		String name=txtcreateClientName.getText();
     		String id=txtcreateClientId.getText();
@@ -1507,7 +1524,8 @@ public class AforeGUI {
         		
         		if (hasOrders == null) {        			
         			
-        			restaurant.deleteClient(txtDeleteClientId.getText());        		
+        			restaurant.deleteClient(txtDeleteClientId.getText());
+				       		
         		
                 	txtDeleteClientId.setText("");
                 	txtDeleteClientName.setText("");
@@ -1607,7 +1625,7 @@ public class AforeGUI {
     }
     
     @FXML
-    public void buttonClientToUpdate(ActionEvent event) { //-->Clase AforeGUI
+    public void buttonClientToUpdate(ActionEvent event) throws IOException { //-->Clase AforeGUI
     	if (!txtUpdateClientId.getText().equals("")){
     		Client clientToUpd = restaurant.findClient(txtUpdateClientId.getText());    	
 
@@ -1730,7 +1748,7 @@ public class AforeGUI {
     }
 
     @FXML
-    public void butttonDisableClientUpdateState(ActionEvent event) {    	
+    public void butttonDisableClientUpdateState(ActionEvent event) throws IOException {    	
     	if (!txtDisableClientId.getText().equals("")) {
     		Client clientToDis = restaurant.findClient(txtDisableClientId.getText());
         	
@@ -1751,6 +1769,7 @@ public class AforeGUI {
     				alert.showAndWait();
         		}
         		
+        		restaurant.saveClientsData();
         		//Aquí pongo el método de persistencia
         		
         		txtDisableClientId.setText("");

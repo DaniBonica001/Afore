@@ -1,7 +1,10 @@
 package model;
 
-public abstract class Employee extends SystemUser{
+import java.io.Serializable;
+
+public abstract class Employee extends SystemUser implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	//Attributes
 	private String name;
 	private String lastName;

@@ -1,6 +1,11 @@
 package model;
 
-public abstract class SystemUser {
+import java.io.Serializable;
+
+public abstract class SystemUser implements Serializable{
+
+	//Constants
+	private static final long serialVersionUID = 1;
 	//Atributes
 	private String username;
 	private String password;

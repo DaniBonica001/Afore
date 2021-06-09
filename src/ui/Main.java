@@ -2,10 +2,14 @@ package ui;
 
 
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.Restaurant;
 import thread.ThreadInsertionSortEmployeeByName;
@@ -21,6 +25,36 @@ public class Main extends Application{
 	public Main() {	
 		restaurant = new Restaurant();
 		aforeGUI= new AforeGUI(restaurant);
+		
+		try {
+			restaurant.loadEmployeesData();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+    		alert.setTitle("Restaurante");
+    		alert.setContentText("Error cargando la información de los empleados del archivo");
+			alert.showAndWait();
+		}
+		
+		try {
+			restaurant.importProductsData();
+		} catch (IOException e) {			
+			e.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+    		alert.setTitle("Restaurante");
+    		alert.setContentText("Error cargando la información de los productos del archivo");
+			alert.showAndWait();
+		}
+		
+		try {
+			restaurant.loadClientsData();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+    		alert.setTitle("Restaurante");
+    		alert.setContentText("Error cargando la información de los clientes del archivo");
+			alert.showAndWait();
+		}
 	}
 
 	public static void main(String[] args) {
