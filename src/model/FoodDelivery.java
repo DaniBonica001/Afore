@@ -9,13 +9,15 @@ public class FoodDelivery {
 	//Attributes
 	private String optionDomicile;
 	private String clientName;
-	private int timeShipment;
+	private double timeShipment;
 	
 	//Relations
 	private Client objClient;
+	private FoodDelivery left;
+	private FoodDelivery right;
 	
 	//Constructor #1
-	public FoodDelivery(String domicile,String client,Client objClient,int time) {
+	public FoodDelivery(String domicile,String client,Client objClient,double time) {
 		optionDomicile = domicile;
 		clientName = client;
 		this.objClient = objClient;
@@ -46,11 +48,11 @@ public class FoodDelivery {
 		return clientName;
 	}
 
-	public void setTimeShipment(int timeShipment) {
+	public void setTimeShipment(double timeShipment) {
 		this.timeShipment = timeShipment;
 	}
 
-	public int getTimeShipment() {
+	public double getTimeShipment() {
 		return timeShipment;
 	}
 
@@ -60,6 +62,22 @@ public class FoodDelivery {
 
 	public Client getObjClient() {
 		return objClient;
+	}
+
+	public FoodDelivery getLeft() {
+		return left;
+	}
+
+	public void setLeft(FoodDelivery left) {
+		this.left = left;
+	}
+
+	public FoodDelivery getRight() {
+		return right;
+	}
+
+	public void setRight(FoodDelivery right) {
+		this.right = right;
 	}
 	
 	//************************************************************************************************++

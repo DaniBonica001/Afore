@@ -27,7 +27,8 @@ public class Restaurant implements Serializable{
 	private static final String SAVE_PATH_FILE_CLIENTS = "data/ClientsData.ap2";
 	//Relations
 	private List<Product>products;
-	private List<FoodDelivery>deliveries;
+	//private List<FoodDelivery>deliveries;
+	private FoodDelivery rootDelivery;
 	private List<Employee>employees;
 	private List<Order>orders;
 	private Client firstClient;
@@ -37,7 +38,8 @@ public class Restaurant implements Serializable{
 	//Constructor
 	public Restaurant() {
 		products = new ArrayList<Product>();
-		deliveries = new ArrayList<FoodDelivery>();
+		//deliveries = new ArrayList<FoodDelivery>();
+		rootDelivery=null;
 		employees = new ArrayList<Employee>();	
 		orders = new ArrayList<Order>();
 		rootDay=null;
@@ -52,6 +54,7 @@ public class Restaurant implements Serializable{
 		return products;
 	}
 	
+	/*
 	public void setDeliveries(List<FoodDelivery> deliveries) {
 		this.deliveries = deliveries;
 	}
@@ -59,7 +62,7 @@ public class Restaurant implements Serializable{
 	public List<FoodDelivery> getDeliveries(){
 		return deliveries;
 	}
-	
+	*/
 	public void setEmployees(List<Employee>employees) {
 		this.employees = employees;
 	}
@@ -878,6 +881,42 @@ public class Restaurant implements Serializable{
 		}
 	
 	 }
+	 
+	//metodo recursivo
+	public void addFoodDelivery(FoodDelivery current, String domicile,String client,Client objClient,double time) {
+		FoodDelivery newDomicilio= new FoodDelivery(domicile, client, objClient, time);
+		
+		if(current==null) {
+			rootDelivery=newDomicilio;
+			//System.out.println("SE CREO EL PRIMER DOMICILIO");
+		}
+		else {
+			if(newDomicilio.getTimeShipment()<=current.getTimeShipment()) {// si es menor que el current
+				if(current.getLeft()==null) {//si aún no hay left entonces lo asigna
+					current.setLeft(newDomicilio);
+				}
+				else {//si hay left entonces recursividad pero partiendo del left
+					addFoodDelivery(current.getLeft(), domicile, client, objClient, time);
+				}
+			}
+			else {//si es mayor que el current
+				if(current.getRight()==null) {//si aún no hay right entonces lo asigna
+					current.setRight(newDomicilio);
+				}
+				else {//si hay right entonces recursividad pero partiendo del right
+					addFoodDelivery(current.getRight(), domicile, client, objClient, time);
+				}
+			}
+		}
+	}
+
+	public FoodDelivery getRootDelivery() {
+		return rootDelivery;
+	}
+
+	public void setRootDelivery(FoodDelivery rootDelivery) {
+		this.rootDelivery = rootDelivery;
+	}
 	 
 	 
 }

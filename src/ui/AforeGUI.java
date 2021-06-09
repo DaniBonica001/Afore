@@ -16,9 +16,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -293,6 +295,9 @@ public class AforeGUI {
     @FXML
     public void buttonDeliveryFood(ActionEvent event) throws IOException{
     	openScreen("domicilios.fxml",paneToChange);
+    	
+    	ObservableList<Product> items =FXCollections.observableArrayList(restaurant.getProducts());
+    	lvDomicilioProductos.setItems(items);
     }
 
     @FXML
@@ -1994,6 +1999,63 @@ public class AforeGUI {
     		alert.setContentText("Debe escoger una calificacion al servicio y a la comida.");
     		alert.showAndWait();
     	}
+    }
+    
+  //*********************************************************************************************************************************************************************************************+
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //FOOD-DEIVERY THINGS**********************************************************************************************************************************************************
+   
+    
+    @FXML
+    private Pane mainPaneDomicilio;
+
+    @FXML
+    private RadioButton pickRestaurant;
+
+    @FXML
+    private ToggleGroup domicilioOption;
+
+    @FXML
+    private RadioButton programarEnvio;
+
+    @FXML
+    private ListView<Product> lvDomicilioProductos;
+
+    @FXML
+    private TextField domicilioQuantity;
+
+    @FXML
+    private TextField domicilioHoraEnvio;
+
+    @FXML
+    private TableView<?> tvDomicilioFactura;
+
+    @FXML
+    private TextField domicilioDestinatarioName;
+    
+
+    @FXML
+    void buttonDomicilioAddProduct(ActionEvent event) {
+
+    }
+
+    @FXML
+    void buttonDomicilioBorrar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void buttonDomicilioCancelar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void buttonDomicilioEnviar(ActionEvent event) {
+
     }
     
 
