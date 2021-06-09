@@ -317,7 +317,7 @@ public class Restaurant implements Serializable{
 			//System.out.println("No entre al if");
 		}
 	}
-    public static boolean isNumeric(String cadena) {
+    public boolean isNumeric(String cadena) {
 
         boolean resultado;
 
@@ -331,29 +331,18 @@ public class Restaurant implements Serializable{
         return resultado;
     }
  
-	public void addProduct(String id,String name,String category,String size,String price,int available,String description) throws NoNumericInputException{
-		Product findProduct = findProduct(id);		
-		if (findProduct==null) {
-			
+	public void addProduct(String id,String name,String category,String size,String price,int available,String description) throws NoNumericInputException{	
+		Product findProduct= findProduct(id);
+		
+		if(findProduct==null) {
 			if(isNumeric(price)==true) {
 				products.add(new Product(id, name, category, size, price, available, description));
 				exportProductsData();
 				threadToSortProducts();			
-				
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Creación del producto");
-				alert.setHeaderText("El producto ha sido creado");
-				alert.setContentText("El producto con id "+id+" ha sido creado exitosamente.");
-				alert.showAndWait();
+
 			}else {
 				throw new NoNumericInputException("El precio debe ser numérico");
 			}
-		}else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error en la creación del producto");
-			alert.setHeaderText("El producto ya existe");
-			alert.setContentText("El producto con id "+id+" ya se ha creado.");
-			alert.showAndWait();
 		}
 	}
 
@@ -362,13 +351,6 @@ public class Restaurant implements Serializable{
 		if(findProduct!=null) {
 			products.remove(findProduct);
 			exportProductsData();
-		}
-		else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error al encontrar producto");
-			alert.setHeaderText("Producto inexistente");
-			alert.setContentText("El producto con id "+id+" no está actualmente en la lista de productos del restaurante.");
-			alert.showAndWait();
 		}
 	}
 	
@@ -383,13 +365,6 @@ public class Restaurant implements Serializable{
 			findProduct.setPrice(price);
 			findProduct.setAvailability(availability);
 			exportProductsData();
-		}
-		else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error al encontrar producto");
-			alert.setHeaderText("Producto inexistente");
-			alert.setContentText("El producto con id "+id+" no está actualmente en la lista de productos del restaurante.");
-			alert.showAndWait();
 		}
 		
 	}
@@ -620,50 +595,41 @@ public class Restaurant implements Serializable{
 				e.printStackTrace();
 			}
 			
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Cliente creado");
-			alert.setHeaderText("El cliente ha sido creado");
-			alert.setContentText("El cliente con el id "+id+" ha sido creado satisfactoriamente.");
-			alert.showAndWait();
-			
-		}else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error al crear el cliente");
-			alert.setHeaderText("Cliente Existente");
-			alert.setContentText("El cliente con el id "+id+" ya está registrado en el restaurante.");
-			alert.showAndWait();
-		}		
+		}	
 	}
 
 
 	public void deleteClient(String id) {
-		Client clientToDelete = findClient(id);		
+		Client clientToDelete = findClient(id);	
 		
-		if (clientToDelete.equals(firstClient)) {
-			if (clientToDelete.getNext() == null) {
-				firstClient = null;
+		if(clientToDelete!=null) {
+
+			if (clientToDelete.equals(firstClient)) {
+				if (clientToDelete.getNext() == null) {
+					firstClient = null;
+				}else {
+					clientToDelete.getNext().setPrevious(null);
+					firstClient = clientToDelete.getNext();
+					clientToDelete.setNext(null); 
+				}
+
 			}else {
-				clientToDelete.getNext().setPrevious(null);
-				firstClient = clientToDelete.getNext();
-				clientToDelete.setNext(null); 
+				Client prev = clientToDelete.getPrevious();
+				Client next = clientToDelete.getNext();
+
+				if (clientToDelete.getNext()!=null) {
+					next.setPrevious(prev);
+				}
+				if (clientToDelete.getPrevious()!=null) {
+					prev.setNext(next);
+				}
+			}	
+
+			try {
+				saveClientsData();
+			} catch (IOException e) {			
+				e.printStackTrace();
 			}
-		  		
-		}else {
-			Client prev = clientToDelete.getPrevious();
-        	Client next = clientToDelete.getNext();
-        	
-			if (clientToDelete.getNext()!=null) {
-				next.setPrevious(prev);
-			}
-			if (clientToDelete.getPrevious()!=null) {
-				prev.setNext(next);
-			}
-		}	
-		
-		try {
-			saveClientsData();
-		} catch (IOException e) {			
-			e.printStackTrace();
 		}
 	}
 	
@@ -681,12 +647,6 @@ public class Restaurant implements Serializable{
 				} catch (IOException e) {					
 					e.printStackTrace();
 				}
-		}else{
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error al encontrar el cliente");
-			alert.setHeaderText("Cliente inexistente");
-			alert.setContentText("El cliente con id "+id+" no está actualmente en la lista de clientes del restaurante.");
-			alert.showAndWait();
 		}
 
 	}

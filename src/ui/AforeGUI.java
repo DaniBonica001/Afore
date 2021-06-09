@@ -1017,14 +1017,32 @@ public class AforeGUI {
     	
     	if (!id.equals("") && !name.equals("") && !category.equals("") && !size.equals("") && !price.equals("") && !txtAvailabilityProduct.getText().equals("") && !description.equals("")) {
     		try {
-    			restaurant.addProduct(id,name,category,size,price,Integer.parseInt(txtAvailabilityProduct.getText()),description);
-    			txtIdProduct.setText("");
-    			txtNameProduct.setText("");
-    			choiceBoxCategoryProduct.getSelectionModel().clearSelection();
-    			choiceBoxSizeProduct.getSelectionModel().clearSelection();
-    			txtPriceProduct.setText("");
-    			txtAvailabilityProduct.setText("");
-    			txtDescriptionProduct.setText("");
+    			Product findProduct =restaurant.findProduct(id);
+    			if (findProduct==null) {
+    				restaurant.addProduct(id,name,category,size,price,Integer.parseInt(txtAvailabilityProduct.getText()),description);
+
+    				Alert alert = new Alert(AlertType.CONFIRMATION);
+    				alert.setTitle("Creación del producto");
+    				alert.setHeaderText("El producto ha sido creado");
+    				alert.setContentText("El producto con id "+id+" ha sido creado exitosamente.");
+    				alert.showAndWait();
+
+    				txtIdProduct.setText("");
+    				txtNameProduct.setText("");
+    				choiceBoxCategoryProduct.getSelectionModel().clearSelection();
+    				choiceBoxSizeProduct.getSelectionModel().clearSelection();
+    				txtPriceProduct.setText("");
+    				txtAvailabilityProduct.setText("");
+    				txtDescriptionProduct.setText("");
+    			}else {
+    				Alert alert = new Alert(AlertType.ERROR);
+    				alert.setTitle("Error en la creación del producto");
+    				alert.setHeaderText("El producto ya existe");
+    				alert.setContentText("El producto con id "+id+" ya se ha creado.");
+    				alert.showAndWait();
+    			}
+    			
+    			
     		}catch(NoNumericInputException nnie) {
         		Alert alert = new Alert(AlertType.ERROR);
     			alert.setTitle("Error al crear el producto");
@@ -1415,18 +1433,33 @@ public class AforeGUI {
     public void buttonCreateClientRegister(ActionEvent event) throws IOException {
     	if(!txtcreateClientName.getText().equals("") && !txtcreateClientId.getText().equals("")) {
     		String name=txtcreateClientName.getText();
-    		String id=txtcreateClientId.getText();
-    		String address=txtcreateClientAdress.getText();
-    		String obs=txtcreateClientObservation.getText();
-    		String phone=txtcreateClientPhone.getText();
-    		
-    		restaurant.addClient(name, id, address, phone, obs); 	
-    		
-        	txtcreateClientName.setText("");
-    		txtcreateClientId.setText("");
-    		txtcreateClientAdress.setText("");
-    		txtcreateClientObservation.setText("");
-    		txtcreateClientPhone.setText("");
+			String id=txtcreateClientId.getText();
+			String address=txtcreateClientAdress.getText();
+			String obs=txtcreateClientObservation.getText();
+			String phone=txtcreateClientPhone.getText();
+			
+    		Client findClient = restaurant.findClient(id);
+    		if (findClient==null) {
+    			restaurant.addClient(name, id, address, phone, obs); 
+
+    			Alert alert = new Alert(AlertType.CONFIRMATION);
+    			alert.setTitle("Cliente creado");
+    			alert.setHeaderText("El cliente ha sido creado");
+    			alert.setContentText("El cliente con el id "+id+" ha sido creado satisfactoriamente.");
+    			alert.showAndWait();
+
+    			txtcreateClientName.setText("");
+    			txtcreateClientId.setText("");
+    			txtcreateClientAdress.setText("");
+    			txtcreateClientObservation.setText("");
+    			txtcreateClientPhone.setText("");
+    		}else {
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error al crear el cliente");
+    			alert.setHeaderText("Cliente Existente");
+    			alert.setContentText("El cliente con el id "+id+" ya está registrado en el restaurante.");
+    			alert.showAndWait();
+    		}
     	}
     	else {
 			Alert alert = new Alert(AlertType.ERROR);
