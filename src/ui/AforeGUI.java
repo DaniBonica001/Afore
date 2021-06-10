@@ -4,6 +4,15 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Optional;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import exceptions.NoNumericInputException;
 import javafx.application.Platform;
@@ -20,10 +29,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -88,6 +100,8 @@ public class AforeGUI {
 
 		if (entry == true){
 	    		openScreen("menu.fxml",mainPaneLogin);   
+	    		usernameMenu.setText(email);
+	    		
 		}else{
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error al ingresar");
@@ -295,9 +309,23 @@ public class AforeGUI {
     @FXML
     public void buttonDeliveryFood(ActionEvent event) throws IOException{
     	openScreen("domicilios.fxml",paneToChange);
+    	initializeScreenDomicilios();
+    }
+    
+    public void initializeScreenDomicilios() {
+    	ObservableList<String> items =FXCollections.observableArrayList(restaurant.getNameProducts());
+    	listViewOfProducts.setItems(items);
     	
-    	ObservableList<Product> items =FXCollections.observableArrayList(restaurant.getProducts());
-    	lvDomicilioProductos.setItems(items);
+    	ToggleGroup tgOp = new ToggleGroup();        
+        rbPickUpRestaurant.setToggleGroup(tgOp);
+        rbScheduleShipment.setToggleGroup(tgOp);
+        
+        
+        if (rbScheduleShipment.isSelected()) {
+        	txtShippingTime.setDisable(false);
+        	labelShippingTime.setDisable(false);
+        }
+    		
     }
 
     @FXML
@@ -2014,50 +2042,140 @@ public class AforeGUI {
     private Pane mainPaneDomicilio;
 
     @FXML
-    private RadioButton pickRestaurant;
+    private RadioButton rbPickUpRestaurant;
 
     @FXML
-    private ToggleGroup domicilioOption;
+    private RadioButton rbScheduleShipment;
 
     @FXML
-    private RadioButton programarEnvio;
+    private ListView<String> listViewOfProducts;
 
     @FXML
-    private ListView<Product> lvDomicilioProductos;
+    private TextField txtAmountOfProduct;
 
     @FXML
-    private TextField domicilioQuantity;
-
-    @FXML
-    private TextField domicilioHoraEnvio;
-
-    @FXML
-    private TableView<?> tvDomicilioFactura;
-
-    @FXML
-    private TextField domicilioDestinatarioName;
+    private Label labelShippingTime;
     
+    @FXML
+    private TextField txtShippingTime;
 
     @FXML
-    void buttonDomicilioAddProduct(ActionEvent event) {
-
-    }
+    private TableView<Product> tableViewReceipt;
+    
+    @FXML
+    private TableColumn<Product,String> tableColumnProductName;
 
     @FXML
-    void buttonDomicilioBorrar(ActionEvent event) {
-
-    }
+    private TableColumn<Product,Integer> tableColumnProductAmount;
 
     @FXML
-    void buttonDomicilioCancelar(ActionEvent event) {
-
-    }
+    private TableColumn<Product,String> tableColumnProductPrice;
 
     @FXML
-    void buttonDomicilioEnviar(ActionEvent event) {
-
+    private TextField txtClientNameToDelivery;
+    
+    ObservableList<Product> products = FXCollections.observableArrayList();
+    
+    public void initializeTableViewDelivery() {     	
+    	tableColumnProductName.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
+    	tableColumnProductAmount.setCellValueFactory(new PropertyValueFactory<Product,Integer>("amountOfProduct"));
+    	tableColumnProductPrice.setCellValueFactory(new PropertyValueFactory<Product,String>("price"));
+    	
+    	tableViewReceipt.setItems(products);   	
     }
     
+    @FXML
+    public void buttonAddProductToReceiptDelivery(ActionEvent event) {
+    	if (listViewOfProducts.getSelectionModel().isEmpty()==false && !txtAmountOfProduct.getText().equals("")) {    		
+    		Product product = restaurant.findProductByName(listViewOfProducts.getSelectionModel().getSelectedItem());
+    		product.setAmountOfProduct(Integer.parseInt(txtAmountOfProduct.getText()));
+    			if (product!=null) {
+    				if (product.getAmountOfProduct() <= product.getAvailability()) {
+    					products.add(product);
+        				initializeTableViewDelivery();
+    				}else {
+    		    		Alert alert = new Alert(AlertType.ERROR);
+    		    		alert.setTitle("Error");
+    		    		alert.setHeaderText("Sin disponibilidad");
+    		    		alert.setContentText("No se tiene la cantidad necesaria del producto para realizar el pedido, por favor ingrese una cantidad más baja o cambie el producto");
+    		    		alert.showAndWait();
+    				}
+    				
+    			}    		
+    	}else {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error");
+    		alert.setHeaderText("Campos incompletos");
+    		alert.setContentText("Es necesario escoger un producto he ingresar su cantidad para añadirlo a la factura");
+    		alert.showAndWait();
+    	}
+    	
+    	txtAmountOfProduct.setText("");
+    }
+
+    @FXML
+    public void buttonCancelDelivery(ActionEvent event) {
+    	products.removeAll(products);
+    	initializeTableViewDelivery();
+    }
+
+    @FXML
+    public void buttonDeleteReceipt(ActionEvent event) {
+    	if (tableViewReceipt.getSelectionModel().isEmpty()==false) {
+        	Product productDelete = tableViewReceipt.getSelectionModel().getSelectedItem();
+        	products.remove(productDelete);
+        	initializeTableViewDelivery();
+    	}
+
+    }
+
+    @FXML
+    void buttonSendReceipt(ActionEvent event) {
+    	if (!txtClientNameToDelivery.getText().equals("") && products!=null) {
+    		TextInputDialog dialog = new TextInputDialog();
+    		dialog.setTitle("Text Input Dialog");
+    		dialog.setHeaderText("Envío de la factura al correo electrónico");
+    		dialog.setContentText("Por favor ingrese el correo electrónico el cliente:"); 
+    		// Traditional way to get the response value.
+    		Optional<String> result = dialog.showAndWait();
+    		if (result.isPresent()){
+    			enviarConGmail(result.get(),"Esto es una prueba","Confirma recibido");
+    		    System.out.println("Your email: " + result.get());
+    		}
+    		
+    	}    	
+    }
+    
+    private void enviarConGmail(String destinatario, String asunto, String cuerpo) {
+        // Esto es lo que va delante de @gmail.com en tu cuenta de correo. Es el remitente también.
+        String remitente = "email del remitente";  //Para la dirección dabo.0106@gmail.com
+
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
+        props.put("mail.smtp.user", remitente);
+        props.put("mail.smtp.clave", "la clave");    //La clave de la cuenta
+        props.put("mail.smtp.auth", "true");    //Usar autenticación mediante usuario y clave
+        props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
+        props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
+
+        Session session = Session.getDefaultInstance(props);
+        MimeMessage message = new MimeMessage(session);
+
+        try {
+            message.setFrom(new InternetAddress(remitente));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));   //Se podrían añadir varios de la misma manera
+            message.setSubject(asunto);
+            message.setText(cuerpo);
+            Transport transport = session.getTransport("smtp");
+            transport.connect("smtp.gmail.com", remitente, "la clave");
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        }
+        catch (MessagingException me) {
+            me.printStackTrace();   //Si se produce un error
+        }
+    }
+
 
     
 }

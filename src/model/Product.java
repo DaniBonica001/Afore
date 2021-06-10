@@ -11,6 +11,10 @@ public class Product {
 	private int availability;
 	private String description;
 	
+	//Atribute to delivery
+	private int amountOfProduct;
+	
+	
 	//Relations
 	private Condition condition;
 	
@@ -91,7 +95,13 @@ public class Product {
 		return condition;
 	}
 
-
+	public void setAmountOfProduct(int amountOfProduct) {
+		this.amountOfProduct = amountOfProduct;
+	}
+	
+	public int getAmountOfProduct() {
+		return amountOfProduct;
+	}
 	
 	//*********************************************************************************************************
 

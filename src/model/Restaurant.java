@@ -27,6 +27,7 @@ public class Restaurant implements Serializable{
 	private static final String SAVE_PATH_FILE_CLIENTS = "data/ClientsData.ap2";
 	//Relations
 	private List<Product>products;
+	private List<String>nameProducts;
 	//private List<FoodDelivery>deliveries;
 	private FoodDelivery rootDelivery;
 	private List<Employee>employees;
@@ -38,6 +39,7 @@ public class Restaurant implements Serializable{
 	//Constructor
 	public Restaurant() {
 		products = new ArrayList<Product>();
+		nameProducts = new ArrayList<String>();
 		//deliveries = new ArrayList<FoodDelivery>();
 		rootDelivery=null;
 		employees = new ArrayList<Employee>();	
@@ -53,6 +55,15 @@ public class Restaurant implements Serializable{
 	public List<Product> getProducts() {
 		return products;
 	}
+	
+	public void setNameProducts(List<String> nameProducts) {
+		this.nameProducts = nameProducts;
+	}
+	
+	public List<String> getNameProducts() {
+		return nameProducts;
+	}
+	
 	
 	/*
 	public void setDeliveries(List<FoodDelivery> deliveries) {
@@ -110,6 +121,19 @@ public class Restaurant implements Serializable{
 		boolean exit = false;
 		for (int i=0;i<products.size() && !exit;i++) {
 			if (products.get(i).getId().equals(id)) {
+				exit = true;
+				product = products.get(i);
+			}
+		}
+		return product;
+	}
+	
+	
+	public Product findProductByName(String name) {
+		Product product=null;
+		boolean exit = false;
+		for (int i=0;i<products.size() && !exit;i++) {
+			if (products.get(i).getName().equals(name)) {
 				exit = true;
 				product = products.get(i);
 			}
@@ -340,6 +364,7 @@ public class Restaurant implements Serializable{
 		if(findProduct==null) {
 			if(isNumeric(price)==true) {
 				products.add(new Product(id, name, category, size, price, available, description));
+				nameProducts.add(name);
 				exportProductsData();
 				threadToSortProducts();			
 
