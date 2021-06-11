@@ -6,13 +6,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Optional;
 import java.util.Properties;
-
+/*
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+*/
 import exceptions.NoNumericInputException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -46,6 +47,7 @@ import model.Client;
 import model.Condition;
 import model.DeliveryMan;
 import model.Employee;
+import model.FoodDelivery;
 import model.Order;
 import model.Product;
 import model.Restaurant;
@@ -54,6 +56,8 @@ import model.Waiter;
 
 
 public class AforeGUI {	
+	//EMPLEADO ACTUAL
+	private Employee actualEmployee;
 	
 	//Relations
 	private Restaurant restaurant;
@@ -149,6 +153,7 @@ public class AforeGUI {
     	openScreen("employees.fxml",paneToChangeAdm);    	
 
 		hora = new Thread(new Runnable() {
+			@Override
 			public void run() {
 				while (true) {
 					updateHour();
@@ -160,6 +165,7 @@ public class AforeGUI {
     
     public void updateHour() {
 		hilo = new Thread(new Runnable() {
+			@Override
 			public void run() {
 				labelHour.setText(calculateHour());
 			}
@@ -358,6 +364,7 @@ public class AforeGUI {
     	listViewOfOrderProducts.setItems(items);    	
     	
     	Employee employee = restaurant.findEmployeeByUsername(usernameMenu.getText());
+    	actualEmployee=employee;
     	if (employee!=null) {
     		LabelEmployeeName.setText(employee.getName()+" "+employee.getLastName());
     	}
@@ -2050,7 +2057,7 @@ public class AforeGUI {
     //+
     //+
     //+     
-    //FOOD-DEIVERY THINGS**********************************************************************************************************************************************************
+    //FOOD-DELIVERY THINGS**********************************************************************************************************************************************************
    
     
     @FXML
@@ -2160,7 +2167,7 @@ public class AforeGUI {
     		// Traditional way to get the response value.
     		Optional<String> result = dialog.showAndWait();
     		if (result.isPresent()){
-    			enviarConGmail(result.get(),"Esto es una prueba","Confirma recibido");
+    			//enviarConGmail(result.get(),"Esto es una prueba","Confirma recibido");
     		    System.out.println("Your email: " + result.get());
     		}
     		
@@ -2173,6 +2180,7 @@ public class AforeGUI {
     	}
     }
     
+    /*
     private void enviarConGmail(String destinatario, String asunto, String cuerpo) {
         // Esto es lo que va delante de @gmail.com en tu cuenta de correo. Es el remitente también.
         String remitente = "email del remitente";  //Para la dirección dabo.0106@gmail.com
@@ -2202,6 +2210,7 @@ public class AforeGUI {
             me.printStackTrace();   //Si se produce un error
         }
     }
+    */
     
     //*********************************************************************************************************************************************************************************************+
     //+
@@ -2372,8 +2381,17 @@ public class AforeGUI {
     }
 
     @FXML
-    void buttonPrintReceipt(ActionEvent event) {
-
+    public void buttonPrintReceipt(ActionEvent event) {
+    	Order order= new Order();
+    	order.getProducts().addAll(productsToOrder);
+    	order.setEmployee(actualEmployee);
+    	restaurant.getOrders().add(order);
+    	
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Orden creada");
+		alert.setHeaderText("La orden ha sido creada");
+		alert.setContentText("La orden ha sido creada satisfactoriamente");
+		alert.showAndWait();
     }
 
     @FXML

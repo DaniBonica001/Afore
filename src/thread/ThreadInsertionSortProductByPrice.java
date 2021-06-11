@@ -10,6 +10,7 @@ public class ThreadInsertionSortProductByPrice extends Thread{
 		this.rest = rest;				
 	}
 	
+	@Override
 	public void run() {		
 		//System.out.println("Empieza el hilo");
 		synchronized (rest.getProducts()) {

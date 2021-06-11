@@ -117,7 +117,7 @@ public class Restaurant implements Serializable{
 		
 		for (int i=0;i<employees.size() && !exit;i++) {
 			if (employees.get(i) instanceof SystemUser) {
-				SystemUser objUser = (SystemUser)employees.get(i);
+				SystemUser objUser = employees.get(i);
 				if (username.equals(objUser.getUsername()) && password.equals(objUser.getPassword()) && employees.get(i).getCondition().equals(Condition.ACTIVE)) {
 					exit=true;
 					open=true;					
