@@ -13,8 +13,6 @@ public class Order {
 	//Constructor
 	public Order() {
 		products = new ArrayList<Product>();
-		client=null;
-		employee=null;
 	}
 	
 	//Getters and setters

@@ -117,7 +117,7 @@ public class Restaurant implements Serializable{
 		
 		for (int i=0;i<employees.size() && !exit;i++) {
 			if (employees.get(i) instanceof SystemUser) {
-				SystemUser objUser = employees.get(i);
+				SystemUser objUser = (SystemUser)employees.get(i);
 				if (username.equals(objUser.getUsername()) && password.equals(objUser.getPassword()) && employees.get(i).getCondition().equals(Condition.ACTIVE)) {
 					exit=true;
 					open=true;					
@@ -920,7 +920,7 @@ public class Restaurant implements Serializable{
 		    String line = br.readLine();
 		    while(line!=null){
 		      String[] parts = line.split(";");
-		      //Invoca el método addContact
+		      //Invoca el método addContact		      
 		      addProduct(parts[0],parts[1],parts[2],parts[3],parts[4],Integer.parseInt(parts[5]),parts[6]);
 		      line = br.readLine();
 		    }

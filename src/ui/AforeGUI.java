@@ -5,8 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Optional;
-import java.util.Properties;
 /*
+import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -47,7 +47,6 @@ import model.Client;
 import model.Condition;
 import model.DeliveryMan;
 import model.Employee;
-import model.FoodDelivery;
 import model.Order;
 import model.Product;
 import model.Restaurant;
@@ -56,8 +55,6 @@ import model.Waiter;
 
 
 public class AforeGUI {	
-	//EMPLEADO ACTUAL
-	private Employee actualEmployee;
 	
 	//Relations
 	private Restaurant restaurant;
@@ -153,7 +150,6 @@ public class AforeGUI {
     	openScreen("employees.fxml",paneToChangeAdm);    	
 
 		hora = new Thread(new Runnable() {
-			@Override
 			public void run() {
 				while (true) {
 					updateHour();
@@ -165,7 +161,6 @@ public class AforeGUI {
     
     public void updateHour() {
 		hilo = new Thread(new Runnable() {
-			@Override
 			public void run() {
 				labelHour.setText(calculateHour());
 			}
@@ -364,7 +359,6 @@ public class AforeGUI {
     	listViewOfOrderProducts.setItems(items);    	
     	
     	Employee employee = restaurant.findEmployeeByUsername(usernameMenu.getText());
-    	actualEmployee=employee;
     	if (employee!=null) {
     		LabelEmployeeName.setText(employee.getName()+" "+employee.getLastName());
     	}
@@ -2057,7 +2051,7 @@ public class AforeGUI {
     //+
     //+
     //+     
-    //FOOD-DELIVERY THINGS**********************************************************************************************************************************************************
+    //FOOD-DEIVERY THINGS**********************************************************************************************************************************************************
    
     
     @FXML
@@ -2381,17 +2375,8 @@ public class AforeGUI {
     }
 
     @FXML
-    public void buttonPrintReceipt(ActionEvent event) {
-    	Order order= new Order();
-    	order.getProducts().addAll(productsToOrder);
-    	order.setEmployee(actualEmployee);
-    	restaurant.getOrders().add(order);
-    	
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Orden creada");
-		alert.setHeaderText("La orden ha sido creada");
-		alert.setContentText("La orden ha sido creada satisfactoriamente");
-		alert.showAndWait();
+    void buttonPrintReceipt(ActionEvent event) {
+
     }
 
     @FXML
