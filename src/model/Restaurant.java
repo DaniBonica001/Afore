@@ -411,6 +411,19 @@ public class Restaurant implements Serializable{
 		return employee;
 	}
 	
+	public Employee findEmployeeByUsername(String username) {
+		selectionSortEmployeeByPhone();
+		Employee employee = null;
+		boolean exit = false;
+		for (int i=0;i<employees.size() && !exit;i++) {
+			if (employees.get(i).getUsername().equals(username)) {
+				exit = true;
+				employee = employees.get(i);						
+			}
+		}
+		return employee;
+	}
+	
 	
 	public void threadToSortEmployees() {
 		//System.out.println("Vengo al metodo en rest");

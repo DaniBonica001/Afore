@@ -76,6 +76,7 @@
             </Button>
             <MenuButton fx:id="orderMenuButton" contentDisplay="RIGHT" layoutX="14.0" layoutY="64.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: transparent;">
                <items>
+                  <MenuItem mnemonicParsing="false" onAction="#buttonOpenProductOrder" text="Realizar pedido" />
                   <MenuItem mnemonicParsing="false" onAction="#buttonCreateProduct" text="Crear producto" />
                   <MenuItem mnemonicParsing="false" onAction="#buttonUpdateProduct" text="Actualizar producto" />
                   <MenuItem mnemonicParsing="false" onAction="#buttonEnableDisableProduct" text="Deshabilitar-Habilitar" />

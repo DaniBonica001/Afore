@@ -62,10 +62,7 @@ public class AforeGUI {
 		restaurant = rest;
 	}
 	
-	//Constructor #2
-	public AforeGUI() {		
-	}
-	
+
 	public void openScreen(String nameFxml, Pane paneToOpen)  {
 		FXMLLoader fxml = new FXMLLoader (getClass().getResource(nameFxml));
 		fxml.setController(this);
@@ -318,14 +315,7 @@ public class AforeGUI {
     	
     	ToggleGroup tgOp = new ToggleGroup();        
         rbPickUpRestaurant.setToggleGroup(tgOp);
-        rbScheduleShipment.setToggleGroup(tgOp);
-        
-        
-        if (rbScheduleShipment.isSelected()) {
-        	txtShippingTime.setDisable(false);
-        	labelShippingTime.setDisable(false);
-        }
-    		
+        rbScheduleShipment.setToggleGroup(tgOp);    		
     }
 
     @FXML
@@ -355,6 +345,23 @@ public class AforeGUI {
     	openScreen("login.fxml",mainPaneMenu);
     }
 
+
+    @FXML
+    public void buttonOpenProductOrder(ActionEvent event) {
+    	openScreen("product-Order.fxml",paneToChange);
+    	initializeScreenOrder();   	
+    }
+    
+    public void initializeScreenOrder() {
+    	ObservableList<String> items =FXCollections.observableArrayList(restaurant.getNameProducts());
+    	listViewOfOrderProducts.setItems(items);    	
+    	
+    	Employee employee = restaurant.findEmployeeByUsername(usernameMenu.getText());
+    	if (employee!=null) {
+    		LabelEmployeeName.setText(employee.getName()+" "+employee.getLastName());
+    	}
+    }
+    
     @FXML
     public void buttonRateServiceClient(ActionEvent event) throws IOException{
     	openScreen("grade-service.fxml",paneToChange);
@@ -2029,7 +2036,7 @@ public class AforeGUI {
     	}
     }
     
-  //*********************************************************************************************************************************************************************************************+
+    //*********************************************************************************************************************************************************************************************+
     //+
     //+
     //+
@@ -2074,24 +2081,24 @@ public class AforeGUI {
     @FXML
     private TextField txtClientNameToDelivery;
     
-    ObservableList<Product> products = FXCollections.observableArrayList();
+    ObservableList<Product> productsDelivery = FXCollections.observableArrayList();
     
     public void initializeTableViewDelivery() {     	
     	tableColumnProductName.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
     	tableColumnProductAmount.setCellValueFactory(new PropertyValueFactory<Product,Integer>("amountOfProduct"));
     	tableColumnProductPrice.setCellValueFactory(new PropertyValueFactory<Product,String>("price"));
     	
-    	tableViewReceipt.setItems(products);   	
+    	tableViewReceipt.setItems(productsDelivery);   	
     }
     
     @FXML
     public void buttonAddProductToReceiptDelivery(ActionEvent event) {
     	if (listViewOfProducts.getSelectionModel().isEmpty()==false && !txtAmountOfProduct.getText().equals("")) {    		
     		Product product = restaurant.findProductByName(listViewOfProducts.getSelectionModel().getSelectedItem());
-    		product.setAmountOfProduct(Integer.parseInt(txtAmountOfProduct.getText()));
     			if (product!=null) {
+    				product.setAmountOfProduct(Integer.parseInt(txtAmountOfProduct.getText()));
     				if (product.getAmountOfProduct() <= product.getAvailability()) {
-    					products.add(product);
+    					productsDelivery.add(product);    					
         				initializeTableViewDelivery();
     				}else {
     		    		Alert alert = new Alert(AlertType.ERROR);
@@ -2101,7 +2108,13 @@ public class AforeGUI {
     		    		alert.showAndWait();
     				}
     				
-    			}    		
+    			}else {
+		    		Alert alert = new Alert(AlertType.ERROR);
+		    		alert.setTitle("Error");
+		    		alert.setHeaderText("Producto no encontrado");
+		    		alert.setContentText("El nombre del producto seleccionado no coincide con los productos del restaurant");
+		    		alert.showAndWait();
+    			}
     	}else {
     		Alert alert = new Alert(AlertType.ERROR);
     		alert.setTitle("Error");
@@ -2115,7 +2128,7 @@ public class AforeGUI {
 
     @FXML
     public void buttonCancelDelivery(ActionEvent event) {
-    	products.removeAll(products);
+    	productsDelivery.removeAll(productsDelivery);
     	initializeTableViewDelivery();
     }
 
@@ -2123,15 +2136,15 @@ public class AforeGUI {
     public void buttonDeleteReceipt(ActionEvent event) {
     	if (tableViewReceipt.getSelectionModel().isEmpty()==false) {
         	Product productDelete = tableViewReceipt.getSelectionModel().getSelectedItem();
-        	products.remove(productDelete);
+        	productsDelivery.remove(productDelete);
         	initializeTableViewDelivery();
     	}
 
     }
 
     @FXML
-    void buttonSendReceipt(ActionEvent event) {
-    	if (!txtClientNameToDelivery.getText().equals("") && products!=null) {
+    public void buttonSendReceipt(ActionEvent event) {
+    	if (!txtClientNameToDelivery.getText().equals("") && !txtShippingTime.getText().equals("") && productsDelivery!=null) {
     		TextInputDialog dialog = new TextInputDialog();
     		dialog.setTitle("Text Input Dialog");
     		dialog.setHeaderText("Envío de la factura al correo electrónico");
@@ -2143,7 +2156,13 @@ public class AforeGUI {
     		    System.out.println("Your email: " + result.get());
     		}
     		
-    	}    	
+    	}else {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error");
+    		alert.setHeaderText("Campos incompletos");
+    		alert.setContentText("Es necesario el nombre del cliente y la hora que el cliente desea su pedid para enviar el recibo");
+    		alert.showAndWait();
+    	}
     }
     
     private void enviarConGmail(String destinatario, String asunto, String cuerpo) {
@@ -2175,6 +2194,143 @@ public class AforeGUI {
             me.printStackTrace();   //Si se produce un error
         }
     }
+    
+    //*********************************************************************************************************************************************************************************************+
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //PRODUCT-ORDER THINGS**********************************************************************************************************************************************************
+    
+    @FXML
+    private Pane mainPaneOrder;   
+
+    @FXML
+    private Pane paneChangeWithTable;
+
+    @FXML
+    private Pane factura;
+
+    @FXML
+    private Label labelTable;
+
+    @FXML
+    private Label LabelEmployeeName;
+
+    @FXML
+    private Label labelTotalToPay;
+
+    @FXML
+    private TableView<Product> tableViewReceiptProductOrder;
+
+    @FXML
+    private TableColumn<Product,String> tableColumnOrderProductName;
+
+    @FXML
+    private TableColumn<Product,Integer> tableColumnOrderAmountProduct;
+
+    @FXML
+    private TableColumn<Product,String> tableColumnOrderProductPrice;
+
+    @FXML
+    private ListView<String> listViewOfOrderProducts;
+
+    @FXML
+    private TextField txtAmounOFProduct;
+
+    @FXML
+    void buttonAddTable(ActionEvent event) {
+
+    }
+     ObservableList<Product>productsToOrder = FXCollections.observableArrayList();
+     
+     public void initializeTableViewReceiptProductOrder() {
+    	 tableColumnOrderProductName.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));    	 
+    	 tableColumnOrderAmountProduct.setCellValueFactory(new PropertyValueFactory<Product,Integer>("amountOfProduct"));
+    	 tableColumnOrderProductPrice.setCellValueFactory(new PropertyValueFactory<Product,String>("price"));
+    	 
+    	 tableViewReceiptProductOrder.setItems(productsToOrder);    	 
+     }
+     
+     public void calculateTotal() {
+    	 long total = 0;
+    	 for (int i=0;i<productsToOrder.size();i++) {
+    		 total += Long.parseLong(productsToOrder.get(i).getPrice()) * productsToOrder.get(i).getAmountOfProduct();    		 
+    	 }
+    	 
+    	 labelTotalToPay.setText(String.valueOf(total));
+    	 
+    	 
+     }
+
+    @FXML
+    public void buttonAddProducToReceipt(ActionEvent event) {
+    	if (listViewOfOrderProducts.getSelectionModel().isEmpty()==false && !txtAmounOFProduct.getText().equals("")) {
+    		Product findProduct = restaurant.findProductByName(listViewOfOrderProducts.getSelectionModel().getSelectedItem());
+    		if (findProduct!=null) {
+    			findProduct.setAmountOfProduct(Integer.parseInt(txtAmounOFProduct.getText()));
+    			if (findProduct.getAmountOfProduct()<= findProduct.getAvailability()) {
+    				productsToOrder.add(findProduct);
+    				initializeTableViewReceiptProductOrder(); 	
+    				calculateTotal();
+    				
+    			}else {
+		    		Alert alert = new Alert(AlertType.ERROR);
+		    		alert.setTitle("Error");
+		    		alert.setHeaderText("Sin disponibilidad");
+		    		alert.setContentText("No se tiene la cantidad necesaria del producto para realizar el pedido, por favor ingrese una cantidad más baja o cambie el producto");
+		    		alert.showAndWait();
+    			}    			
+    			
+    		}else {
+	    		Alert alert = new Alert(AlertType.ERROR);
+	    		alert.setTitle("Error");
+	    		alert.setHeaderText("Producto no encontrado");
+	    		alert.setContentText("El nombre del producto seleccionado no coincide con los productos del restaurant");
+	    		alert.showAndWait();
+    		}
+    	}else {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error");
+    		alert.setHeaderText("Campos incompletos");
+    		alert.setContentText("Es necesario escoger un producto he ingresar su cantidad para añadirlo a la factura");
+    		alert.showAndWait();
+    	}
+    	txtAmounOFProduct.setText("");
+    }
+
+    @FXML
+    public void buttonCancelReceipt(ActionEvent event) {
+    	productsToOrder.removeAll(productsToOrder);
+    	initializeTableViewReceiptProductOrder();
+    }
+
+    @FXML
+    public void buttonDeleteProductfReceipt(ActionEvent event) {
+    	if (tableViewReceiptProductOrder.getSelectionModel().isEmpty()==false) {
+    		Product product = tableViewReceiptProductOrder.getSelectionModel().getSelectedItem();
+    		productsToOrder.remove(product);
+    		initializeTableViewReceiptProductOrder();
+    	}
+    }
+
+    @FXML
+    void buttonOpenScreenCreateProduct(ActionEvent event) {
+    	openScreen("create-product.fxml",paneToChange);
+    }
+
+    @FXML
+    void buttonPrintReceipt(ActionEvent event) {
+
+    }
+
+    @FXML
+    void buttonShowTables(ActionEvent event) {
+    	openScreen("tables.fxml",paneChangeWithTable);
+    }
+   
+    
 
 
     
