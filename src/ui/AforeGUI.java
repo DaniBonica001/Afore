@@ -13,7 +13,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
 import exceptions.NoNumericInputException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -34,10 +33,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Cashier;
 import model.Chef;
@@ -360,6 +361,13 @@ public class AforeGUI {
     	if (employee!=null) {
     		LabelEmployeeName.setText(employee.getName()+" "+employee.getLastName());
     	}
+        
+        ToggleGroup tgTables = new ToggleGroup();
+        rbTable1.setToggleGroup(tgTables);
+        rbTable2.setToggleGroup(tgTables);
+        rbTable3.setToggleGroup(tgTables);
+        rbTable4.setToggleGroup(tgTables);
+        rbTable5.setToggleGroup(tgTables);
     }
     
     @FXML
@@ -2211,6 +2219,21 @@ public class AforeGUI {
 
     @FXML
     private Pane factura;
+    
+    @FXML
+    private RadioButton rbTable1;
+
+    @FXML
+    private RadioButton rbTable2;
+
+    @FXML
+    private RadioButton rbTable3;
+
+    @FXML
+    private RadioButton rbTable4;
+
+    @FXML
+    private RadioButton rbTable5;
 
     @FXML
     private Label labelTable;
@@ -2239,11 +2262,39 @@ public class AforeGUI {
     @FXML
     private TextField txtAmounOFProduct;
 
+    private int amountOfTables = 6;
+    private int layoutX = 33;
+    private int layoutY = 90;
+    
     @FXML
-    void buttonAddTable(ActionEvent event) {
-
+    public void buttonAddTable(ActionEvent event) {
+    	RadioButton rb;    	
+    	if (amountOfTables<10) {
+    		rb = new RadioButton("Table 0"+amountOfTables);
+    	}else {
+    		rb = new RadioButton("Table "+amountOfTables);
+    	}    
+    	
+    	restaurant.setTables(restaurant.getTables()+1);
+    	rb.setLayoutX(layoutX);
+    	rb.setLayoutY(layoutY);   	
+    	amountOfTables ++;
+    	
+    	if (layoutX == 341) {    
+    		layoutY += 63;
+    		layoutX = 33;    		
+    	}else {
+    		layoutX += 77;
+    	}
+    	    	    	
+    
+    	rb.setToggleGroup(rbt1.getToggleGroup());
+    	paneTables.getChildren().add(rb); 
+    	
+    	
     }
-     ObservableList<Product>productsToOrder = FXCollections.observableArrayList();
+    
+    ObservableList<Product>productsToOrder = FXCollections.observableArrayList();
      
      public void initializeTableViewReceiptProductOrder() {
     	 tableColumnOrderProductName.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));    	 
@@ -2316,7 +2367,7 @@ public class AforeGUI {
     }
 
     @FXML
-    void buttonOpenScreenCreateProduct(ActionEvent event) {
+    public void buttonOpenScreenCreateProduct(ActionEvent event) {
     	openScreen("create-product.fxml",paneToChange);
     }
 
@@ -2326,10 +2377,103 @@ public class AforeGUI {
     }
 
     @FXML
-    void buttonShowTables(ActionEvent event) {
-    	openScreen("tables.fxml",paneChangeWithTable);
+    public void buttonShowTables(ActionEvent event) { 
+    	openScreen("tables.fxml",mainPaneOrder);
+    	ToggleGroup tgTables = new ToggleGroup();
+    	rbt1.setToggleGroup(tgTables);
+    	rbt2.setToggleGroup(tgTables);
+    	rbt3.setToggleGroup(tgTables);
+    	rbt4.setToggleGroup(tgTables);
+    	rbt5.setToggleGroup(tgTables);
+    	   
+    	recreateRadioButtonsTables();    	
     }
-   
+    
+    private void recreateRadioButtonsTables() {
+    	RadioButton rb;    
+    	int i=0;
+    	while (i<restaurant.getTables()) {
+    	  	if (amountOfTables<10) {
+        		rb = new RadioButton("Table 0"+amountOfTables);
+        	}else {
+        		rb = new RadioButton("Table "+amountOfTables);
+        	}    	
+        	rb.setLayoutX(layoutX);
+        	rb.setLayoutY(layoutY);   	
+        	amountOfTables ++;
+        	
+        	if (layoutX == 341) {    
+        		layoutY += 77;
+        		layoutX = 33;    		
+        	}else {
+        		layoutX += 77;
+        	}    	    	    	
+        
+        	rb.setToggleGroup(rbt1.getToggleGroup());
+        	paneTables.getChildren().add(rb);     		
+    		i++;    		
+    	}    	
+    }
+    
+    //*********************************************************************************************************************************************************************************************+
+    //+
+    //+
+    //+
+    //+
+    //+     
+    //TABLES THINGS**********************************************************************************************************************************************************
+    
+    @FXML
+    private Pane paneTableToChange;
+
+    @FXML
+    private AnchorPane paneTables;
+
+
+    @FXML
+    private RadioButton rbt1;
+
+    @FXML
+    private RadioButton rbt2;
+
+    @FXML
+    private RadioButton rbt3;
+
+    @FXML
+    private RadioButton rbt4;
+
+    @FXML
+    private RadioButton rbt5;
+
+    /*
+     *  @FXML
+    	void buttonAddTable(ActionEvent event) {
+
+    	}
+     */
+  
+    ObservableList<Toggle>rbt = FXCollections.observableArrayList();
+    
+    @FXML
+    public void buttonHideTables(ActionEvent event) {   
+    	amountOfTables = 6;
+    	layoutX = 33;
+    	layoutY = 90;
+    	openScreen("product-Order.fxml",paneTableToChange);
+    	RadioButton rb = (RadioButton) rbt1.getToggleGroup().getSelectedToggle();
+    	if (rb!=null) {
+    		if (rb.getText().length()==2) {
+    			labelTable.setText("Mesa "+rb.getText());
+    		}else {
+    			labelTable.setText("Mesa "+rb.getText().substring(6));
+    		}
+    		
+    	}
+    	
+    	initializeScreenOrder();
+    	initializeTableViewReceiptProductOrder();
+    	calculateTotal();
+    }
     
 
 

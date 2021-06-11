@@ -17,7 +17,7 @@
    <children>
       <Pane prefHeight="55.0" prefWidth="698.0" style="-fx-background-color: #E1E5E5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: green blue black yellow;">
          <children>
-            <RadioButton contentDisplay="TOP" graphicTextGap="0.0" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="01">
+            <RadioButton fx:id="rbTable1" contentDisplay="TOP" graphicTextGap="0.0" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="01">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -25,7 +25,7 @@
                   <Label text="Table" />
                </graphic>
             </RadioButton>
-            <RadioButton contentDisplay="TOP" graphicTextGap="0.0" layoutX="81.0" layoutY="9.0" mnemonicParsing="false" text="02">
+            <RadioButton fx:id="rbTable2" contentDisplay="TOP" graphicTextGap="0.0" layoutX="81.0" layoutY="9.0" mnemonicParsing="false" text="02">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -33,7 +33,7 @@
                   <Label text="Table" />
                </graphic>
             </RadioButton>
-            <RadioButton contentDisplay="TOP" graphicTextGap="0.0" layoutX="156.0" layoutY="9.0" mnemonicParsing="false" text="03">
+            <RadioButton fx:id="rbTable3" contentDisplay="TOP" graphicTextGap="0.0" layoutX="156.0" layoutY="9.0" mnemonicParsing="false" text="03">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -41,7 +41,7 @@
                   <Label text="Table" />
                </graphic>
             </RadioButton>
-            <RadioButton contentDisplay="TOP" graphicTextGap="0.0" layoutX="234.0" layoutY="9.0" mnemonicParsing="false" text="04">
+            <RadioButton fx:id="rbTable4" contentDisplay="TOP" graphicTextGap="0.0" layoutX="234.0" layoutY="9.0" mnemonicParsing="false" text="04">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -49,7 +49,7 @@
                   <Label text="Table" />
                </graphic>
             </RadioButton>
-            <RadioButton contentDisplay="TOP" graphicTextGap="0.0" layoutX="311.0" layoutY="9.0" mnemonicParsing="false" text="05">
+            <RadioButton fx:id="rbTable5" contentDisplay="TOP" graphicTextGap="0.0" layoutX="311.0" layoutY="9.0" mnemonicParsing="false" text="05">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

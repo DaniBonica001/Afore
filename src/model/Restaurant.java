@@ -25,6 +25,9 @@ public class Restaurant implements Serializable{
 	private static final String SAVE_PATH_FILE_EMPLOYEES = "data/EmployeesData.ap2";
 	private static final String SAVE_PATH_FILE_PRODUCT = "data/ProductsData.txt";
 	private static final String SAVE_PATH_FILE_CLIENTS = "data/ClientsData.ap2";
+	//Attributes
+	private int tables;
+	
 	//Relations
 	private List<Product>products;
 	private List<String>nameProducts;
@@ -48,6 +51,14 @@ public class Restaurant implements Serializable{
 	}
 	
 	//Getters and Setters
+	public int getTables() {
+		return tables;
+	}
+
+	public void setTables(int tables) {
+		this.tables = tables;
+	}
+	
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
@@ -955,6 +966,8 @@ public class Restaurant implements Serializable{
 	public void setRootDelivery(FoodDelivery rootDelivery) {
 		this.rootDelivery = rootDelivery;
 	}
+
+
 	 
 	 
 }
