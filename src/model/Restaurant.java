@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.NoNumericInputException;
+import exceptions.NoNumericPhoneException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -453,10 +454,11 @@ public class Restaurant implements Serializable{
 
 	//Create a cashier employee
 	public void addEmployee(String userCashier, String passCashier, String nameCashier, String lastNameCashier,
-			String idCashier, String phoneCashier, boolean waiter) throws IOException {
+			String idCashier, String phoneCashier, boolean waiter) throws IOException, NoNumericPhoneException {
 		
 		Employee findEmployee = findEmployee(idCashier);
 		
+		if(isNumeric(phoneCashier)==true) {
 		if (findEmployee == null) {
 			employees.add(new Cashier(userCashier,passCashier,nameCashier,lastNameCashier,idCashier,phoneCashier,waiter));
 			saveEmployeesData();
@@ -473,7 +475,10 @@ public class Restaurant implements Serializable{
 			alert.setHeaderText("El empleado ya existe");
 			alert.setContentText("El empleado con id "+idCashier+" ya se ha creado.");
 			alert.showAndWait();
-		}		
+		}
+		}else {
+			throw new NoNumericPhoneException();
+		}
 	}
 
 	//Create a chef employee

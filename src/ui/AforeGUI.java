@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Optional;
-/*
+
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,8 +13,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-*/
+
 import exceptions.NoNumericInputException;
+import exceptions.NoNumericPhoneException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,6 +56,7 @@ import model.Waiter;
 
 
 public class AforeGUI {	
+	Employee actualEmployee;
 	
 	//Relations
 	private Restaurant restaurant;
@@ -62,6 +64,7 @@ public class AforeGUI {
 	//Constructor #1
 	public AforeGUI(Restaurant rest) {
 		restaurant = rest;
+		actualEmployee=null;
 	}
 	
 
@@ -359,6 +362,7 @@ public class AforeGUI {
     	listViewOfOrderProducts.setItems(items);    	
     	
     	Employee employee = restaurant.findEmployeeByUsername(usernameMenu.getText());
+    	actualEmployee=employee;
     	if (employee!=null) {
     		LabelEmployeeName.setText(employee.getName()+" "+employee.getLastName());
     	}
@@ -450,6 +454,7 @@ public class AforeGUI {
     			!pfPasswordCashier.getText().equals("") && !txtLastNameCashier.getText().equals("") &&
     			!txtIdCashier.getText().equals("") && !txtPhoneCashier.getText().equals("") && rbYesCashier.isSelected() || rbNoCashier.isSelected() ) {
     		
+    		
     		String nameCashier = txtNameCashier.getText();
     		String lastNameCashier = txtLastNameCashier.getText();
     		String idCashier = txtIdCashier.getText();
@@ -467,6 +472,12 @@ public class AforeGUI {
 				restaurant.addEmployee(userCashier,passCashier,nameCashier,lastNameCashier,idCashier,phoneCashier,waiter);
 			} catch (IOException e) {				
 				e.printStackTrace();
+			} catch (NoNumericPhoneException nnpe) {
+        		Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Error al crear el empleado");
+    			alert.setHeaderText("Telefono no númerico");
+    			alert.setContentText(nnpe.getMessage());
+    			alert.showAndWait();
 			}
     		
     		txtNameCashier.setText("");
@@ -2051,7 +2062,7 @@ public class AforeGUI {
     //+
     //+
     //+     
-    //FOOD-DEIVERY THINGS**********************************************************************************************************************************************************
+    //FOOD-DELIVERY THINGS**********************************************************************************************************************************************************
    
     
     @FXML
@@ -2174,7 +2185,7 @@ public class AforeGUI {
     	}
     }
     
-    /*
+    
     private void enviarConGmail(String destinatario, String asunto, String cuerpo) {
         // Esto es lo que va delante de @gmail.com en tu cuenta de correo. Es el remitente también.
         String remitente = "email del remitente";  //Para la dirección dabo.0106@gmail.com
@@ -2204,7 +2215,7 @@ public class AforeGUI {
             me.printStackTrace();   //Si se produce un error
         }
     }
-    */
+    
     
     //*********************************************************************************************************************************************************************************************+
     //+
@@ -2375,9 +2386,19 @@ public class AforeGUI {
     }
 
     @FXML
-    void buttonPrintReceipt(ActionEvent event) {
-
+    public void buttonPrintReceipt(ActionEvent event) {
+    	Order order= new Order();
+    	order.getProducts().addAll(productsToOrder);
+    	order.setEmployee(actualEmployee);
+    	restaurant.getOrders().add(order);
+    	
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Orden creada");
+		alert.setHeaderText("La orden ha sido creada");
+		alert.setContentText("La orden ha sido creada satisfactoriamente");
+		alert.showAndWait();
     }
+
 
     @FXML
     public void buttonShowTables(ActionEvent event) { 
