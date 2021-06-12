@@ -1,9 +1,11 @@
 package ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Optional;
 
 import java.util.Properties;
@@ -35,7 +37,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
@@ -124,7 +125,7 @@ public class AforeGUI {
     }
     
     @FXML
-    void buttonLoginAdministrator(ActionEvent event) {
+    public void buttonLoginAdministrator(ActionEvent event) {
     	openScreen("menu-admin.fxml",mainPaneLogin);
     }
     
@@ -149,7 +150,7 @@ public class AforeGUI {
     public Thread hilo;
 
     @FXML
-    void buttonOpenEmployeeManagement(ActionEvent event) {
+    public void buttonOpenEmployeeManagement(ActionEvent event) {
     	openScreen("employees.fxml",paneToChangeAdm);    	
 
 		hora = new Thread(new Runnable() {
@@ -365,14 +366,7 @@ public class AforeGUI {
     	actualEmployee=employee;
     	if (employee!=null) {
     		LabelEmployeeName.setText(employee.getName()+" "+employee.getLastName());
-    	}
-        
-        ToggleGroup tgTables = new ToggleGroup();
-        rbTable1.setToggleGroup(tgTables);
-        rbTable2.setToggleGroup(tgTables);
-        rbTable3.setToggleGroup(tgTables);
-        rbTable4.setToggleGroup(tgTables);
-        rbTable5.setToggleGroup(tgTables);
+    	}    	 
     }
     
     @FXML
@@ -2172,7 +2166,7 @@ public class AforeGUI {
     		// Traditional way to get the response value.
     		Optional<String> result = dialog.showAndWait();
     		if (result.isPresent()){
-    			//enviarConGmail(result.get(),"Esto es una prueba","Confirma recibido");
+    			enviarConGmail(result.get(),"Esto es una prueba","Confirma recibido");
     		    System.out.println("Your email: " + result.get());
     		}
     		
@@ -2188,12 +2182,12 @@ public class AforeGUI {
     
     private void enviarConGmail(String destinatario, String asunto, String cuerpo) {
         // Esto es lo que va delante de @gmail.com en tu cuenta de correo. Es el remitente también.
-        String remitente = "email del remitente";  //Para la dirección dabo.0106@gmail.com
+        String remitente = "dabo.0106@gmail.com";  //Para la dirección dabo.0106@gmail.com
 
         Properties props = System.getProperties();
         props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
         props.put("mail.smtp.user", remitente);
-        props.put("mail.smtp.clave", "la clave");    //La clave de la cuenta
+        props.put("mail.smtp.clave", "dafaju010604");    //La clave de la cuenta
         props.put("mail.smtp.auth", "true");    //Usar autenticación mediante usuario y clave
         props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
         props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
@@ -2207,7 +2201,7 @@ public class AforeGUI {
             message.setSubject(asunto);
             message.setText(cuerpo);
             Transport transport = session.getTransport("smtp");
-            transport.connect("smtp.gmail.com", remitente, "la clave");
+            transport.connect("smtp.gmail.com", remitente, "dafaju010604");
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
         }
@@ -2215,6 +2209,7 @@ public class AforeGUI {
             me.printStackTrace();   //Si se produce un error
         }
     }
+    
     
     
     //*********************************************************************************************************************************************************************************************+
@@ -2234,21 +2229,6 @@ public class AforeGUI {
     @FXML
     private Pane factura;
     
-    @FXML
-    private RadioButton rbTable1;
-
-    @FXML
-    private RadioButton rbTable2;
-
-    @FXML
-    private RadioButton rbTable3;
-
-    @FXML
-    private RadioButton rbTable4;
-
-    @FXML
-    private RadioButton rbTable5;
-
     @FXML
     private Label labelTable;
 
@@ -2276,37 +2256,12 @@ public class AforeGUI {
     @FXML
     private TextField txtAmounOFProduct;
 
-    private int amountOfTables = 6;
+    private int amountOfTables = 1;
     private int layoutX = 33;
     private int layoutY = 90;
     
-    @FXML
-    public void buttonAddTable(ActionEvent event) {
-    	RadioButton rb;    	
-    	if (amountOfTables<10) {
-    		rb = new RadioButton("Table 0"+amountOfTables);
-    	}else {
-    		rb = new RadioButton("Table "+amountOfTables);
-    	}    
-    	
-    	restaurant.setTables(restaurant.getTables()+1);
-    	rb.setLayoutX(layoutX);
-    	rb.setLayoutY(layoutY);   	
-    	amountOfTables ++;
-    	
-    	if (layoutX == 341) {    
-    		layoutY += 63;
-    		layoutX = 33;    		
-    	}else {
-    		layoutX += 77;
-    	}
-    	    	    	
     
-    	rb.setToggleGroup(rbt1.getToggleGroup());
-    	paneTables.getChildren().add(rb); 
-    	
-    	
-    }
+   
     
     ObservableList<Product>productsToOrder = FXCollections.observableArrayList();
      
@@ -2387,29 +2342,39 @@ public class AforeGUI {
 
     @FXML
     public void buttonPrintReceipt(ActionEvent event) {
-    	Order order= new Order();
-    	order.getProducts().addAll(productsToOrder);
-    	order.setEmployee(actualEmployee);
-    	restaurant.getOrders().add(order);
+    	Employee employee = restaurant.findEmployeeByUsername(LabelEmployeeName.getText());
+    	List<Product> products = new ArrayList<Product>();
+    	if (employee!=null && productsToOrder!=null) {
+    		products = productsToOrder;
+    		try {
+				restaurant.addOrder(employee,products);
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+	    		alert.setTitle("Orden creada");
+	    		alert.setHeaderText("La orden ha sido creada");
+	    		alert.setContentText("La orden ha sido creada satisfactoriamente");
+	    		alert.showAndWait();
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}
     	
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Orden creada");
-		alert.setHeaderText("La orden ha sido creada");
-		alert.setContentText("La orden ha sido creada satisfactoriamente");
-		alert.showAndWait();
+    	}else {
+    		Alert alert = new Alert(AlertType.CONFIRMATION);
+    		alert.setTitle("Error");
+    		alert.setHeaderText("Información incompleta");
+    		alert.setContentText("Para guardar la orden se necesita un listado de productos y el nombre del empleado que tomó la orden");
+    		alert.showAndWait();
+    	}
+    	
+    	//Order order= new Order(employee,products);
+    	//order.getProducts().addAll(productsToOrder);
+    	//order.setEmployee(actualEmployee);
+    	//restaurant.getOrders().add(order);
     }
 
 
     @FXML
     public void buttonShowTables(ActionEvent event) { 
-    	openScreen("tables.fxml",mainPaneOrder);
-    	ToggleGroup tgTables = new ToggleGroup();
-    	rbt1.setToggleGroup(tgTables);
-    	rbt2.setToggleGroup(tgTables);
-    	rbt3.setToggleGroup(tgTables);
-    	rbt4.setToggleGroup(tgTables);
-    	rbt5.setToggleGroup(tgTables);
-    	   
+    	openScreen("tables.fxml",mainPaneOrder);   
     	recreateRadioButtonsTables();    	
     }
     
@@ -2433,7 +2398,7 @@ public class AforeGUI {
         		layoutX += 77;
         	}    	    	    	
         
-        	rb.setToggleGroup(rbt1.getToggleGroup());
+        	rb.setToggleGroup(tgTables);
         	paneTables.getChildren().add(rb);     		
     		i++;    		
     	}    	
@@ -2452,54 +2417,55 @@ public class AforeGUI {
 
     @FXML
     private AnchorPane paneTables;
-
-
-    @FXML
-    private RadioButton rbt1;
-
-    @FXML
-    private RadioButton rbt2;
-
-    @FXML
-    private RadioButton rbt3;
-
-    @FXML
-    private RadioButton rbt4;
-
-    @FXML
-    private RadioButton rbt5;
-
-    /*
-     *  @FXML
-    	void buttonAddTable(ActionEvent event) {
-
-    	}
-     */
-  
-    ObservableList<Toggle>rbt = FXCollections.observableArrayList();
+    
+    private ToggleGroup tgTables = new ToggleGroup();
     
     @FXML
+    public void buttonAddTable(ActionEvent event) {    	
+    	RadioButton rb;    	
+    	if (amountOfTables<10) {
+    		rb = new RadioButton("Table 0"+amountOfTables);
+    	}else {
+    		rb = new RadioButton("Table "+amountOfTables);
+    	}    
+    	
+    	restaurant.setTables(restaurant.getTables()+1);
+    	
+    	rb.setLayoutX(layoutX);
+    	rb.setLayoutY(layoutY);   	
+    	
+    	amountOfTables ++;
+    	
+    	if (layoutX == 341) {    
+    		layoutY += 63;
+    		layoutX = 33;    		
+    	}else {
+    		layoutX += 77;
+    	}    	    	    	
+    
+    	rb.setToggleGroup(tgTables);
+    	paneTables.getChildren().add(rb); 
+    	
+    	
+    }
+        
+    @FXML
     public void buttonHideTables(ActionEvent event) {   
-    	amountOfTables = 6;
+    	amountOfTables = 1;
     	layoutX = 33;
     	layoutY = 90;
     	openScreen("product-Order.fxml",paneTableToChange);
-    	RadioButton rb = (RadioButton) rbt1.getToggleGroup().getSelectedToggle();
-    	if (rb!=null) {
-    		if (rb.getText().length()==2) {
-    			labelTable.setText("Mesa "+rb.getText());
-    		}else {
-    			labelTable.setText("Mesa "+rb.getText().substring(6));
-    		}
-    		
-    	}
     	
+    	RadioButton rb = (RadioButton) tgTables.getSelectedToggle();
+    	if (rb!=null) {
+    		if (rb.isSelected()) {
+
+    			labelTable.setText("Mesa "+rb.getText().substring(6));        		
+    		}
+    	}
+   
     	initializeScreenOrder();
     	initializeTableViewReceiptProductOrder();
     	calculateTotal();
-    }
-    
-
-
-    
+    }       
 }

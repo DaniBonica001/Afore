@@ -1,2 +1,2 @@
-123;Queso;Entrada;Personal;12000;3;ocjd
-1;pasta;Plato principal;Personal;10000;15;:)
+1;pasta;Plato principal;Personal;12000;12;nada
+3;brownie con helado;Postre;Personal;5000;5;nada

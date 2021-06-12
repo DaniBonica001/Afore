@@ -23,15 +23,16 @@ import javafx.scene.control.Alert.AlertType;
 public class Restaurant implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	private static final String SAVE_PATH_FILE_EMPLOYEES = "data/EmployeesData.ap2";
-	private static final String SAVE_PATH_FILE_PRODUCT = "data/ProductsData.txt";
-	private static final String SAVE_PATH_FILE_CLIENTS = "data/ClientsData.ap2";
+	public static final String SAVE_PATH_FILE_EMPLOYEES = "data/EmployeesData.ap2";
+	public static final String SAVE_PATH_FILE_ORDERS = "data/OrdersData.ap2";
+	public static final String SAVE_PATH_FILE_PRODUCT = "data/ProductsData.txt";
+	public static final String SAVE_PATH_FILE_CLIENTS = "data/ClientsData.ap2";
 	//Attributes
 	private int tables;
+	private List<String>nameProducts;
 	
 	//Relations
-	private List<Product>products;
-	private List<String>nameProducts;
+	private List<Product>products;	
 	//private List<FoodDelivery>deliveries;
 	private FoodDelivery rootDelivery;
 	private List<Employee>employees;
@@ -75,17 +76,7 @@ public class Restaurant implements Serializable{
 	public List<String> getNameProducts() {
 		return nameProducts;
 	}
-	
-	
-	/*
-	public void setDeliveries(List<FoodDelivery> deliveries) {
-		this.deliveries = deliveries;
-	}
-	
-	public List<FoodDelivery> getDeliveries(){
-		return deliveries;
-	}
-	*/
+
 	public void setEmployees(List<Employee>employees) {
 		this.employees = employees;
 	}
@@ -390,6 +381,7 @@ public class Restaurant implements Serializable{
 		Product findProduct= findProduct(id);		
 		if(findProduct!=null) {
 			products.remove(findProduct);
+			nameProducts.remove(findProduct.getName());
 			exportProductsData();
 		}
 	}
@@ -880,6 +872,28 @@ public class Restaurant implements Serializable{
 		 oos.close();
 	 }
 	 
+	 //Import orders Data (serializacion)
+	 @SuppressWarnings("unchecked")
+	 public boolean loadOrdersData() throws IOException, ClassNotFoundException{
+		 File f = new File(SAVE_PATH_FILE_ORDERS);
+		 boolean loaded = false;
+		 if(f.exists()){
+			 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			 orders = (List<Order>)ois.readObject();
+			 ois.close();
+			 loaded = true;
+		 }		 
+		 return loaded;	
+	 }
+
+	 //Export employees data (serializacion)
+	 public void saveOrdersData() throws IOException{
+		 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SAVE_PATH_FILE_ORDERS));
+		 oos.writeObject(orders);
+		 oos.close();
+	 }
+
+	 
 	 //Import clients data (serializacion)
 	 public void loadClientsData() throws FileNotFoundException, IOException, ClassNotFoundException {
 		 ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVE_PATH_FILE_CLIENTS));
@@ -970,6 +984,16 @@ public class Restaurant implements Serializable{
 
 	public void setRootDelivery(FoodDelivery rootDelivery) {
 		this.rootDelivery = rootDelivery;
+	}
+	
+	public void addOrder(Employee employee,List<Product>products) throws IOException {
+		Employee findEmployee = findEmployee(employee.getId());
+		if (findEmployee!=null && products!=null) {
+			Order order= new Order(employee,products);
+			orders.add(order);
+			saveOrdersData();
+			
+		}	
 	}
 
 

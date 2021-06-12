@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class Employee extends SystemUser implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1;
 	//Attributes
 	private String name;
 	private String lastName;

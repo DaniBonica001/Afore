@@ -1,19 +1,23 @@
 package model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+//import java.util.ArrayList;
 import java.util.List;
 
-public class Order {
-	
+public class Order implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	//Relations
 	private Client client;
 	private Employee employee;
 	private List<Product>products;
 	
-	//Constructor
-	public Order() {
-		products = new ArrayList<Product>();
-	}
+	//Constructor #1
+	public Order(Employee emp,List<Product> products) {
+		employee = emp;
+		this.products = products;
+	}	
+
 	
 	//Getters and setters
 	public void setClient(Client client) {

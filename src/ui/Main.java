@@ -37,6 +37,17 @@ public class Main extends Application{
 		}
 		
 		try {
+			restaurant.loadOrdersData();
+		} catch (ClassNotFoundException | IOException e1) {			
+			e1.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+    		alert.setTitle("Restaurante");
+    		alert.setContentText("Error cargando la información de las ordenes del archivo");
+			alert.showAndWait();
+		}
+		
+		
+		try {
 			restaurant.importProductsData();
 		} catch (IOException e) {			
 			e.printStackTrace();
