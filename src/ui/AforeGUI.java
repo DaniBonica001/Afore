@@ -2182,12 +2182,12 @@ public class AforeGUI {
     
     private void enviarConGmail(String destinatario, String asunto, String cuerpo) {
         // Esto es lo que va delante de @gmail.com en tu cuenta de correo. Es el remitente también.
-        String remitente = "dabo.0106@gmail.com";  //Para la dirección dabo.0106@gmail.com
+        String remitente = "email del remitente";  //Para la dirección dabo.0106@gmail.com
 
         Properties props = System.getProperties();
         props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
         props.put("mail.smtp.user", remitente);
-        props.put("mail.smtp.clave", "dafaju010604");    //La clave de la cuenta
+        props.put("mail.smtp.clave", "clave del remitente");    //La clave de la cuenta
         props.put("mail.smtp.auth", "true");    //Usar autenticación mediante usuario y clave
         props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
         props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
@@ -2201,7 +2201,7 @@ public class AforeGUI {
             message.setSubject(asunto);
             message.setText(cuerpo);
             Transport transport = session.getTransport("smtp");
-            transport.connect("smtp.gmail.com", remitente, "dafaju010604");
+            transport.connect("smtp.gmail.com", remitente, "clave del remitente");
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
         }
