@@ -20,4 +20,7 @@ This problem brings with it that people decide many times not to go out or on ma
 
 ##Documentation
 
-[Documentation of the app](docs/Documentacion/Tarea Integradora 3.pdf)
+-[Documentation of the app](docs/Documentacion/Tarea Integradora 3.pdf)
+
+-[Video Presentation of the App](https://youtu.be/697ePrPSoqM)
+
